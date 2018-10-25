@@ -1,0 +1,24 @@
+{
+    "features": [{
+        "name": "Example Feature Flag",
+        "enabled": false
+    }, {
+        "name": "Example A/B Test",
+        "enabled": true,
+        "test-biases": [50, 50],
+        "test-variations": ["Group A", "Group B"],
+        "labels": ["label1-for-analytics", "label2-for-analytics"]
+    }, {
+        "name": "Example Feature On/Off A/B Test",
+        "enabled": true,
+        "test-biases": [80, 20],
+        "test-variations": ["enabled", "disabled"],
+        "labels": ["label1-for-analytics", "label2-for-analytics"]
+    }, {
+        "name": "Example MVT Test",
+        "enabled": true,
+        "test-biases": [70, 20, 10],
+        "test-variations": ["Group A", "Group B", "Group C"],
+        "labels": ["label1-for-analytics", "label2-for-analytics", "label3-for-analytics"]
+    }]
+}

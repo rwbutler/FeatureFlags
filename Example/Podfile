@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'FeatureFlags_Example' do
+  pod 'FeatureFlags', :path => '../'
+
+  target 'FeatureFlags_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

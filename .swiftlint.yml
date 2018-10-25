@@ -1,0 +1,7 @@
+disabled_rules:
+  - trailing_whitespace
+  - identifier_name
+opt_in_rules:
+  - empty_count
+excluded:
+reporter: "xcode"

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Test Variation Picker View Controller-->
+        <scene sceneID="pxL-nW-9m3">
+            <objects>
+                <viewController storyboardIdentifier="TestVariationPickerViewController" id="9Dz-4h-y38" customClass="TestVariationPickerViewController" customModule="FeatureFlags" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kKW-0V-tzU"/>
+                        <viewControllerLayoutGuide type="bottom" id="h3K-fc-xF3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vUe-94-CQk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8H-ph-HMf" customClass="UIControl">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="dismiss" destination="9Dz-4h-y38" eventType="touchUpInside" id="awn-t2-Fvu"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7b-OB-iti">
+                                <rect key="frame" x="0.0" y="502" width="375" height="37"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lF-g2-ArL">
+                                        <rect key="frame" x="320" y="0.0" width="45" height="37"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="18"/>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="dismiss" destination="9Dz-4h-y38" eventType="touchUpInside" id="S1P-KA-wmi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="3lF-g2-ArL" firstAttribute="top" secondItem="b7b-OB-iti" secondAttribute="top" id="c4S-8Q-nZq"/>
+                                    <constraint firstAttribute="bottom" secondItem="3lF-g2-ArL" secondAttribute="bottom" id="dH7-iY-E5h"/>
+                                    <constraint firstAttribute="trailing" secondItem="3lF-g2-ArL" secondAttribute="trailing" constant="10" id="mJm-fm-Ipl"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="w7N-P2-k04">
+                                <rect key="frame" x="0.0" y="539" width="375" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="g0k-ce-cQS"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" tag="10" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="picker-cell" rowHeight="216" id="62Q-lv-XIl">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="216"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="11" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="62Q-lv-XIl" id="rSp-O3-R0U">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="215.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <pickerView tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="afp-dW-tfY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="215.5"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </pickerView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="afp-dW-tfY" secondAttribute="trailing" id="AE9-bL-qzI"/>
+                                                <constraint firstItem="afp-dW-tfY" firstAttribute="top" secondItem="rSp-O3-R0U" secondAttribute="top" id="J3n-SH-Eya"/>
+                                                <constraint firstAttribute="bottom" secondItem="afp-dW-tfY" secondAttribute="bottom" id="KBK-8H-zRD"/>
+                                                <constraint firstItem="afp-dW-tfY" firstAttribute="leading" secondItem="rSp-O3-R0U" secondAttribute="leading" id="MGZ-at-BuY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="9Dz-4h-y38" id="Xqx-NJ-3Eg"/>
+                                    <outlet property="delegate" destination="9Dz-4h-y38" id="moZ-bW-Ijf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="b7b-OB-iti" firstAttribute="leading" secondItem="vUe-94-CQk" secondAttribute="leading" id="0RF-03-Elq"/>
+                            <constraint firstAttribute="trailing" secondItem="Y8H-ph-HMf" secondAttribute="trailing" id="AZw-I7-ZiW"/>
+                            <constraint firstAttribute="trailing" secondItem="b7b-OB-iti" secondAttribute="trailing" id="Mxb-F2-YSs"/>
+                            <constraint firstItem="h3K-fc-xF3" firstAttribute="top" secondItem="Y8H-ph-HMf" secondAttribute="bottom" id="TdI-dc-pbS"/>
+                            <constraint firstAttribute="trailing" secondItem="w7N-P2-k04" secondAttribute="trailing" id="Xz9-8W-z3x"/>
+                            <constraint firstItem="Y8H-ph-HMf" firstAttribute="leading" secondItem="vUe-94-CQk" secondAttribute="leading" id="aL9-k1-Dya"/>
+                            <constraint firstItem="Y8H-ph-HMf" firstAttribute="top" secondItem="vUe-94-CQk" secondAttribute="top" id="mjr-CJ-f1g"/>
+                            <constraint firstItem="h3K-fc-xF3" firstAttribute="top" secondItem="w7N-P2-k04" secondAttribute="bottom" id="nlJ-Xy-2lw"/>
+                            <constraint firstItem="w7N-P2-k04" firstAttribute="top" secondItem="b7b-OB-iti" secondAttribute="bottom" id="vua-1m-vEQ"/>
+                            <constraint firstItem="w7N-P2-k04" firstAttribute="leading" secondItem="vUe-94-CQk" secondAttribute="leading" id="wCL-lz-b5T"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeOverlay" destination="Y8H-ph-HMf" id="o5m-1x-0WL"/>
+                        <outlet property="tableView" destination="w7N-P2-k04" id="5R3-Vh-FoJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DaQ-oE-tpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1270" y="-45"/>
+        </scene>
+    </scenes>
+</document>

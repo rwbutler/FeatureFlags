@@ -1,0 +1,22 @@
+{
+  "name": "FeatureFlags",
+  "version": "0.1.0",
+  "summary": "A short description of FeatureFlags.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/rwbutler/FeatureFlags",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "rwbutler": "ross.butler@argos.co.uk"
+  },
+  "source": {
+    "git": "https://github.com/rwbutler/FeatureFlags.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "FeatureFlags/Classes/**/*"
+}

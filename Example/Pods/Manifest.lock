@@ -1,0 +1,16 @@
+PODS:
+  - FeatureFlags (0.1.0)
+
+DEPENDENCIES:
+  - FeatureFlags (from `../`)
+
+EXTERNAL SOURCES:
+  FeatureFlags:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FeatureFlags: a722e78684be789b760d2439272d450453f3d49f
+
+PODFILE CHECKSUM: 23c33b3059c2404051c249e1e4f21393161e421e
+
+COCOAPODS: 1.5.0
