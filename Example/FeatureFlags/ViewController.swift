@@ -26,6 +26,8 @@ class ViewController: UIViewController {
             print("Is in group B? -> \(test.isGroupB())")
         }
         
+        print(Feature.isEnabled(.exampleABTest))
+        
     }
 
 }

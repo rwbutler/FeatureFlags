@@ -11,12 +11,11 @@ import UIKit
 class FeatureFlagsViewController: UITableViewController {
     
     // MARK: Type definitions
-    public struct NavigationSettings {
-        let animated: Bool
-        let isNavigationBarHidden: Bool
-    }
+    public typealias Delegate = FeatureFlagsViewControllerDelegate
+    public typealias NavigationSettings = FeatureFlagsViewControllerNavigationSettings
     
     // MARK: State
+    var delegate: Delegate?
     var navigationSettings: NavigationSettings?
     
     override func viewDidLoad() {
@@ -60,16 +59,17 @@ class FeatureFlagsViewController: UITableViewController {
         
         switch feature.type {
         case .featureFlag, .featureTest(.featureFlagAB):
-            UIView.animate(withDuration: 1.0, animations: {
-                allLabels.forEach({ label in
-                    label?.textColor = UIColor.white
-                })
-                cell.contentView.backgroundColor = feature.isEnabled()
-                    ? UIColor(red: 63.0/255.0, green: 134.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-                    : UIColor(red: 189.0/255.0, green: 50.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+            allLabels.forEach({ label in
+                label?.textColor = UIColor.white
             })
+            cell.contentView.backgroundColor = feature.isEnabled()
+                ? UIColor(red: 63.0/255.0, green: 134.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+                : UIColor(red: 189.0/255.0, green: 50.0/255.0, blue: 80.0/255.0, alpha: 1.0)
         case .featureTest(.ab), .featureTest(.mvt), .deprecated:
-            break
+            allLabels.forEach({ label in
+                label?.textColor = UIColor.black
+            })
+            cell.contentView.backgroundColor = UIColor.white
         }
         featureFlagCell.featureEnabled.isHidden = true // Always hide for now
         return featureFlagCell
@@ -105,11 +105,11 @@ extension FeatureFlagsViewController {
         case .featureTest(.ab):
             if let alternateABVariant = feature.testVariations.filter({ $0 != feature.testVariation() }).first {
                 FeatureFlags.updateFeatureTestVariation(feature: feature.name, testVariation: alternateABVariant)
-                tableView.reloadData()
+                tableView.reloadRows(at: [indexPath], with: .fade)
             }
         case .featureFlag, .featureTest(.featureFlagAB):
             FeatureFlags.updateFeatureIsEnabled(feature: feature.name, isEnabled: !feature.isEnabled())
-            tableView.reloadData()
+            tableView.reloadRows(at: [indexPath], with: .fade)
         case .featureTest(.mvt):
             presentPickerViewController(on: self, with: feature)
         case .deprecated:
@@ -159,12 +159,15 @@ private extension FeatureFlagsViewController {
     }
     
     @objc func close() {
-        if let navigationController = navigationController, let settings = navigationSettings {
-            navigationController.isNavigationBarHidden = settings.isNavigationBarHidden
-            navigationController.popViewController(animated: settings.animated)
-        } else {
-            dismiss(animated: true, completion: nil)
+        if navigationSettings?.autoClose ?? true {
+            if let navigationController = navigationController, let settings = navigationSettings {
+                navigationController.isNavigationBarHidden = settings.isNavigationBarHidden
+                navigationController.popViewController(animated: settings.animated)
+            } else {
+                dismiss(animated: navigationSettings?.animated ?? false, completion: nil)
+            }
         }
+        delegate?.viewControllerDidFinish()
     }
     
     /// Retrieves the current bundle

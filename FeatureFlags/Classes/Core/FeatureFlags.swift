@@ -46,10 +46,17 @@ public struct FeatureFlags {
     public static func pushFeatureFlags(navigationController: UINavigationController, animated: Bool = false) {
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         let navigationSettings = FeatureFlagsViewController
-            .NavigationSettings(animated: animated, isNavigationBarHidden: navigationController.isNavigationBarHidden)
+            .NavigationSettings(animated: animated, autoClose: true, isNavigationBarHidden: navigationController.isNavigationBarHidden)
         featureFlagsViewController.navigationSettings = navigationSettings
         navigationController.isNavigationBarHidden = false
         navigationController.pushViewController(featureFlagsViewController, animated: animated)
+    }
+    
+    public static func pushFeatureFlags(navigationController: UINavigationController, navigationSettings: FeatureFlagsViewControllerNavigationSettings) {
+        let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
+        featureFlagsViewController.navigationSettings = navigationSettings
+        navigationController.isNavigationBarHidden = false
+        navigationController.pushViewController(featureFlagsViewController, animated: navigationSettings.animated)
     }
     
     public static func refresh(_ completion:(()-> Void)? = nil) {

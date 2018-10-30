@@ -41,7 +41,7 @@ public struct Feature {
         fatalError("A feature must always be categorizable into a test variation.")
     }
     
-    public static func isEnabled(feature featureName: Feature.Name) -> Bool {
+    public static func isEnabled(_ featureName: Feature.Name) -> Bool {
         guard let feature = named(featureName) else { return false }
         return feature.isEnabled()
     }
