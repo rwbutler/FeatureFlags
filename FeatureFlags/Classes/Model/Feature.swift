@@ -20,25 +20,13 @@ public struct Feature {
     internal var testBiases: [Percentage]
     internal let testVariations: [TestVariation]
     internal let labels: [String?]
+    internal var testVariationOverride: TestVariation?
     
     public func label(testVariation: Test.Variation) -> String? {
         guard let variationLabel = zip(testVariations, labels).first(where: { $0.0 == testVariation })?.1 else {
             return nil
         }
         return variationLabel
-    }
-    
-    public func testVariation() -> TestVariation {
-        var lowerBound = Percentage.min.rawValue
-        for variation in zip(testVariations, testBiases) {
-            let upperBound = lowerBound + variation.1.rawValue
-            let range = lowerBound..<upperBound
-            if range.contains(testVariationAssignment) {
-                return variation.0
-            }
-            lowerBound = upperBound
-        }
-        fatalError("A feature must always be categorizable into a test variation.")
     }
     
     public static func isEnabled(_ featureName: Feature.Name) -> Bool {
@@ -79,18 +67,26 @@ public struct Feature {
         return testBiasForVariation.1
     }
     
-    /// Returns whether or not updated successfully
-    @discardableResult internal mutating func setTestVariation(_ testVariation: Test.Variation) -> Bool {
+    public func testVariation() -> TestVariation {
+        if let testVariationOverride = self.testVariationOverride {
+            return testVariationOverride
+        }
         var lowerBound = Percentage.min.rawValue
         for variation in zip(testVariations, testBiases) {
             let upperBound = lowerBound + variation.1.rawValue
-            if variation.0 == testVariation {
-                testVariationAssignment = lowerBound
-                return true
+            let range = lowerBound..<upperBound
+            if range.contains(testVariationAssignment) {
+                return variation.0
             }
             lowerBound = upperBound
         }
-        return false
+        fatalError("A feature must always be categorizable into a test variation.")
+    }
+    
+    /// Returns whether or not updated successfully
+    @discardableResult internal mutating func setTestVariation(_ testVariation: Test.Variation) -> Bool {
+        testVariationOverride = testVariation
+        return true
     }
 }
 
