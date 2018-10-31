@@ -120,8 +120,15 @@ extension FeatureFlagsViewController {
 
 private extension FeatureFlagsViewController {
     private func configureNavigationBar() {
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
-        navigationItem.leftBarButtonItem = doneButton
+        let closeButtonType = navigationSettings?.closeButton ?? .done
+        let doneButton = UIBarButtonItem(barButtonSystemItem: closeButtonType, target: self, action: #selector(close))
+        let closeButtonAlignment = navigationSettings?.closeButtonAlignment ?? .left
+        switch closeButtonAlignment {
+        case .left:
+            navigationItem.leftBarButtonItem = doneButton
+        case .right:
+            navigationItem.rightBarButtonItem = doneButton
+        }
     }
     
     private func configureTableView() {

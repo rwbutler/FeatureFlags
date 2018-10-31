@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        FeatureFlags.pushFeatureFlags(navigationController: navigationController, animated: false)
+        let navigationSettings = FeatureFlagsViewControllerNavigationSettings(autoClose: true, closeButtonAlignment: .left, closeButton: .done, isNavigationBarHidden: false)
+        FeatureFlags.pushFeatureFlags(navigationController: navigationController, navigationSettings: navigationSettings)
         return true
     }
 

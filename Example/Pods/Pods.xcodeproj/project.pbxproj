@@ -31,6 +31,7 @@
 		135FF82F218214BF00F430C4 /* ParsingServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF823218214BF00F430C4 /* ParsingServiceResult.swift */; };
 		1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */; };
 		1389AE652188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */; };
+		13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */; };
 		1FD713615BDF74D9B2EE769255074C13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		2F4DE5AB3E0F07F628BBE3F6FC3BAB77 /* FeatureFlags-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 938636CB5BC770CC83F3A2AF56F939ED /* FeatureFlags-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5DB8B4F2FC907773A4ED7A682E2BFC35 /* Pods-FeatureFlags_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE802B3080D5514EB764C0739F7168C9 /* Pods-FeatureFlags_Tests-dummy.m */; };
@@ -86,6 +87,7 @@
 		135FF823218214BF00F430C4 /* ParsingServiceResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingServiceResult.swift; sourceTree = "<group>"; };
 		1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerNavigationSettings.swift; sourceTree = "<group>"; };
+		13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerCloseButtonAlignment.swift; sourceTree = "<group>"; };
 		14877BE95EDD6695AAA45510BDA5099E /* FeatureFlags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FeatureFlags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		283DD01CF54326970BDF4106EE4F114B /* Pods-FeatureFlags_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-FeatureFlags_Tests-umbrella.h"; sourceTree = "<group>"; };
 		28A8BD20CE65658510927664523C5A0D /* Pods-FeatureFlags_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-FeatureFlags_Tests.modulemap"; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				135FF817218214BF00F430C4 /* FeatureFlagsViewController.swift */,
 				1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */,
 				1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */,
+				13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				1336532D2178E98C00E41564 /* FeatureName.swift in Sources */,
 				13365349217DFF3500E41564 /* Test.swift in Sources */,
 				135FF82E218214BF00F430C4 /* JSONParsingService.swift in Sources */,
+				13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */,
 				133653282178E98C00E41564 /* Percentage.swift in Sources */,
 				135FF82D218214BF00F430C4 /* PropertyListParsingService.swift in Sources */,
 				1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */,
