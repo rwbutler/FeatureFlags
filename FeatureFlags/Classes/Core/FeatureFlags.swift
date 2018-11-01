@@ -75,12 +75,16 @@ public struct FeatureFlags {
         navigationController.pushViewController(featureFlagsViewController, animated: navigationSettings.animated)
     }
     
-    public static func refresh(_ completion:(()-> Void)? = nil) {
+    @discardableResult
+    public static func refresh(_ completion:(()-> Void)? = nil) -> ParsingServiceResult? {
         configuration = loadConfiguration(completion)
+        return configuration
     }
     
-    public static func refreshWithData(_ data: Data, completion:(()-> Void)? = nil) {
+    @discardableResult
+    public static func refreshWithData(_ data: Data, completion:(()-> Void)? = nil) -> ParsingServiceResult? {
         configuration = loadConfigurationWithData(data, completion: completion)
+        return configuration
     }
     
     /// Transient update - will not be persisted

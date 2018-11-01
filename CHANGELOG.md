@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - 2018-11-01
+### Changed
+- Fixed a bug which resulted in a crash on swiping to delete a feature which existed in the remote data source and not solely in the cache.
+
 ## [0.0.9] - 2018-11-01
 ### Added
 - A local configuration may now be specified as a fallback allowing features to be added locally which are not present in the remote configuration.
