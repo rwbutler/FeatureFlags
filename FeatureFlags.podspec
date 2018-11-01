@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'FeatureFlags'
-  s.version          = '0.0.7'
+  s.version          = '0.0.8'
   s.swift_version    = '4.2'
   s.summary          = 'Feature flags, A/B and MVT testing for iOS'
   s.description      = <<-DESC

@@ -66,6 +66,10 @@ public struct FeatureFlags {
         configuration = loadConfiguration(completion)
     }
     
+    public static func refreshWithData(_ data: Data, completion:(()-> Void)? = nil) {
+        configuration = loadConfigurationWithData(data, completion: completion)
+    }
+    
     /// Transient update - will not be persisted
     public static func updateFeatureIsEnabled(feature named: Feature.Name, isEnabled: Bool) {
         guard var updatedConfiguration = configuration, var feature = Feature.named(named) else { return }
@@ -114,19 +118,49 @@ internal extension FeatureFlags {
         return Bundle.main.url(forResource: configurationName, withExtension: configType.rawValue)
     }
     
+    static func loadConfigurationWithData(_ data: Data?, completion:(()-> Void)? = nil) -> ParsingServiceResult? {
+        // Load cached configuration, if exists
+        var cachedResult: ParsingServiceResult?
+        if let cachedConfigurationURL = cachedConfigurationURL,
+            let cachedData = try? Data(contentsOf: cachedConfigurationURL) {
+            cachedResult = parseConfiguration(data: cachedData)
+        }
+        
+        // Load remote data
+        if let remoteData = data,
+            let remoteResult = parseConfiguration(data: remoteData) {
+            if let storedResult = cachedResult {
+                
+                // Update remote feature flag data with existing test variation assignments
+                let updatedRemoteResult = updateWithTestVariationAssignments(remoteResult, storedResult: storedResult)
+                cacheConfiguration(updatedRemoteResult) // cache merged result
+                completion?()
+                return updatedRemoteResult
+            } else {
+                cacheConfiguration(remoteResult)
+                completion?()
+                return remoteResult
+            }
+        } else if let storedResult = cachedResult {
+            completion?()
+            return storedResult
+        } else if let bundledConfigurationURL = bundledConfigurationURL(),
+            let bundledData = try? Data(contentsOf: bundledConfigurationURL) {
+            let bundledResult = parseConfiguration(data: bundledData)
+            completion?()
+            return bundledResult
+        }
+        completion?()
+        return nil
+    }
+    
     static func loadConfiguration(_ completion:(()-> Void)? = nil) -> ParsingServiceResult? {
         
         // Load cached configuration, if exists
         var cachedResult: ParsingServiceResult?
-        if let cachedConfigurationURL = cachedConfigurationURL {
-            do {
-                
-                let cachedData = try Data(contentsOf: cachedConfigurationURL)
+        if let cachedConfigurationURL = cachedConfigurationURL,
+            let cachedData = try? Data(contentsOf: cachedConfigurationURL) {
                 cachedResult = parseConfiguration(data: cachedData)
-            } catch let e {
-                print(e)
-            }
-            
         }
         
         // Load remote data
