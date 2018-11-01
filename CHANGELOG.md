@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.9] - 2018-11-01
+### Added
+- A local configuration may now be specified as a fallback allowing features to be added locally which are not present in the remote configuration.
+- Swipe to delete features from cache using FeatureFlagsViewController.
+
 ## [0.0.8] - 2018-11-01
 ### Changed
 - Made it possible to refresh configuration by passing data to be parsed directly into the refreshData(:completion:) method.

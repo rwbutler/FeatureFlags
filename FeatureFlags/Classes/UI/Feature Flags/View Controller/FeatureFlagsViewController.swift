@@ -75,6 +75,19 @@ class FeatureFlagsViewController: UITableViewController {
         return featureFlagCell
     }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard var features = FeatureFlags.configuration, indexPath.row < features.count else {
+                return
+            }
+            features = sortedFeatures(features)
+            let feature = features[indexPath.row]
+            FeatureFlags.deleteFeatureFromCache(named: feature.name)
+            FeatureFlags.refresh()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
     private func sortedFeatures(_ features: [Feature]) -> [Feature] {
         var mutableFeatures = features
         mutableFeatures.sort(by: { (lhs, rhs) -> Bool in

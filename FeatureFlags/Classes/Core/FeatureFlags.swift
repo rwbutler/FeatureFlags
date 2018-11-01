@@ -33,6 +33,19 @@ public struct FeatureFlags {
         return .json // default
     }()
     
+    static func deleteFeatureFromCache(named name: Feature.Name) {
+        // Load cached configuration, if exists
+        if let cachedConfigurationURL = cachedConfigurationURL,
+            let cachedData = try? Data(contentsOf: cachedConfigurationURL),
+            var cachedResult = parseConfiguration(data: cachedData) {
+            cachedResult = cachedResult.filter({ $0.name != name })
+            cacheConfiguration(cachedResult)
+        }
+    }
+    
+    /// Where using a remote URL, a local fallback file may be specified
+    public static var localFallbackConfigurationURL: URL?
+    
     /// Presents FeatureFlagsViewController modally
     public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil) {
         guard let presenter = UIApplication.shared.keyWindow?.rootViewController else { return }
@@ -96,7 +109,7 @@ public struct FeatureFlags {
             self.configuration = updatedConfiguration
         }
     }
-
+    
 }
 
 internal extension FeatureFlags {
@@ -129,18 +142,20 @@ internal extension FeatureFlags {
         // Load remote data
         if let remoteData = data,
             let remoteResult = parseConfiguration(data: remoteData) {
-            if let storedResult = cachedResult {
-                
-                // Update remote feature flag data with existing test variation assignments
-                let updatedRemoteResult = updateWithTestVariationAssignments(remoteResult, storedResult: storedResult)
-                cacheConfiguration(updatedRemoteResult) // cache merged result
-                completion?()
-                return updatedRemoteResult
+            // If fallback URL is set - fallback to local config file
+            let localFallbackResult: ParsingServiceResult?
+            if let localFallbackURL = localFallbackConfigurationURL,
+                let localFallbackData = try? Data(contentsOf: localFallbackURL) {
+                localFallbackResult = parseConfiguration(data: localFallbackData)
             } else {
-                cacheConfiguration(remoteResult)
-                completion?()
-                return remoteResult
+                localFallbackResult = nil
             }
+            
+            // Update remote feature flag data with existing test variation assignments
+            let updatedRemoteResult = updateWithTestVariationAssignments(remoteResult, storedResult: cachedResult, localFallbackResult: localFallbackResult)
+            cacheConfiguration(updatedRemoteResult) // cache merged result
+            completion?()
+            return updatedRemoteResult
         } else if let storedResult = cachedResult {
             completion?()
             return storedResult
@@ -160,25 +175,27 @@ internal extension FeatureFlags {
         var cachedResult: ParsingServiceResult?
         if let cachedConfigurationURL = cachedConfigurationURL,
             let cachedData = try? Data(contentsOf: cachedConfigurationURL) {
-                cachedResult = parseConfiguration(data: cachedData)
+            cachedResult = parseConfiguration(data: cachedData)
         }
         
         // Load remote data
         if let configurationURL = configurationURL,
             let data = try? Data(contentsOf: configurationURL),
             let remoteResult = parseConfiguration(data: data) {
-            if let storedResult = cachedResult {
-                
-                // Update remote feature flag data with existing test variation assignments
-                let updatedRemoteResult = updateWithTestVariationAssignments(remoteResult, storedResult: storedResult)
-                cacheConfiguration(updatedRemoteResult) // cache merged result
-                completion?()
-                return updatedRemoteResult
+            // If fallback URL is set - fallback to local config file
+            let localFallbackResult: ParsingServiceResult?
+            if let localFallbackURL = localFallbackConfigurationURL,
+                let localFallbackData = try? Data(contentsOf: localFallbackURL) {
+                localFallbackResult = parseConfiguration(data: localFallbackData)
             } else {
-                cacheConfiguration(remoteResult)
-                completion?()
-                return remoteResult
+                localFallbackResult = nil
             }
+            
+            // Update remote feature flag data with existing test variation assignments
+            let updatedRemoteResult = updateWithTestVariationAssignments(remoteResult, storedResult: cachedResult, localFallbackResult: localFallbackResult)
+            cacheConfiguration(updatedRemoteResult) // cache merged result
+            completion?()
+            return updatedRemoteResult
         } else if let storedResult = cachedResult {
             completion?()
             return storedResult
@@ -197,28 +214,40 @@ internal extension FeatureFlags {
         guard let data = try? encoder.encode(result),
             let cachedConfigurationURL = cachedConfigurationURL else { return }
         do {
-        try data.write(to: cachedConfigurationURL)
+            try data.write(to: cachedConfigurationURL)
         } catch let e {
             print(e)
         }
     }
     
-    private static func updateWithTestVariationAssignments(_ remoteResult: ParsingServiceResult, storedResult: ParsingServiceResult) -> ParsingServiceResult {
+    private static func updateWithTestVariationAssignments(_ remoteResult: ParsingServiceResult, storedResult: ParsingServiceResult?, localFallbackResult: ParsingServiceResult? = nil) -> ParsingServiceResult {
         var mergedResult: ParsingServiceResult = []
         for remoteFeature in remoteResult {
             var updatedRemoteFeature = remoteFeature
-            if let storedFeature = storedResult.first(where: { $0.name == remoteFeature.name }) {
+            if let storedFeature = storedResult?.first(where: { $0.name == remoteFeature.name }) {
                 updatedRemoteFeature.testVariationAssignment = storedFeature.testVariationAssignment
             }
             mergedResult.append(updatedRemoteFeature)
         }
         // Add in any features not defined remotely
-        let localOnlyFeatures = storedResult.filter({ storedFeature in
-            return !remoteResult.contains(where: { remoteFeature in
-                storedFeature.name == remoteFeature.name
+        if let stored = storedResult {
+            let localOnlyFeatures = stored.filter({ storedFeature in
+                return !mergedResult.contains(where: { remoteFeature in
+                    storedFeature.name == remoteFeature.name
+                })
             })
-        })
-        mergedResult.append(contentsOf: localOnlyFeatures)
+            mergedResult.append(contentsOf: localOnlyFeatures)
+        }
+        
+        if let localFallback = localFallbackResult {
+            let fallbackOnlyFeatures = localFallback.filter({ fallbackFeature in
+                return !mergedResult.contains(where: { mergedFeature in
+                    fallbackFeature.name == mergedFeature.name
+                })
+            })
+            mergedResult.append(contentsOf: fallbackOnlyFeatures)
+        }
+        
         return mergedResult
     }
     
