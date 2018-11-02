@@ -22,7 +22,7 @@ public struct Feature {
     internal let labels: [String?]
     internal var testVariationOverride: TestVariation?
     
-    public func label(testVariation: Test.Variation) -> String? {
+    public func label(_ testVariation: Test.Variation) -> String? {
         guard let variationLabel = zip(testVariations, labels).first(where: { $0.0 == testVariation })?.1,
             enabled else {
             return nil
