@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name             = 'FeatureFlags'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.swift_version    = '4.2'
-  s.summary          = 'Feature flags, A/B and MVT testing for iOS'
+  s.summary          = 'Feature flags, A/B testing and MVT for iOS'
   s.description      = <<-DESC
-Allows developers to configure feature flags, run multiple A/B or MVT tests using a bundled or remotely-hosted JSON configuration file.
+FeatureFlags makes it easy to configure feature flags, A/B and MVT tests via a JSON file which may be bundled with your app or hosted remotely. For remotely-hosted configuration files, you may enable / disable features without another release to the App Store, update the percentages of users in A/B test groups or even roll out a feature previously under A/B test to 100% of your users once you have decided that the feature is ready for prime time.
                        DESC
   s.homepage         = 'https://github.com/rwbutler/FeatureFlags'
   s.screenshots     = 'https://raw.githubusercontent.com/rwbutler/FeatureFlags/master/docs/images/feature-flags-view-controller.png', 'https://raw.githubusercontent.com/rwbutler/FeatureFlags/master/docs/images/feature-details-view-controller.png'
