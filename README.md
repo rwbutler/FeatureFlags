@@ -29,7 +29,7 @@ FeatureFlags makes it easy to configure feature flags, A/B and MVT tests via a J
 	- [Frameworks](#frameworks)
 	- [Tools](#tools)
 
-To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/master/docs/presentations/feature-flags.pdf) or make use of table of contents below:
+To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/master/docs/presentations/feature-flags.pdf) or make use of the table of contents below:
 
 ## Features
 
@@ -86,7 +86,7 @@ From the macOS Terminal run `carthage update --platform iOS` to build the framew
 For more information [see here](https://github.com/Carthage/Carthage#quick-start).
 
 ## Usage
-With the framework integrated into your project, the next step is configuration with a JSON file which may be bundled as part of your app or hosted remotely. The JSON file may be newly-created or could an existing configuration JSON file that you're using already. Simply add a key called `features` at the top level of your file mapping to an array of features as follows:
+With the framework integrated into your project, the next step is configuration using a JSON file which may be bundled as part of your app or hosted remotely. The JSON file may be newly-created or could be an existing configuration JSON file that you're using already. Simply add a key called `features` at the top level of your file mapping to an array of features as follows:
 
 ```
 {
@@ -132,7 +132,7 @@ In order to configure a feature flag add a feature object to the features array 
 }
 ```
 
-Then add an extension on Feature.Name to import your feature flag in code as follows:
+Then add an extension on `Feature.Name` to import your feature flag in code as follows:
 
 ```
 import FeatureFlags
@@ -179,7 +179,7 @@ extension Feature.Name {
 }
 ```
 
-And then using the following to check which group the user has been assigned to:
+And then use the following to check which group the user has been assigned to:
 
 ```
 if let test = ABTest(rawValue: .exampleABTest) {
@@ -202,7 +202,7 @@ if let feature = Feature.named(.exampleABTest) {
 
 ### Feature A/B Tests
 
-A feature A/B test is a subtle variation on (and subtype of) A/B test. In a generic A/B test you may want to check whether a user has been placed in the blue background or red background test variation. A feature A/B test specifically tests whether the introduction of a new feature is an improvement over a control group without the feature. Thus in a feature A/B test - the feature is either off or on.
+A feature A/B test is a subtle variation on (and subtype of) an A/B test. In a generic A/B test you may want to check whether a user has been placed in the blue background or red background test variation. A feature A/B test specifically tests whether the introduction of a new feature is an improvement over a control group without the feature. Thus in a feature A/B test - the feature is either off or on.
 
 To configure a feature A/B test use the following JSON:
 
@@ -218,9 +218,9 @@ extension Feature.Name {
 }
 ```
 
-By naming the test variations `Enabled` and `Disabled`, FeatureFlags knows that you configure to set up a feature A/B test.
+By naming the test variations `Enabled` and `Disabled`, FeatureFlags knows that your intention is to set up a feature A/B test.
 
-Configuring a feature A/B test has the advantage over a generic A/B test in that instead of having to write (which will work if you choose to use this method):
+Configuring a feature A/B test has the advantage over a generic A/B test in that instead of having to write:
 
 ```
 if let feature = Feature.named(.exampleFeatureABTest) {
@@ -231,13 +231,13 @@ if let feature = Feature.named(.exampleFeatureABTest) {
 }
 ```
 
-You may simply use the following to determine which test group the user has been assigned:
+You may simply use the following to determine which test group the user has been assigned to:
 
 ```
 Feature.isEnabled(.exampleFeatureABTest))
 ```
 
-Ordinarily using the `Feature.enabled()` method tests to see whether a feature is globally enabled, in this specific instance it will return `true` if the user belongs to the group receiving the new feature and `false` if the user belongs to the control group. Note that this method also return `false` if the `enabled` property is set to `false` in the JSON for this feature i.e. the test is globally disabled.
+Ordinarily using the `Feature.enabled()` method tests to see whether a feature is globally enabled; in this specific instance it will return `true` if the user belongs to the group receiving the new feature and `false` if the user belongs to the control group. Note that this method also return `false` if the `enabled` property is set to `false` in the JSON for this feature i.e. the test is globally disabled.
 
 ### Multivariate (MVT) Tests
 
@@ -281,7 +281,7 @@ You are free to name your test variations whatever you wish:
 }
 ```
 
-Simply create an extension on Test.Variation to map your test variations in code:
+Simply create an extension on `Test.Variation` to map your test variations in code:
 
 ```
 extension Test.Variation {
@@ -291,7 +291,7 @@ extension Test.Variation {
 }
 ```
 
-Then check which group the user has been assigned:
+Then check which group the user has been assigned to:
 
 ```
 if let feature = Feature.named(.exampleMVTTest) {
@@ -320,10 +320,10 @@ It is possible to configure a test bias such that the likelihood of being assign
 }
 ```
 
-The number of weightings specified in the `test-biases` array must be equal to the number of test variations and must amount to 100 otherwise the weighting will be ignored and default to equal weightings.
+The number of weightings specified in the `test-biases` array must be equal to the number of test variations and must amount to 100 otherwise the weightings will be ignored and default to equal weightings.
 
 ### Labels
-It is possible to attach labels to test variations in case you wish to send analytics respective to the test variation a user has been assigned.
+It is possible to attach labels to test variations in case you wish to send analytics respective to the test group to which a user has been assigned.
 
 To do so, define an array of `labels` of equal length to the number of test variations specified:
 
@@ -350,13 +350,11 @@ if let feature = Feature.named(.exampleABTest) {
 
 ### Rolling Out Features
 
-The most powerful feature of the FeatureFlags framework is the ability to adjust the test biases in your remote JSON configuration file and have the users automatically be re-assigned to new test groups / variations e.g. you might decide to roll out a feature using a 10%/90% (whereby 10% of users receive the new feature) split in the first week, 20%/80% in the second week and so on. 
+The most powerful feature of the FeatureFlags framework is the ability to adjust the test biases in your remote JSON configuration file and have the users automatically be re-assigned to new test groups. For example, you might decide to roll out a feature using a 10%/90% (whereby 10% of users receive the new feature) split in the first week, 20%/80% in the second week and so on. 
 
 Simply update the weightings in the `test-biases` array and the next time the framework checks your JSON configuration, groups will be re-assigned.
 
-When you are done A/B or MVT testing a feature you will have gathered enough analytics to decide whether or not to roll out the feature to your entire user base. At this point, you may decide to disable the feature entirely by setting the `enabled` flag to `false` in your JSON file. 
-
-In the case of a successful test, you may decide to roll out the feature to all users by adjusting the feature object in your JSON file from:
+When you are done A/B or MVT testing a feature you will have gathered enough analytics to decide whether or not to roll out the feature to your entire user base. At this point, you may decide to disable the feature entirely by setting the `enabled` flag to `false` in your JSON file or in the case of a successful test, you may decide to roll out the feature to all users by adjusting the feature object in your JSON file from:
 
 ```
 {
@@ -402,7 +400,7 @@ Should you need further information on the state of each feature flag / test, yo
 
 ### Refreshing Configuration
 
-Should you need to refresh your configuration at any time you may call `FeatureFlags.refresh()` which optionally accepts a completion closure to be notified when the refresh is complete.
+Should you need to refresh your configuration at any time you may call `FeatureFlags.refresh()` which optionally accepts a completion closure to notify you when the refresh is complete.
 
 If you have opted to include your feature flag information as part of an existing JSON file which your app has already fetched you may wish to use the following method passing the JSON file data to avoid repeated network calls:
 
