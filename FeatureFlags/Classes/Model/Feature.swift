@@ -23,7 +23,8 @@ public struct Feature {
     internal var testVariationOverride: TestVariation?
     
     public func label(testVariation: Test.Variation) -> String? {
-        guard let variationLabel = zip(testVariations, labels).first(where: { $0.0 == testVariation })?.1 else {
+        guard let variationLabel = zip(testVariations, labels).first(where: { $0.0 == testVariation })?.1,
+            enabled else {
             return nil
         }
         return variationLabel
@@ -35,6 +36,7 @@ public struct Feature {
     }
     
     public func isTestVariation(_ variation: TestVariation) -> Bool {
+        guard enabled else { return variation == .disabled }
         return testVariation() == variation
     }
     
@@ -58,6 +60,7 @@ public struct Feature {
     }
     
     func testBias(_ testVariation: Test.Variation) -> Percentage {
+        guard enabled else { return Percentage.min }
         guard let testBiasForVariation = zip(testVariations, testBiases).first(where: { pair in
             let currentTestVariation = pair.0
             return currentTestVariation == testVariation
@@ -68,6 +71,7 @@ public struct Feature {
     }
     
     public func testVariation() -> TestVariation {
+        guard enabled else { return .disabled }
         if let testVariationOverride = self.testVariationOverride {
             return testVariationOverride
         }

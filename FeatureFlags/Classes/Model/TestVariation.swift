@@ -12,6 +12,12 @@ public struct TestVariation: RawRepresentable {
     // MARK: Global state
     public static let enabled = Test.Variation(rawValue: "Enabled")
     public static let disabled = Test.Variation(rawValue: "Disabled")
+    public static let a = Test.Variation(rawValue: "A")
+    public static let b = Test.Variation(rawValue: "B")
+    public static let c = Test.Variation(rawValue: "C")
+    public static let d = Test.Variation(rawValue: "D")
+    public static let e = Test.Variation(rawValue: "E")
+    public static let f = Test.Variation(rawValue: "F")
     
     private let name: RawValue
     public typealias RawValue = String
