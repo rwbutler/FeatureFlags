@@ -29,7 +29,7 @@ FeatureFlags makes it easy to configure feature flags, A/B and MVT tests via a J
 	- [Frameworks](#frameworks)
 	- [Tools](#tools)
 
-To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/master/docs/presentations/feature-flags.pdf) or make use of the table of contents below:
+To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/master/docs/presentations/feature-flags.pdf), check out the [blog post](https://medium.com/@rwbutler/feature-flags-a-b-testing-mvt-on-ios-718339ac7aa1), or make use of the table of contents below:
 
 ## Features
 
