@@ -47,31 +47,43 @@ public struct FeatureFlags {
     public static var localFallbackConfigurationURL: URL?
     
     /// Presents FeatureFlagsViewController modally
-    public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil) {
+    public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil, animated: Bool = false, shouldRefresh: Bool = true) {
         guard let presenter = UIApplication.shared.keyWindow?.rootViewController else { return }
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.modalPresentationStyle = .overCurrentContext
         let navigationController = UINavigationController(rootViewController: featureFlagsViewController)
-        presenter.present(navigationController, animated: true, completion: nil)
+        let navigationSettings = FeatureFlagsViewController
+            .NavigationSettings(animated: animated, autoClose: true, isNavigationBarHidden: navigationController.isNavigationBarHidden)
+        featureFlagsViewController.navigationSettings = navigationSettings
+        if shouldRefresh {
+            FeatureFlags.refresh()
+        }
+        presenter.present(navigationController, animated: animated, completion: nil)
     }
     
     /// Allows FeatureFlagsViewController to be pushed onto a navigation stack
-    public static func pushFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil, navigationController: UINavigationController, animated: Bool = false) {
+    public static func pushFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil, navigationController: UINavigationController, animated: Bool = false, shouldRefresh: Bool = true) {
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         let navigationSettings = FeatureFlagsViewController
             .NavigationSettings(animated: animated, autoClose: true, isNavigationBarHidden: navigationController.isNavigationBarHidden)
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.navigationSettings = navigationSettings
         navigationController.isNavigationBarHidden = false
+        if shouldRefresh {
+            FeatureFlags.refresh()
+        }
         navigationController.pushViewController(featureFlagsViewController, animated: animated)
     }
     
-    public static func pushFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil,  navigationController: UINavigationController, navigationSettings: FeatureFlagsViewControllerNavigationSettings) {
+    public static func pushFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil,  navigationController: UINavigationController, navigationSettings: FeatureFlagsViewControllerNavigationSettings, shouldRefresh: Bool = true) {
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.navigationSettings = navigationSettings
         navigationController.isNavigationBarHidden = false
+        if shouldRefresh {
+            FeatureFlags.refresh()
+        }
         navigationController.pushViewController(featureFlagsViewController, animated: navigationSettings.animated)
     }
     

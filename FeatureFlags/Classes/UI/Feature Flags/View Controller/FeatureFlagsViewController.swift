@@ -18,16 +18,6 @@ class FeatureFlagsViewController: UITableViewController {
     var delegate: Delegate?
     var navigationSettings: NavigationSettings?
     
-    override init(style: UITableView.Style) {
-        super.init(style: style)
-        FeatureFlags.refresh()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        FeatureFlags.refresh()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Feature Flags"
