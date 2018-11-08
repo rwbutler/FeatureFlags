@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2018-11-08
+### Added
+- Support for checking whether a feature is enabled in Objective-C using FEATURE_IS_ENABLED macro.
+
 ## [1.0.2] - 2018-11-06
 ### Added
 - Made it possible to configure whether feature flag data is refreshed prior to displaying FeatureFlagsViewController.
