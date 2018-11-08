@@ -181,12 +181,21 @@ private extension FeatureFlagsViewController {
     }
     
     @objc func close() {
-        if navigationSettings?.autoClose ?? true {
-            if let navigationController = navigationController, let settings = navigationSettings {
-                navigationController.isNavigationBarHidden = settings.isNavigationBarHidden
-                navigationController.popViewController(animated: settings.animated)
+        let shouldClose: Bool = navigationSettings?.autoClose ?? true // default to auto-close
+        
+        if shouldClose {
+
+            let isAnimated: Bool = navigationSettings?.animated ?? true
+            let isModal: Bool = navigationSettings?.isModal ?? (navigationController == nil)
+            let isNavigationBarHidden: Bool? = navigationSettings?.isNavigationBarHidden
+            
+            if isModal {
+                dismiss(animated: isAnimated, completion: nil)
             } else {
-                dismiss(animated: navigationSettings?.animated ?? false, completion: nil)
+                if let isNavigationBarHidden = isNavigationBarHidden {
+                    navigationController?.isNavigationBarHidden = isNavigationBarHidden
+                }
+                navigationController?.popViewController(animated: isAnimated)
             }
         }
         delegate?.viewControllerDidFinish()
