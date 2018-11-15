@@ -8,6 +8,8 @@
 
 FeatureFlags makes it easy to configure feature flags, A/B and MVT tests via a JSON file which may be bundled with your app or hosted remotely. For remotely-hosted configuration files, you may enable / disable features without another release to the App Store, update the percentages of users in A/B test groups or even roll out a feature previously under A/B test to 100% of your users once you have decided that the feature is ready for prime time. 
 
+To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/master/docs/presentations/feature-flags.pdf), check out the [blog post](https://medium.com/@rwbutler/feature-flags-a-b-testing-mvt-on-ios-718339ac7aa1), or make use of the table of contents below:
+
 - [Features](#features)
 - [Installation](#installation)
 	- [Cocoapods](#cocoapods)
@@ -28,8 +30,6 @@ FeatureFlags makes it easy to configure feature flags, A/B and MVT tests via a J
 - [Additional Software](#additional-software)
 	- [Frameworks](#frameworks)
 	- [Tools](#tools)
-
-To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/master/docs/presentations/feature-flags.pdf), check out the [blog post](https://medium.com/@rwbutler/feature-flags-a-b-testing-mvt-on-ios-718339ac7aa1), or make use of the table of contents below:
 
 ## Features
 
