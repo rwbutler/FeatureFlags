@@ -65,13 +65,16 @@ class FeatureFlagsViewController: UITableViewController {
             cell.contentView.backgroundColor = feature.isEnabled()
                 ? UIColor(red: 63.0/255.0, green: 134.0/255.0, blue: 80.0/255.0, alpha: 1.0)
                 : UIColor(red: 189.0/255.0, green: 50.0/255.0, blue: 80.0/255.0, alpha: 1.0)
+            featureFlagCell.isDevelopment.tintColor = UIColor.white
         case .featureTest(.ab), .featureTest(.mvt), .deprecated:
             allLabels.forEach({ label in
                 label?.textColor = UIColor.black
             })
             cell.contentView.backgroundColor = UIColor.white
+            featureFlagCell.isDevelopment.tintColor = UIColor.gray
         }
         featureFlagCell.featureEnabled.isHidden = true // Always hide for now
+        featureFlagCell.isDevelopment.isHidden = !feature.isDevelopment
         return featureFlagCell
     }
     

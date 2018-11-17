@@ -16,6 +16,7 @@ public struct Feature {
     public let name: Name
     internal var enabled: Bool
     public let type: FeatureType
+    internal var isDevelopment: Bool
     internal var testVariationAssignment: Double
     internal var testBiases: [Percentage]
     internal let testVariations: [TestVariation]
@@ -30,9 +31,9 @@ public struct Feature {
         return variationLabel
     }
     
-    public static func isEnabled(_ featureName: Feature.Name) -> Bool {
+    public static func isEnabled(_ featureName: Feature.Name, isDevelopment: Bool = false) -> Bool {
         guard let feature = named(featureName) else { return false }
-        return feature.isEnabled()
+        return feature.isEnabled(isDevelopment: isDevelopment)
     }
     
     public func isTestVariation(_ variation: TestVariation) -> Bool {
@@ -45,11 +46,19 @@ public struct Feature {
         return feature.isTestVariation(variation)
     }
     
-    public func isEnabled() -> Bool {
+    public func isEnabled(isDevelopment: Bool = false) -> Bool {
         switch type {
         case .featureTest(.featureFlagAB):
             return testVariation().rawValue == "Enabled" ? true : false
         default:
+            guard !isDevelopment && !self.isDevelopment else {
+                #if DEBUG
+                return enabled
+                #else
+                guard FeatureFlags.isDevelopment else { return false }
+                return enabled
+                #endif
+            }
             return enabled
         }
     }
@@ -97,6 +106,7 @@ public struct Feature {
 extension Feature: Codable {
     enum CodingKeys: String, CodingKey {
         case name
+        case isDevelopment = "development"
         case isEnabled = "enabled"
         case type
         case testBiases = "test-biases"
@@ -109,6 +119,7 @@ extension Feature: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(FeatureName.self, forKey: .name)
         let isEnabled = try container.decodeIfPresent(Bool.self, forKey: .isEnabled)
+        let isDevelopment = try container.decodeIfPresent(Bool.self, forKey: .isDevelopment)
         let testBiases = try container.decodeIfPresent([Percentage].self, forKey: .testBiases)
         self.testVariationAssignment = try container.decodeIfPresent(Double.self, forKey: .testVariationAssignment)
             ?? drand48() * 100
@@ -116,16 +127,19 @@ extension Feature: Codable {
         let defaultTestVariations = [TestVariation(rawValue: "Enabled"), TestVariation(rawValue: "Disabled")]
         if let testVariations = testVariations {
             if testVariations.isEmpty {
+                self.isDevelopment = isDevelopment ?? false
                 self.enabled = isEnabled ?? false
                 self.testVariations = defaultTestVariations
                 self.type = .featureFlag
                 self.testVariationAssignment = enabled ? 1.0 : 99.0
             } else if testVariations.count == 1, let firstVariation = testVariations.first {
                 self.enabled = isEnabled ?? false
+                self.isDevelopment = isDevelopment ?? false
                 self.testVariations = [TestVariation(rawValue: firstVariation), TestVariation(rawValue: "!\(firstVariation)")]
                 self.type = .featureFlag
             } else if testVariations.count == 2 {
                 self.enabled = isEnabled ?? true
+                self.isDevelopment = isDevelopment ?? false
                 let testVariations = testVariations.map({ TestVariation(rawValue: $0) })
                 if Feature.testVariationsContains(variationNames: ["enabled", "disabled"], in: testVariations)
                     || Feature.testVariationsContains(variationNames: ["on", "off"], in: testVariations) {
@@ -137,11 +151,13 @@ extension Feature: Codable {
                 }
             } else {
                 self.enabled = isEnabled ?? true
+                self.isDevelopment = isDevelopment ?? false
                 self.testVariations = testVariations.map({ TestVariation(rawValue: $0) })
                 self.type = .featureTest(.mvt)
             }
         } else {
             self.enabled = isEnabled ?? false
+            self.isDevelopment = isDevelopment ?? false
             self.testVariations = defaultTestVariations
             self.type = .featureFlag
             self.testVariationAssignment = enabled ? 1.0 : 99.0
@@ -176,6 +192,7 @@ extension Feature: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
+        try container.encode(isDevelopment, forKey: .isDevelopment)
         try container.encode(enabled, forKey: .isEnabled)
         try container.encode(testBiases, forKey: .testBiases)
         try container.encode(testVariationAssignment, forKey: .testVariationAssignment)

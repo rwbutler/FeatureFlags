@@ -12,8 +12,5 @@ class FeatureFlagTableViewCell: UITableViewCell {
     @IBOutlet weak var featureType: UILabel!
     @IBOutlet weak var featureEnabled: UISwitch!
     @IBOutlet weak var testVariation: UILabel!
-    
-    @IBAction func featureEnabledToggled(_ sender: UISwitch) {
-        
-    }
+    @IBOutlet weak var isDevelopment: UIImageView!
 }

@@ -43,6 +43,9 @@ public struct FeatureFlags {
         }
     }
     
+    /// Whether or not the app is running in development mode
+    public static var isDevelopment: Bool = false
+    
     /// Where using a remote URL, a local fallback file may be specified
     public static var localFallbackConfigurationURL: URL?
     
@@ -186,8 +189,17 @@ internal extension FeatureFlags {
             completion?()
             return updatedRemoteResult
         } else if let storedResult = cachedResult {
+            // Couldn't access remote configuration - merge fallback into cached result
+            let localFallbackResult: ParsingServiceResult?
+            if let localFallbackURL = localFallbackConfigurationURL,
+                let localFallbackData = try? Data(contentsOf: localFallbackURL) {
+                localFallbackResult = parseConfiguration(data: localFallbackData)
+            } else {
+                localFallbackResult = nil
+            }
+            let updatedResult = updateWithTestVariationAssignments(storedResult, storedResult: storedResult, localFallbackResult: localFallbackResult)
             completion?()
-            return storedResult
+            return updatedResult
         } else if let bundledConfigurationURL = bundledConfigurationURL(),
             let bundledData = try? Data(contentsOf: bundledConfigurationURL) {
             let bundledResult = parseConfiguration(data: bundledData)
@@ -269,6 +281,19 @@ internal extension FeatureFlags {
         }
         
         if let localFallback = localFallbackResult {
+            // Update development status of remote features from local
+            mergedResult = mergedResult.map { remoteFeature in
+                var resultFeature: Feature = remoteFeature
+                if let localFeature = localFallback.first(where: { localFeature in
+                    localFeature.name == remoteFeature.name
+                }) {
+                    if localFeature.isDevelopment {
+                        resultFeature.isDevelopment = localFeature.isDevelopment
+                    }
+                }
+                return resultFeature
+            }
+            
             let fallbackOnlyFeatures = localFallback.filter({ fallbackFeature in
                 return !mergedResult.contains(where: { mergedFeature in
                     fallbackFeature.name == mergedFeature.name

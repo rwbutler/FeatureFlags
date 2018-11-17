@@ -17,6 +17,7 @@
 		1336532D2178E98C00E41564 /* FeatureName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133653252178E98B00E41564 /* FeatureName.swift */; };
 		1336532F2179EF7500E41564 /* ConfigurationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1336532E2179EF7500E41564 /* ConfigurationType.swift */; };
 		13365349217DFF3500E41564 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13365348217DFF3500E41564 /* Test.swift */; };
+		133FDEFC21A0D30A00A157EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 133FDEFB21A0D30A00A157EA /* Images.xcassets */; };
 		135FF824218214BF00F430C4 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF80D218214BF00F430C4 /* PickerViewController.swift */; };
 		135FF825218214BF00F430C4 /* PickerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135FF80E218214BF00F430C4 /* PickerViewController.storyboard */; };
 		135FF826218214BF00F430C4 /* TestVariationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF80F218214BF00F430C4 /* TestVariationPickerViewController.swift */; };
@@ -75,6 +76,7 @@
 		133653252178E98B00E41564 /* FeatureName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureName.swift; sourceTree = "<group>"; };
 		1336532E2179EF7500E41564 /* ConfigurationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationType.swift; sourceTree = "<group>"; };
 		13365348217DFF3500E41564 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		133FDEFB21A0D30A00A157EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FeatureFlags/Assets/Images.xcassets; sourceTree = "<group>"; };
 		135FF80D218214BF00F430C4 /* PickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		135FF80E218214BF00F430C4 /* PickerViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PickerViewController.storyboard; sourceTree = "<group>"; };
 		135FF80F218214BF00F430C4 /* TestVariationPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVariationPickerViewController.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 		D795C758A7C2525B6CF8EF03DEC72CDE /* Pod */ = {
 			isa = PBXGroup;
 			children = (
+				133FDEFB21A0D30A00A157EA /* Images.xcassets */,
 				8FB8D33F69BA695585BCF4D0C19D6053 /* FeatureFlags.podspec */,
 				6B772E84EE80B5BB0B243291AFCE9E3D /* LICENSE */,
 				AAF7C73F60414FA1AD7E60DF12A65237 /* README.md */,
@@ -560,6 +563,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				133FDEFC21A0D30A00A157EA /* Images.xcassets in Resources */,
 				135FF825218214BF00F430C4 /* PickerViewController.storyboard in Resources */,
 				135FF82B218214BF00F430C4 /* FeatureFlagTableViewCell.xib in Resources */,
 			);

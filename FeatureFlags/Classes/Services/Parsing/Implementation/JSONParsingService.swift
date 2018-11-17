@@ -14,13 +14,7 @@ struct JSONParsingService: ParsingService {
             let features = jsonContainer["features"],
             let featuresData = try? JSONSerialization.data(withJSONObject: features) else {
                 let decoder = JSONDecoder()
-                do {
-                    let container = try decoder.decode([Feature].self, from: data)
-                    return container
-                } catch let e {
-                    print(e)
-                }
-                return nil
+                return try? decoder.decode([Feature].self, from: data)
         }
         let decoder = JSONDecoder()
         guard let container = try? decoder.decode([Feature].self, from: featuresData) else {

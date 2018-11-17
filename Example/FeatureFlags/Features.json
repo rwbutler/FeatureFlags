@@ -1,6 +1,7 @@
 {
     "features": [{
         "name": "Example Feature Flag",
+        "development": true,
         "enabled": false
     }, {
         "name": "Example A/B Test",
