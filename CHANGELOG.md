@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2018-11-19
+### Changed
+- Fixed an issue where if remote configuration could not be parsed, then fell back to cached configuration without making use of local fallback data in other loadConfiguration(:) method and refactored to eliminate code duplication.
+
+### Changed
 ## [1.1.0] - 2018-11-17
 ### Added
 - Support for development flags such that a feature flag can be marked such that the feature is never released unfinished even if remotely enabled later. To mark a feature as in development set the `development` property to `true` in the local fallback configuration.
