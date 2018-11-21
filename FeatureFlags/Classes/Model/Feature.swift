@@ -200,9 +200,3 @@ extension Feature: Codable {
         try container.encode(testVariations, forKey: .labels)
     }
 }
-
-extension Feature: Equatable {
-    public static func == (lhs: Feature, rhs: Feature) -> Bool {
-        return lhs.name == rhs.name
-    }
-}

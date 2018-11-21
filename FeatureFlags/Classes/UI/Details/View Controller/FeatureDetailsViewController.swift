@@ -28,14 +28,32 @@ class FeatureDetailsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let feature = self.feature else { return 0 }
-        switch feature.type {
-        case .deprecated:
-            return 0
+        return cells(for: feature.type).count
+    }
+    
+    private enum CellType {
+        case featureType
+        case enabled
+        case labels
+        case testVariations
+        case testVariationAssignment
+    }
+    
+    private func cells(for featureType: FeatureType) -> [CellType] {
+        switch featureType {
         case .featureFlag:
-            return 3
-        case .featureTest(.featureFlagAB), .featureTest(.ab), .featureTest(.mvt):
-            return 5
+            return [.featureType, .enabled, .labels]
+        case .featureTest(.ab), .featureTest(.mvt), .featureTest(.featureFlagAB):
+            return [.featureType, .enabled, .testVariations, .testVariationAssignment, .labels]
+        case .deprecated:
+            return []
         }
+    }
+    
+    private func row(for featureType: FeatureType, at row: Int) -> CellType? {
+        let detailCells = cells(for: featureType)
+        guard row < detailCells.count else { return nil }
+        return detailCells[row]
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,58 +66,59 @@ class FeatureDetailsViewController: UITableViewController {
         cell.textLabel?.font = UIFont(name: "Avenir-Light", size: 16.0)
         cell.detailTextLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
         cell.detailTextLabel?.numberOfLines = 0
-        switch indexPath.row {
-        case 0:
+        
+        guard let detailRow = row(for: feature.type, at: indexPath.row) else {
+            return cell
+        }
+        switch detailRow {
+        case .featureType:
             cell.textLabel?.text = "Feature type"
             cell.detailTextLabel?.text = feature.type.description
-        case 1:
+        case .enabled:
             let enabled = feature.isEnabled()
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = enabled ? "Enabled" : "Disabled"
-        case 2:
-            switch feature.type {
-            case .featureFlag, .deprecated:
-                cell.textLabel?.text = "Labels"
-                let labels = feature.labels.compactMap({ $0 })
-                if !labels.isEmpty {
-                    cell.detailTextLabel?.text = labels.joined(separator: ", ")
-                } else {
-                    cell.detailTextLabel?.text = "None"
-                }
-            case .featureTest(.featureFlagAB), .featureTest(.ab), .featureTest(.mvt):
-                cell.textLabel?.text = "Test variations"
-                if let feature = self.feature {
-                    let variationsStr = zip(feature.testVariations, feature.testBiases).map{ testVariation, testBias in
-                        return "\(testVariation) (\(testBias))"
-                        }.joined(separator: ", ")
-                    cell.detailTextLabel?.text = variationsStr
-                } else {
-                    cell.detailTextLabel?.text = ""
-                }
-            }
-        case 3:
-            
-            cell.textLabel?.text = "Test variation assignment"
-            if let feature = self.feature {
-                let testVariationAssignment = String(format: "%.f", feature.testVariationAssignment)
-                let assignmentStr = "\(testVariationAssignment)% -> \(feature.testVariation())"
-                cell.detailTextLabel?.text = assignmentStr
-            } else {
-                cell.detailTextLabel?.text = ""
-            }
-            
-        case 4:
-            cell.textLabel?.text = "Labels"
-            let labels = feature.labels.compactMap({ $0 })
-            if !labels.isEmpty {
-                cell.detailTextLabel?.text = labels.joined(separator: ", ")
-            } else {
-                cell.detailTextLabel?.text = "None"
-            }
-        default:
-            break
+        case .labels:
+            bindLabelsCell(cell, to: feature)
+        case .testVariations:
+            bindTestVariationCell(cell, to: feature)
+        case .testVariationAssignment:
+            bindTestVariationAssignmentCell(cell, to: feature)
         }
         return cell
+    }
+    
+    private func bindLabelsCell(_ cell: UITableViewCell, to feature: Feature) {
+        cell.textLabel?.text = "Labels"
+        let labels = feature.labels.compactMap({ $0 })
+        if !labels.isEmpty {
+            cell.detailTextLabel?.text = labels.joined(separator: ", ")
+        } else {
+            cell.detailTextLabel?.text = "None"
+        }
+    }
+    
+    private func bindTestVariationCell(_ cell: UITableViewCell, to feature: Feature) {
+        cell.textLabel?.text = "Test variations"
+        if let feature = self.feature {
+            let variationsStr = zip(feature.testVariations, feature.testBiases).map{ testVariation, testBias in
+                return "\(testVariation) (\(testBias))"
+                }.joined(separator: ", ")
+            cell.detailTextLabel?.text = variationsStr
+        } else {
+            cell.detailTextLabel?.text = ""
+        }
+    }
+    
+    private func bindTestVariationAssignmentCell(_ cell: UITableViewCell, to feature: Feature) {
+        cell.textLabel?.text = "Test variation assignment"
+        if let feature = self.feature {
+            let testVariationAssignment = String(format: "%.f", feature.testVariationAssignment)
+            let assignmentStr = "\(testVariationAssignment)% -> \(feature.testVariation())"
+            cell.detailTextLabel?.text = assignmentStr
+        } else {
+            cell.detailTextLabel?.text = ""
+        }
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {

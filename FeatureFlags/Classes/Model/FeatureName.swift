@@ -20,12 +20,6 @@ public struct FeatureName: RawRepresentable {
     }
 }
 
-extension FeatureName: Equatable {
-    public static func == (lhs: FeatureName, rhs: FeatureName) -> Bool {
-        return lhs.rawValue == rhs.rawValue
-    }
-}
-
 extension FeatureName: Codable {
     enum CodingKeys: String, CodingKey {
         case name

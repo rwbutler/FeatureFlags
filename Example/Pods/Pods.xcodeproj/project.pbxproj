@@ -32,6 +32,8 @@
 		135FF82F218214BF00F430C4 /* ParsingServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF823218214BF00F430C4 /* ParsingServiceResult.swift */; };
 		1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */; };
 		1389AE652188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */; };
+		138FE03F21A58D15005C9B76 /* Feature+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */; };
+		138FE04421A59B0E005C9B76 /* UIColorAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FE04321A59B0E005C9B76 /* UIColorAdditions.swift */; };
 		13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */; };
 		13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */; };
 		13EA6C2B21944C1C0057724A /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 13AE3EC3219449A6003BFA34 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -91,6 +93,8 @@
 		135FF823218214BF00F430C4 /* ParsingServiceResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingServiceResult.swift; sourceTree = "<group>"; };
 		1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerNavigationSettings.swift; sourceTree = "<group>"; };
+		138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feature+Equatable.swift"; sourceTree = "<group>"; };
+		138FE04321A59B0E005C9B76 /* UIColorAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorAdditions.swift; path = ../FeatureFlags/Classes/Extensions/UIColorAdditions.swift; sourceTree = "<group>"; };
 		13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsAdapter.swift; sourceTree = "<group>"; };
 		13AE3EC3219449A6003BFA34 /* FeatureFlags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeatureFlags.h; sourceTree = "<group>"; };
 		13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerCloseButtonAlignment.swift; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 				133653202178E98B00E41564 /* Percentage.swift */,
 				133653212178E98B00E41564 /* TestVariation.swift */,
 				13365348217DFF3500E41564 /* Test.swift */,
+				138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */,
 			);
 			name = Model;
 			path = FeatureFlags/Classes/Model;
@@ -325,9 +330,18 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		138FE04021A58D91005C9B76 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				138FE04321A59B0E005C9B76 /* UIColorAdditions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		38DAD0E284CB4CE1AFEE4A91254A2523 /* FeatureFlags */ = {
 			isa = PBXGroup;
 			children = (
+				138FE04021A58D91005C9B76 /* Extensions */,
 				1336531C2178E98B00E41564 /* Core */,
 				1336531E2178E98B00E41564 /* Model */,
 				D795C758A7C2525B6CF8EF03DEC72CDE /* Pod */,
@@ -585,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				135FF82C218214BF00F430C4 /* ParsingService.swift in Sources */,
+				138FE03F21A58D15005C9B76 /* Feature+Equatable.swift in Sources */,
 				135FF826218214BF00F430C4 /* TestVariationPickerViewController.swift in Sources */,
 				1336532A2178E98C00E41564 /* Feature.swift in Sources */,
 				135FF82A218214BF00F430C4 /* FeatureFlagTableViewCell.swift in Sources */,
@@ -594,6 +609,7 @@
 				135FF82E218214BF00F430C4 /* JSONParsingService.swift in Sources */,
 				13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */,
 				133653282178E98C00E41564 /* Percentage.swift in Sources */,
+				138FE04421A59B0E005C9B76 /* UIColorAdditions.swift in Sources */,
 				135FF82D218214BF00F430C4 /* PropertyListParsingService.swift in Sources */,
 				1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */,
 				135FF827218214BF00F430C4 /* PickerOptionsViewModel.swift in Sources */,

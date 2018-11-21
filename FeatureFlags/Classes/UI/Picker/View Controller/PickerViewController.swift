@@ -45,22 +45,22 @@ class PickerViewController<PickerOption: Equatable & CustomStringConvertible>: U
     }
     
     private func setSelectedRows() {
-        if let sectionTitles = viewModel?.keys.compactMap({ $0 }) {
-            var sectionCounter = 0
-            for sectionTitle in sectionTitles {
-                if let sectionViewModel = viewModel?[sectionTitle] {
-                    for i in 0..<sectionViewModel.pickerOptions.count where
-                        sectionViewModel.pickerOptions[i] == sectionViewModel.pickerOptions[sectionViewModel.selectedIndex] {
-                            let cell = tableView.cellForRow(at: IndexPath(row: 0, section: sectionCounter)) // Currently 1 row per section
-                            let pickerTagOffset = sectionCounter
-                            if let pickerView = cell?.viewWithTag(pickerTagOffset) as? UIPickerView {
-                                pickerView.selectRow(i, inComponent: 0, animated: false)
-                            }
-                            break
+        guard let sectionTitles = viewModel?.keys.compactMap({ $0 }) else {
+            return
+        }
+        var sectionCounter = 0
+        let sectionViewModels = sectionTitles.compactMap({ return viewModel?[$0] })
+        for sectionViewModel in sectionViewModels {
+            for i in 0..<sectionViewModel.pickerOptions.count where
+                sectionViewModel.pickerOptions[i] == sectionViewModel.pickerOptions[sectionViewModel.selectedIndex] {
+                    let cell = tableView.cellForRow(at: IndexPath(row: 0, section: sectionCounter)) // Currently 1 row per section
+                    let pickerTagOffset = sectionCounter
+                    if let pickerView = cell?.viewWithTag(pickerTagOffset) as? UIPickerView {
+                        pickerView.selectRow(i, inComponent: 0, animated: false)
                     }
-                }
-                sectionCounter += 1
+                    break
             }
+            sectionCounter += 1
         }
     }
     

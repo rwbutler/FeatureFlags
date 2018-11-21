@@ -30,52 +30,43 @@ class FeatureFlagsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let green = UIColor(red: 151.0/255.0, green: 201.0/255.0, blue: 61.0/255.0, alpha: 1.0)
         let cellReuseIdentifier = String(describing: FeatureFlagTableViewCell.self)
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
         guard let featureFlagCell = cell as? FeatureFlagTableViewCell,
-            var features = FeatureFlags.configuration,
-            indexPath.row < features.count else {
+            let features = FeatureFlags.configuration, indexPath.row < features.count else {
                 return cell
         }
-        features = sortedFeatures(features)
-        let feature = features[indexPath.row]
+        let feature = sortedFeatures(features)[indexPath.row]
+        return bindCell(featureFlagCell, feature: feature)
+    }
+    
+    private func bindCell(_ cell: FeatureFlagTableViewCell, feature: Feature) -> FeatureFlagTableViewCell {
         let testVariation = feature.testVariation()
-        featureFlagCell.featureName.text = feature.name.rawValue
-        featureFlagCell.featureEnabled.isOn = feature.isEnabled()
-        featureFlagCell.featureType.text = feature.type.description
-        featureFlagCell.testVariation.text = testVariation.description
-        featureFlagCell.featureEnabled.onTintColor = green
-        switch  feature.type {
-        case .featureFlag:
-            featureFlagCell.featureEnabled.isHidden = false
-            featureFlagCell.testVariation.isHidden = false
-        default:
-            featureFlagCell.featureEnabled.isHidden = true
-            featureFlagCell.testVariation.isHidden = false
-        }
+        cell.featureName.text = feature.name.rawValue
+        cell.featureEnabled.isOn = feature.isEnabled()
+        cell.featureType.text = feature.type.description
+        cell.testVariation.text = testVariation.description
         
-        let allLabels = [featureFlagCell.featureName, featureFlagCell.featureType, featureFlagCell.testVariation]
+        let allLabels = [cell.featureName, cell.featureType, cell.testVariation]
         
+        let labelTextColor: UIColor
         switch feature.type {
         case .featureFlag, .featureTest(.featureFlagAB):
-            allLabels.forEach({ label in
-                label?.textColor = UIColor.white
-            })
+            labelTextColor = UIColor.white
             cell.contentView.backgroundColor = feature.isEnabled()
-                ? UIColor(red: 63.0/255.0, green: 134.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-                : UIColor(red: 189.0/255.0, green: 50.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-            featureFlagCell.isDevelopment.tintColor = UIColor.white
+                ? UIColor.featureFlagsGreen
+                : UIColor.featureFlagsRed
+            cell.isDevelopment.tintColor = UIColor.white
         case .featureTest(.ab), .featureTest(.mvt), .deprecated:
-            allLabels.forEach({ label in
-                label?.textColor = UIColor.black
-            })
+            labelTextColor = UIColor.black
             cell.contentView.backgroundColor = UIColor.white
-            featureFlagCell.isDevelopment.tintColor = UIColor.gray
+            cell.isDevelopment.tintColor = UIColor.gray
         }
-        featureFlagCell.featureEnabled.isHidden = true // Always hide for now
-        featureFlagCell.isDevelopment.isHidden = !feature.isDevelopment
-        return featureFlagCell
+        allLabels.forEach({ label in
+            label?.textColor = labelTextColor
+        })
+        cell.isDevelopment.isHidden = !feature.isDevelopment
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -184,24 +175,32 @@ private extension FeatureFlagsViewController {
     }
     
     @objc func close() {
-        let shouldClose: Bool = navigationSettings?.autoClose ?? true // default to auto-close
-        
-        if shouldClose {
-
+        if viewControllerShouldDismiss() {
             let isAnimated: Bool = navigationSettings?.animated ?? true
             let isModal: Bool = navigationSettings?.isModal ?? (navigationController == nil)
-            let isNavigationBarHidden: Bool? = navigationSettings?.isNavigationBarHidden
             
             if isModal {
                 dismiss(animated: isAnimated, completion: nil)
             } else {
-                if let isNavigationBarHidden = isNavigationBarHidden {
-                    navigationController?.isNavigationBarHidden = isNavigationBarHidden
-                }
+                hideNavigationBarIfNeeded()
                 navigationController?.popViewController(animated: isAnimated)
             }
         }
         delegate?.viewControllerDidFinish()
+    }
+    
+    /// Determines whether or not this view controller should dismiss itself
+    /// or whether code outside the controller is responsible for this.
+    private func viewControllerShouldDismiss() -> Bool {
+        return navigationSettings?.autoClose ?? true // default to auto-close
+    }
+    
+    /// Hides or unhides the navigation bar according to navigational preferences.
+    private func hideNavigationBarIfNeeded() {
+        let isNavigationBarHidden: Bool? = navigationSettings?.isNavigationBarHidden
+        if let isNavigationBarHidden = isNavigationBarHidden {
+            navigationController?.isNavigationBarHidden = isNavigationBarHidden
+        }
     }
     
     /// Retrieves the current bundle

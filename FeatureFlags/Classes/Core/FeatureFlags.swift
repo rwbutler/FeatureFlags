@@ -241,12 +241,7 @@ internal extension FeatureFlags {
         }
         // Add in any features not defined remotely
         if let stored = storedResult {
-            let localOnlyFeatures = stored.filter({ storedFeature in
-                return !mergedResult.contains(where: { remoteFeature in
-                    storedFeature.name == remoteFeature.name
-                })
-            })
-            mergedResult.append(contentsOf: localOnlyFeatures)
+            mergedResult = mergeFeaturesNotFoundIn(mergedResult, from: stored)
         }
         
         if let localFallback = localFallbackResult {
@@ -262,16 +257,21 @@ internal extension FeatureFlags {
                 }
                 return resultFeature
             }
-            
-            let fallbackOnlyFeatures = localFallback.filter({ fallbackFeature in
-                return !mergedResult.contains(where: { mergedFeature in
-                    fallbackFeature.name == mergedFeature.name
-                })
-            })
-            mergedResult.append(contentsOf: fallbackOnlyFeatures)
+            mergedResult = mergeFeaturesNotFoundIn(mergedResult, from: localFallback)
         }
         
         return mergedResult
+    }
+    
+    private static func mergeFeaturesNotFoundIn(_ lhs: [Feature], from rhs: [Feature]) -> [Feature] {
+        var result = lhs
+        let disjointFeatures = rhs.filter({ rhsFeature in
+            return !lhs.contains(where: { lhsFeature in
+                rhsFeature.name == lhsFeature.name
+            })
+        })
+        result.append(contentsOf: disjointFeatures)
+        return result
     }
     
     private static func parseConfiguration(data: Data) -> ParsingServiceResult? {
