@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1307A1D021AC642F00C692CE /* UIColorAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1307A1CF21AC642F00C692CE /* UIColorAdditions.swift */; };
 		133653262178E98C00E41564 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1336531D2178E98B00E41564 /* FeatureFlags.swift */; };
 		133653272178E98C00E41564 /* FeatureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1336531F2178E98B00E41564 /* FeatureType.swift */; };
 		133653282178E98C00E41564 /* Percentage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133653202178E98B00E41564 /* Percentage.swift */; };
@@ -33,7 +34,6 @@
 		1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */; };
 		1389AE652188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */; };
 		138FE03F21A58D15005C9B76 /* Feature+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */; };
-		138FE04421A59B0E005C9B76 /* UIColorAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FE04321A59B0E005C9B76 /* UIColorAdditions.swift */; };
 		13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */; };
 		13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */; };
 		13EA6C2B21944C1C0057724A /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 13AE3EC3219449A6003BFA34 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -68,6 +68,7 @@
 /* Begin PBXFileReference section */
 		027C297A2925D75AB31C8DF0A717BF32 /* Pods-FeatureFlags_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FeatureFlags_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		11E1967FE1A78D4D27F60F89F0C1E849 /* FeatureFlags-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FeatureFlags-dummy.m"; sourceTree = "<group>"; };
+		1307A1CF21AC642F00C692CE /* UIColorAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorAdditions.swift; sourceTree = "<group>"; };
 		1336531D2178E98B00E41564 /* FeatureFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		1336531F2178E98B00E41564 /* FeatureType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureType.swift; sourceTree = "<group>"; };
 		133653202178E98B00E41564 /* Percentage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Percentage.swift; sourceTree = "<group>"; };
@@ -94,7 +95,6 @@
 		1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerNavigationSettings.swift; sourceTree = "<group>"; };
 		138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feature+Equatable.swift"; sourceTree = "<group>"; };
-		138FE04321A59B0E005C9B76 /* UIColorAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColorAdditions.swift; path = ../FeatureFlags/Classes/Extensions/UIColorAdditions.swift; sourceTree = "<group>"; };
 		13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsAdapter.swift; sourceTree = "<group>"; };
 		13AE3EC3219449A6003BFA34 /* FeatureFlags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeatureFlags.h; sourceTree = "<group>"; };
 		13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerCloseButtonAlignment.swift; sourceTree = "<group>"; };
@@ -172,6 +172,15 @@
 			);
 			name = "Support Files";
 			path = "Example/Pods/Target Support Files/FeatureFlags";
+			sourceTree = "<group>";
+		};
+		1307A1CE21AC642F00C692CE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1307A1CF21AC642F00C692CE /* UIColorAdditions.swift */,
+			);
+			name = Extensions;
+			path = FeatureFlags/Classes/Extensions;
 			sourceTree = "<group>";
 		};
 		1336531C2178E98B00E41564 /* Core */ = {
@@ -330,18 +339,10 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		138FE04021A58D91005C9B76 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				138FE04321A59B0E005C9B76 /* UIColorAdditions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		38DAD0E284CB4CE1AFEE4A91254A2523 /* FeatureFlags */ = {
 			isa = PBXGroup;
 			children = (
-				138FE04021A58D91005C9B76 /* Extensions */,
+				1307A1CE21AC642F00C692CE /* Extensions */,
 				1336531C2178E98B00E41564 /* Core */,
 				1336531E2178E98B00E41564 /* Model */,
 				D795C758A7C2525B6CF8EF03DEC72CDE /* Pod */,
@@ -603,13 +604,13 @@
 				135FF826218214BF00F430C4 /* TestVariationPickerViewController.swift in Sources */,
 				1336532A2178E98C00E41564 /* Feature.swift in Sources */,
 				135FF82A218214BF00F430C4 /* FeatureFlagTableViewCell.swift in Sources */,
+				1307A1D021AC642F00C692CE /* UIColorAdditions.swift in Sources */,
 				7F1F2D2AD4886F384EA3B0A3DF206F92 /* FeatureFlags-dummy.m in Sources */,
 				1336532D2178E98C00E41564 /* FeatureName.swift in Sources */,
 				13365349217DFF3500E41564 /* Test.swift in Sources */,
 				135FF82E218214BF00F430C4 /* JSONParsingService.swift in Sources */,
 				13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */,
 				133653282178E98C00E41564 /* Percentage.swift in Sources */,
-				138FE04421A59B0E005C9B76 /* UIColorAdditions.swift in Sources */,
 				135FF82D218214BF00F430C4 /* PropertyListParsingService.swift in Sources */,
 				1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */,
 				135FF827218214BF00F430C4 /* PickerOptionsViewModel.swift in Sources */,

@@ -21,6 +21,7 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 	- [A/B Tests](#ab-tests)
 	- [Feature A/B Tests](#feature-ab-tests)
 	- [Multivariate (MVT) Tests](#multivariate-mvt-tests)
+	- [Development Flags](#development-flags)
 - [Advanced Usage](#advanced-usage)
 	- [Test Bias](#test-bias)
 	- [Labels](#labels)
@@ -101,7 +102,7 @@ The contents of the array depends on the feature flags and tests to be configure
 To let FeatureFlags know where to find your configuration file:
 
 ```
-guard let featuresURL = Bundle.main.url(forResource: "features", withExtension: "json") { return }
+guard let featuresURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
 FeatureFlags.configurationURL = featuresURL
 ```
 
@@ -115,7 +116,7 @@ FeatureFlags.configurationURL = featuresURL
 In the event that you opt to host your JSON file remotely, you may provide a bundled fallback as part of your app bundle:
 
 ```
-guard let fallbackURL = Bundle.main.url(forResource: "features", withExtension: "json") { return }
+guard let fallbackURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
 FeatureFlags.localFallbackConfigurationURL = fallbackURL
 ```
 
@@ -304,6 +305,61 @@ if let feature = Feature.named(.exampleMVTTest) {
 	print("Test variation -> \(feature.testVariation())")
 }
 ```
+
+### Development Flags
+
+When developers speak of feature flags they are often referring to one of two things:
+
+- Remote flags: Allow us to remotely toggle a finished feature on or off and roll it out to a specific group of users.
+- Development flags: Allow to us hide features in development in order to keep code shippable.
+
+With development flags we never want the code under development to be released to users. 
+
+Consider if we were to use a remote feature flag to toggle off an unfinished feature allowing us to release version 1 of our app without the feature present. If subsequently we were to finish the feature as part of version 2 of the app and toggle the feature on then users of version one would experience a partially complete feature as the under development version 1 code is enabled. This is a situation we never want to arise hence FeatureFlags caters for development flags as well as remote flags.
+
+To mark a feature flag as a development flag, first of all include a bundled JSON file as part of your app containing the `features` key. The JSON file may be an existing file or an entirely new file. Next, having defined your feature flags as part of this file, set the configuration URL to reference this file:
+
+```
+guard let featuresURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
+FeatureFlags.configurationURL = featuresURL
+```
+
+Or, if you are already using a remote configuration URL then set the fallback configuration URL instead:
+
+```
+guard let fallbackURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
+FeatureFlags.localFallbackConfigurationURL = fallbackURL
+```
+
+Set up your feature flag in JSON as you would do normally but setting the `development` property to `true`:
+
+```
+{
+    "features": [{
+        "name": "Example Feature Flag",
+        "development": true,
+        "enabled": true
+    }]
+}
+```
+
+And that's it! From now on this feature flag will be considered a development flag and the code behind it will never be released to users even if `enabled` is set.
+
+Development flag code will be shown in the following cases:
+
+- If the `#DEBUG` preprocessor flag is set and the flag is `enabled`.
+- If `FeatureFlags.isDevelopment` is set to `true` (it is up to the developer to set this to `true` when the app is in development - the default value is `false`) and the flag is `enabled`.
+
+If you need more granular control over code that is in development then you may pass the `isDevelopment` flag when checking whether or not a feature is enabled e.g.:
+
+```
+if let feature = Feature.named(.exampleFeatureFlag, isDevelopment: true) {
+	print("Feature name -> \(feature.name)")
+	print("Feature enabled -> \(feature.isEnabled())")
+}
+```
+
+In this example, the `print` statements will only be executed if `exampleFeatureFlag` is enabled and the app is development (i.e. either `#DEBUG` or `FeatureFlags.isDevelopment` is set).
 
 ## Advanced Usage
 ### Test Bias
