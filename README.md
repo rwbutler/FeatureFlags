@@ -88,6 +88,18 @@ From the macOS Terminal run `carthage update --platform iOS` to build the framew
 
 For more information [see here](https://github.com/Carthage/Carthage#quick-start).
 
+### Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a dependency manager for Swift modules and is included as part of the build system as of Swift 3.0. It is used to automate the download, compilation and linking of dependencies.
+
+To include FeatureFlags as a dependency within a Swift package, add the package to the `dependencies` entry in your `Package.swift` file as follows:
+
+```
+dependencies: [
+    .package(url: "https://github.com/rwbutler/FeatureFlags.git", from: "4.2.0")
+]
+```
+
 ## Usage
 With the framework integrated into your project, the next step is configuration using a JSON file which may be bundled as part of your app or hosted remotely. The JSON file may be newly-created or could be an existing configuration JSON file that you're using already. Simply add a key called `features` at the top level of your file mapping to an array of features as follows:
 

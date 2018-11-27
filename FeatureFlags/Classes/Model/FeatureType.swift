@@ -14,12 +14,12 @@ public enum FeatureType {
 }
 
 extension FeatureType: Codable {
-    
+
     enum CodingKeys: String, CodingKey {
         case featureFlag = "feature-flag"
         case featureTest = "feature-test"
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {
@@ -30,7 +30,7 @@ extension FeatureType: Codable {
             self = .featureTest(featureTest)
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
@@ -42,7 +42,7 @@ extension FeatureType: Codable {
             try container.encode(featureTest, forKey: .featureTest)
         }
     }
-    
+
 }
 
 extension FeatureType: CustomStringConvertible {

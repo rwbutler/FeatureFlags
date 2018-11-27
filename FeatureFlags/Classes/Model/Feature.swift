@@ -135,7 +135,8 @@ extension Feature: Codable {
             } else if testVariations.count == 1, let firstVariation = testVariations.first {
                 self.enabled = isEnabled ?? false
                 self.isDevelopment = isDevelopment ?? false
-                self.testVariations = [TestVariation(rawValue: firstVariation), TestVariation(rawValue: "!\(firstVariation)")]
+                self.testVariations = [TestVariation(rawValue: firstVariation),
+                                       TestVariation(rawValue: "!\(firstVariation)")]
                 self.type = .featureFlag
             } else if testVariations.count == 2 {
                 self.enabled = isEnabled ?? true

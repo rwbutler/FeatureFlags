@@ -43,8 +43,10 @@ public class ABTest: Test {
     public required init?(rawValue: Feature.Name) {
         super.init(rawValue: rawValue)
         switch feature.type {
-            case .featureTest(.ab): break
-            default: return nil
+        case .featureTest(.ab):
+            break
+        default:
+            return nil
         }
     }
     

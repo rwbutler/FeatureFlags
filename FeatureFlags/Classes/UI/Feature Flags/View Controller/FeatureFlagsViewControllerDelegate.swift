@@ -10,4 +10,3 @@ import Foundation
 @objc public protocol FeatureFlagsViewControllerDelegate: class {
     @objc func viewControllerDidFinish()
 }
-

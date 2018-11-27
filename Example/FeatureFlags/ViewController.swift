@@ -21,15 +21,14 @@ class ViewController: UIViewController {
             print("Is in group B? -> \(feature.isTestVariation(.disabled))")
             print("Test variation -> \(feature.testVariation())")
         }
-        
+
         if let test = ABTest(rawValue: .exampleABTest) {
             print("Is in group A? -> \(test.isGroupA())")
             print("Is in group B? -> \(test.isGroupB())")
         }
-        
+
         print(Feature.isEnabled(.exampleFeatureFlag))
-        
+
     }
 
 }
-

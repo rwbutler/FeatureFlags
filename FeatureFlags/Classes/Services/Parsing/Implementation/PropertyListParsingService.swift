@@ -16,5 +16,3 @@ struct PropertyListParsingService: ParsingService {
         return features
     }
 }
-
-

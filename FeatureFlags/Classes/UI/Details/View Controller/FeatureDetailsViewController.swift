@@ -9,28 +9,28 @@ import Foundation
 import UIKit
 
 class FeatureDetailsViewController: UITableViewController {
-    
+
     // MARK: Type definitions
     public struct NavigationSettings {
         let animated: Bool
         let isNavigationBarHidden: Bool
     }
-    
+
     // MARK: State
     var feature: Feature?
     var navigationSettings: NavigationSettings?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let feature = self.feature else { return }
         title = feature.name.description
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let feature = self.feature else { return 0 }
         return cells(for: feature.type).count
     }
-    
+
     private enum CellType {
         case featureType
         case enabled
@@ -38,7 +38,7 @@ class FeatureDetailsViewController: UITableViewController {
         case testVariations
         case testVariationAssignment
     }
-    
+
     private func cells(for featureType: FeatureType) -> [CellType] {
         switch featureType {
         case .featureFlag:
@@ -49,13 +49,13 @@ class FeatureDetailsViewController: UITableViewController {
             return []
         }
     }
-    
+
     private func row(for featureType: FeatureType, at row: Int) -> CellType? {
         let detailCells = cells(for: featureType)
         guard row < detailCells.count else { return nil }
         return detailCells[row]
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellReuseIdentifier = "\(String(describing: self))Cell"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)
@@ -66,7 +66,7 @@ class FeatureDetailsViewController: UITableViewController {
         cell.textLabel?.font = UIFont(name: "Avenir-Light", size: 16.0)
         cell.detailTextLabel?.font = UIFont(name: "Avenir-Medium", size: 20.0)
         cell.detailTextLabel?.numberOfLines = 0
-        
+
         guard let detailRow = row(for: feature.type, at: indexPath.row) else {
             return cell
         }
@@ -87,7 +87,7 @@ class FeatureDetailsViewController: UITableViewController {
         }
         return cell
     }
-    
+
     private func bindLabelsCell(_ cell: UITableViewCell, to feature: Feature) {
         cell.textLabel?.text = "Labels"
         let labels = feature.labels.compactMap({ $0 })
@@ -97,11 +97,11 @@ class FeatureDetailsViewController: UITableViewController {
             cell.detailTextLabel?.text = "None"
         }
     }
-    
+
     private func bindTestVariationCell(_ cell: UITableViewCell, to feature: Feature) {
         cell.textLabel?.text = "Test variations"
         if let feature = self.feature {
-            let variationsStr = zip(feature.testVariations, feature.testBiases).map{ testVariation, testBias in
+            let variationsStr = zip(feature.testVariations, feature.testBiases).map { testVariation, testBias in
                 return "\(testVariation) (\(testBias))"
                 }.joined(separator: ", ")
             cell.detailTextLabel?.text = variationsStr
@@ -109,7 +109,7 @@ class FeatureDetailsViewController: UITableViewController {
             cell.detailTextLabel?.text = ""
         }
     }
-    
+
     private func bindTestVariationAssignmentCell(_ cell: UITableViewCell, to feature: Feature) {
         cell.textLabel?.text = "Test variation assignment"
         if let feature = self.feature {
@@ -120,11 +120,11 @@ class FeatureDetailsViewController: UITableViewController {
             cell.detailTextLabel?.text = ""
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -135,18 +135,18 @@ private extension FeatureDetailsViewController {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
         navigationItem.leftBarButtonItem = doneButton
     }
-    
+
     private func configureTableView() {
         tableView.dataSource = self
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableView.automaticDimension
     }
-    
+
     func configureView() {
         configureNavigationBar()
         configureTableView()
     }
-    
+
     @objc func close() {
         if let navigationController = navigationController, let settings = navigationSettings {
             navigationController.isNavigationBarHidden = settings.isNavigationBarHidden
@@ -156,4 +156,3 @@ private extension FeatureDetailsViewController {
         }
     }
 }
-

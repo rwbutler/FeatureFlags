@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc public enum FeatureFlagsViewControllerCloseButtonAlignment: Int {
+@objc public enum CloseButtonAlignment: Int {
     case left
     case right
 }

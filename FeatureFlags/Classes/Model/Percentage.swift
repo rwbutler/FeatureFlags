@@ -8,17 +8,17 @@
 import Foundation
 
 public struct Percentage: RawRepresentable {
-    
+
     // MARK: Global state
     static let min: Percentage = Percentage(rawValue: 0.0)
     static let max: Percentage = Percentage(rawValue: 100.0)
-    
+
     // MARK: Type definitions
     public typealias RawValue = Double
-    
+
     // MARK: State
     private let value: RawValue
-    
+
     public init(rawValue: RawValue) {
         switch rawValue {
         case 0.0...100.0:
@@ -29,12 +29,12 @@ public struct Percentage: RawRepresentable {
             self.value = 100.0
         }
     }
-    
+
     public var rawValue: RawValue {
         return value
     }
-    
-    static func +(left: Percentage, right: Percentage) -> Percentage {
+
+    static func + (left: Percentage, right: Percentage) -> Percentage {
         return Percentage(rawValue: left.rawValue + right.rawValue)
     }
 }

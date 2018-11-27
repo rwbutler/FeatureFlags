@@ -19,6 +19,7 @@
 		1336532F2179EF7500E41564 /* ConfigurationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1336532E2179EF7500E41564 /* ConfigurationType.swift */; };
 		13365349217DFF3500E41564 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13365348217DFF3500E41564 /* Test.swift */; };
 		133FDEFC21A0D30A00A157EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 133FDEFB21A0D30A00A157EA /* Images.xcassets */; };
+		1356D67121ADF96400D8590B /* FeatureFlagsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1356D67021ADF96400D8590B /* FeatureFlagsUI.swift */; };
 		135FF824218214BF00F430C4 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF80D218214BF00F430C4 /* PickerViewController.swift */; };
 		135FF825218214BF00F430C4 /* PickerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135FF80E218214BF00F430C4 /* PickerViewController.storyboard */; };
 		135FF826218214BF00F430C4 /* TestVariationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF80F218214BF00F430C4 /* TestVariationPickerViewController.swift */; };
@@ -32,10 +33,10 @@
 		135FF82E218214BF00F430C4 /* JSONParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF821218214BF00F430C4 /* JSONParsingService.swift */; };
 		135FF82F218214BF00F430C4 /* ParsingServiceResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF823218214BF00F430C4 /* ParsingServiceResult.swift */; };
 		1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */; };
-		1389AE652188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */; };
+		1389AE652188C4D800CD8AF8 /* NavigationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */; };
 		138FE03F21A58D15005C9B76 /* Feature+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */; };
 		13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */; };
-		13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */; };
+		13D7B720218A49150081071A /* CloseButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7B71F218A49150081071A /* CloseButtonAlignment.swift */; };
 		13EA6C2B21944C1C0057724A /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 13AE3EC3219449A6003BFA34 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FD713615BDF74D9B2EE769255074C13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		2F4DE5AB3E0F07F628BBE3F6FC3BAB77 /* FeatureFlags-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 938636CB5BC770CC83F3A2AF56F939ED /* FeatureFlags-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -80,6 +81,8 @@
 		1336532E2179EF7500E41564 /* ConfigurationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationType.swift; sourceTree = "<group>"; };
 		13365348217DFF3500E41564 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		133FDEFB21A0D30A00A157EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FeatureFlags/Assets/Images.xcassets; sourceTree = "<group>"; };
+		1356D66F21ADF4F000D8590B /* FeatureFlags copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FeatureFlags copy-Info.plist"; path = "/Users/butlerrr/Library/Mobile Documents/com~apple~CloudDocs/Documents/projects/feature-flags/Example/Pods/FeatureFlags copy-Info.plist"; sourceTree = "<absolute>"; };
+		1356D67021ADF96400D8590B /* FeatureFlagsUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsUI.swift; sourceTree = "<group>"; };
 		135FF80D218214BF00F430C4 /* PickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		135FF80E218214BF00F430C4 /* PickerViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PickerViewController.storyboard; sourceTree = "<group>"; };
 		135FF80F218214BF00F430C4 /* TestVariationPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVariationPickerViewController.swift; sourceTree = "<group>"; };
@@ -93,11 +96,11 @@
 		135FF821218214BF00F430C4 /* JSONParsingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParsingService.swift; sourceTree = "<group>"; };
 		135FF823218214BF00F430C4 /* ParsingServiceResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParsingServiceResult.swift; sourceTree = "<group>"; };
 		1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerDelegate.swift; sourceTree = "<group>"; };
-		1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerNavigationSettings.swift; sourceTree = "<group>"; };
+		1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSettings.swift; sourceTree = "<group>"; };
 		138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feature+Equatable.swift"; sourceTree = "<group>"; };
 		13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsAdapter.swift; sourceTree = "<group>"; };
 		13AE3EC3219449A6003BFA34 /* FeatureFlags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeatureFlags.h; sourceTree = "<group>"; };
-		13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerCloseButtonAlignment.swift; sourceTree = "<group>"; };
+		13D7B71F218A49150081071A /* CloseButtonAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonAlignment.swift; sourceTree = "<group>"; };
 		14877BE95EDD6695AAA45510BDA5099E /* FeatureFlags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FeatureFlags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		283DD01CF54326970BDF4106EE4F114B /* Pods-FeatureFlags_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-FeatureFlags_Tests-umbrella.h"; sourceTree = "<group>"; };
 		28A8BD20CE65658510927664523C5A0D /* Pods-FeatureFlags_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-FeatureFlags_Tests.modulemap"; sourceTree = "<group>"; };
@@ -215,6 +218,7 @@
 		135FF80A218214BF00F430C4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1356D67021ADF96400D8590B /* FeatureFlagsUI.swift */,
 				135FF80B218214BF00F430C4 /* Picker */,
 				135FF812218214BF00F430C4 /* Details */,
 				135FF815218214BF00F430C4 /* Feature Flags */,
@@ -280,8 +284,8 @@
 			children = (
 				135FF817218214BF00F430C4 /* FeatureFlagsViewController.swift */,
 				1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */,
-				1389AE642188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift */,
-				13D7B71F218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift */,
+				1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */,
+				13D7B71F218A49150081071A /* CloseButtonAlignment.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -512,6 +516,7 @@
 				1336534A217F257100E41564 /* Resources */,
 				45CF7824E88CCB1FE488428C276D6750 /* Frameworks */,
 				87AD447BE1427463790F73BCAE903C79 /* Headers */,
+				1307A1D321ADDC2D00C692CE /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -586,6 +591,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1307A1D321ADDC2D00C692CE /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\ncd ../../FeatureFlags\nswiftlint\nelse\necho \"error: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		21A4246DFF16A8F65C597817583BB312 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -609,10 +635,11 @@
 				1336532D2178E98C00E41564 /* FeatureName.swift in Sources */,
 				13365349217DFF3500E41564 /* Test.swift in Sources */,
 				135FF82E218214BF00F430C4 /* JSONParsingService.swift in Sources */,
-				13D7B720218A49150081071A /* FeatureFlagsViewControllerCloseButtonAlignment.swift in Sources */,
+				13D7B720218A49150081071A /* CloseButtonAlignment.swift in Sources */,
 				133653282178E98C00E41564 /* Percentage.swift in Sources */,
 				135FF82D218214BF00F430C4 /* PropertyListParsingService.swift in Sources */,
 				1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */,
+				1356D67121ADF96400D8590B /* FeatureFlagsUI.swift in Sources */,
 				135FF827218214BF00F430C4 /* PickerOptionsViewModel.swift in Sources */,
 				133653272178E98C00E41564 /* FeatureType.swift in Sources */,
 				133653262178E98C00E41564 /* FeatureFlags.swift in Sources */,
@@ -623,7 +650,7 @@
 				135FF824218214BF00F430C4 /* PickerViewController.swift in Sources */,
 				13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */,
 				133653292178E98C00E41564 /* TestVariation.swift in Sources */,
-				1389AE652188C4D800CD8AF8 /* FeatureFlagsViewControllerNavigationSettings.swift in Sources */,
+				1389AE652188C4D800CD8AF8 /* NavigationSettings.swift in Sources */,
 				135FF82F218214BF00F430C4 /* ParsingServiceResult.swift in Sources */,
 				135FF829218214BF00F430C4 /* FeatureFlagsViewController.swift in Sources */,
 			);

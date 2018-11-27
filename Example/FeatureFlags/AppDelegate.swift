@@ -14,13 +14,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions
+        launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navigationController = UINavigationController()
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        let navigationSettings = FeatureFlagsViewControllerNavigationSettings(autoClose: true, closeButtonAlignment: .left, closeButton: .done, isNavigationBarHidden: false)
-        FeatureFlags.pushFeatureFlags(navigationController: navigationController, navigationSettings: navigationSettings)
+        let navigationSettings = ViewControllerNavigationSettings(
+            autoClose: true,
+            closeButtonAlignment: .left,
+            closeButton: .done,
+            isNavigationBarHidden: false)
+        FeatureFlagsUI.pushFeatureFlags(navigationController: navigationController,
+                                      navigationSettings: navigationSettings)
         return true
     }
 
@@ -40,4 +46,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-

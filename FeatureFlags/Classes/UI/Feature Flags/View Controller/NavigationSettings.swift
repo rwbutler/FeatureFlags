@@ -8,16 +8,21 @@
 import Foundation
 import UIKit
 
-@objc public class FeatureFlagsViewControllerNavigationSettings: NSObject {
+@objc public class ViewControllerNavigationSettings: NSObject {
     let animated: Bool
     let autoClose: Bool
-    let closeButtonAlignment: FeatureFlagsViewControllerCloseButtonAlignment
+    let closeButtonAlignment: CloseButtonAlignment
     let closeButton: UIBarButtonItem.SystemItem
     let isModal: Bool
     let isNavigationBarHidden: Bool
     let shouldRefresh: Bool
-    
-    public init(animated: Bool = false, autoClose: Bool = true, closeButtonAlignment: FeatureFlagsViewControllerCloseButtonAlignment = .left, closeButton: UIBarButtonItem.SystemItem = .done, isModal: Bool = false, isNavigationBarHidden: Bool = false, shouldRefresh: Bool = true) {
+
+    public init(animated: Bool = false, autoClose: Bool = true,
+                closeButtonAlignment: CloseButtonAlignment = .left,
+                closeButton: UIBarButtonItem.SystemItem = .done,
+                isModal: Bool = false,
+                isNavigationBarHidden: Bool = false,
+                shouldRefresh: Bool = true) {
         self.animated = animated
         self.autoClose = autoClose
         self.closeButtonAlignment = closeButtonAlignment

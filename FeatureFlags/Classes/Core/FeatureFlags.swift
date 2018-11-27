@@ -23,7 +23,7 @@ public struct FeatureFlags {
             }
         }
     }
-    
+
     public static var configurationType: ConfigurationType = {
         for configurationType in ConfigurationType.allCases {
             if bundledConfigurationURL(configurationType) != nil {
@@ -42,75 +42,21 @@ public struct FeatureFlags {
             cacheConfiguration(cachedResult)
         }
     }
-    
+
     /// Whether or not the app is running in development mode
     public static var isDevelopment: Bool = false
     
     /// Where using a remote URL, a local fallback file may be specified
     public static var localFallbackConfigurationURL: URL?
-    
-    /// Presents FeatureFlagsViewController modally
-    public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil, animated: Bool = false, shouldRefresh: Bool = true) {
-        guard let presenter = UIApplication.shared.keyWindow?.rootViewController else { return }
-        let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
-        featureFlagsViewController.delegate = delegate
-        featureFlagsViewController.modalPresentationStyle = .overCurrentContext
-        let navigationController = UINavigationController(rootViewController: featureFlagsViewController)
-        let navigationSettings = FeatureFlagsViewController
-            .NavigationSettings(animated: animated, autoClose: true, closeButtonAlignment: .right, isModal: true, isNavigationBarHidden: navigationController.isNavigationBarHidden, shouldRefresh: shouldRefresh)
-        featureFlagsViewController.navigationSettings = navigationSettings
-        if navigationSettings.shouldRefresh {
-            FeatureFlags.refresh()
-        }
-        presenter.present(navigationController, animated: animated, completion: nil)
-    }
-    
-    public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil, navigationSettings: FeatureFlagsViewControllerNavigationSettings) {
-        guard let presenter = UIApplication.shared.keyWindow?.rootViewController else { return }
-        let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
-        featureFlagsViewController.delegate = delegate
-        featureFlagsViewController.modalPresentationStyle = .overCurrentContext
-        let navigationController = UINavigationController(rootViewController: featureFlagsViewController)
-        featureFlagsViewController.navigationSettings = navigationSettings
-        if navigationSettings.shouldRefresh {
-            FeatureFlags.refresh()
-        }
-        presenter.present(navigationController, animated: navigationSettings.animated, completion: nil)
-    }
-    
-    /// Allows FeatureFlagsViewController to be pushed onto a navigation stack
-    public static func pushFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil, navigationController: UINavigationController, animated: Bool = false, shouldRefresh: Bool = true) {
-        let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
-        let navigationSettings = FeatureFlagsViewController
-            .NavigationSettings(animated: animated, autoClose: true, isNavigationBarHidden: navigationController.isNavigationBarHidden, shouldRefresh: shouldRefresh)
-        featureFlagsViewController.delegate = delegate
-        featureFlagsViewController.navigationSettings = navigationSettings
-        navigationController.isNavigationBarHidden = false
-        if navigationSettings.shouldRefresh {
-            FeatureFlags.refresh()
-        }
-        navigationController.pushViewController(featureFlagsViewController, animated: animated)
-    }
-    
-    public static func pushFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil,  navigationController: UINavigationController, navigationSettings: FeatureFlagsViewControllerNavigationSettings) {
-        let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
-        featureFlagsViewController.delegate = delegate
-        featureFlagsViewController.navigationSettings = navigationSettings
-        navigationController.isNavigationBarHidden = false
-        if navigationSettings.shouldRefresh {
-            FeatureFlags.refresh()
-        }
-        navigationController.pushViewController(featureFlagsViewController, animated: navigationSettings.animated)
-    }
-    
+
     @discardableResult
-    public static func refresh(_ completion:(()-> Void)? = nil) -> ParsingServiceResult? {
+    public static func refresh(_ completion:(() -> Void)? = nil) -> ParsingServiceResult? {
         configuration = loadConfiguration(completion)
         return configuration
     }
-    
+
     @discardableResult
-    public static func refreshWithData(_ data: Data, completion:(()-> Void)? = nil) -> ParsingServiceResult? {
+    public static func refreshWithData(_ data: Data, completion:(() -> Void)? = nil) -> ParsingServiceResult? {
         configuration = loadConfigurationWithData(data, completion: completion)
         return configuration
     }
@@ -121,7 +67,7 @@ public struct FeatureFlags {
         if let featureIndex = self.configuration?.firstIndex(where: { $0 == feature }) {
             updatedConfiguration.remove(at: featureIndex)
             feature.enabled = isEnabled
-            
+
             if (feature.type == FeatureType.featureTest(.featureFlagAB)
                 || feature.type == FeatureType.featureFlag),
                 let alternateABVariant = feature.testVariations.filter({ $0 != feature.testVariation() }).first {
@@ -131,7 +77,7 @@ public struct FeatureFlags {
             self.configuration = updatedConfiguration
         }
     }
-    
+
     public static func updateFeatureTestVariation(feature named: Feature.Name, testVariation: Test.Variation) {
         guard var updatedConfiguration = configuration, var feature = Feature.named(named) else { return }
         if let featureIndex = self.configuration?.firstIndex(where: { $0 == feature }) {
@@ -141,7 +87,7 @@ public struct FeatureFlags {
             self.configuration = updatedConfiguration
         }
     }
-    
+
 }
 
 internal extension FeatureFlags {
@@ -163,7 +109,8 @@ internal extension FeatureFlags {
         return Bundle.main.url(forResource: configurationName, withExtension: configType.rawValue)
     }
     
-    static func loadConfigurationWithData(_ data: Data?, completion:(()-> Void)? = nil) -> ParsingServiceResult? {
+    static func loadConfigurationWithData(_ data: Data?,
+                                          completion:(() -> Void)? = nil) -> ParsingServiceResult? {
         // Load cached configuration, if exists
         var cachedResult: ParsingServiceResult?
         if let cachedConfigurationURL = cachedConfigurationURL,
@@ -182,9 +129,11 @@ internal extension FeatureFlags {
             } else {
                 localFallbackResult = nil
             }
-            
+
             // Update remote feature flag data with existing test variation assignments
-            let updatedRemoteResult = updateWithTestVariationAssignments(remoteResult, storedResult: cachedResult, localFallbackResult: localFallbackResult)
+            let updatedRemoteResult = updateWithTestVariationAssignments(remoteResult,
+                                                                         storedResult: cachedResult,
+                                                                         localFallbackResult: localFallbackResult)
             cacheConfiguration(updatedRemoteResult) // cache merged result
             completion?()
             return updatedRemoteResult
@@ -197,7 +146,9 @@ internal extension FeatureFlags {
             } else {
                 localFallbackResult = nil
             }
-            let updatedResult = updateWithTestVariationAssignments(storedResult, storedResult: storedResult, localFallbackResult: localFallbackResult)
+            let updatedResult = updateWithTestVariationAssignments(storedResult,
+                                                                   storedResult: storedResult,
+                                                                   localFallbackResult: localFallbackResult)
             completion?()
             return updatedResult
         } else if let localFallbackURL = localFallbackConfigurationURL,
@@ -214,23 +165,26 @@ internal extension FeatureFlags {
         completion?()
         return nil
     }
-    
-    static func loadConfiguration(_ completion:(()-> Void)? = nil) -> ParsingServiceResult? {
+
+    static func loadConfiguration(_ completion: (() -> Void)? = nil) -> ParsingServiceResult? {
         var remoteData: Data?
         if let configurationURL = configurationURL {
             remoteData = try? Data(contentsOf: configurationURL)
         }
         return loadConfigurationWithData(remoteData, completion: completion)
     }
-    
+
     private static func cacheConfiguration(_ result: ParsingServiceResult) {
         let encoder = JSONEncoder()
         guard let data = try? encoder.encode(result),
             let cachedConfigurationURL = cachedConfigurationURL else { return }
         try? data.write(to: cachedConfigurationURL)
     }
-    
-    private static func updateWithTestVariationAssignments(_ remoteResult: ParsingServiceResult, storedResult: ParsingServiceResult?, localFallbackResult: ParsingServiceResult? = nil) -> ParsingServiceResult {
+
+    private static func updateWithTestVariationAssignments(_ remoteResult: ParsingServiceResult,
+                                                           storedResult: ParsingServiceResult?,
+                                                           localFallbackResult: ParsingServiceResult? = nil)
+        -> ParsingServiceResult {
         var mergedResult: ParsingServiceResult = []
         for remoteFeature in remoteResult {
             var updatedRemoteFeature = remoteFeature
@@ -243,7 +197,7 @@ internal extension FeatureFlags {
         if let stored = storedResult {
             mergedResult = mergeFeaturesNotFoundIn(mergedResult, from: stored)
         }
-        
+
         if let localFallback = localFallbackResult {
             // Update development status of remote features from local
             mergedResult = mergedResult.map { remoteFeature in
@@ -259,10 +213,10 @@ internal extension FeatureFlags {
             }
             mergedResult = mergeFeaturesNotFoundIn(mergedResult, from: localFallback)
         }
-        
+
         return mergedResult
     }
-    
+
     private static func mergeFeaturesNotFoundIn(_ lhs: [Feature], from rhs: [Feature]) -> [Feature] {
         var result = lhs
         let disjointFeatures = rhs.filter({ rhsFeature in
@@ -273,7 +227,7 @@ internal extension FeatureFlags {
         result.append(contentsOf: disjointFeatures)
         return result
     }
-    
+
     private static func parseConfiguration(data: Data) -> ParsingServiceResult? {
         var parsingService: ParsingService?
         switch configurationType {

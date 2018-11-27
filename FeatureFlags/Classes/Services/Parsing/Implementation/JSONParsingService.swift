@@ -23,4 +23,3 @@ struct JSONParsingService: ParsingService {
         return container
     }
 }
-

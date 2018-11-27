@@ -12,10 +12,10 @@ class FeatureFlagsViewController: UITableViewController {
     
     // MARK: Type definitions
     public typealias Delegate = FeatureFlagsViewControllerDelegate
-    public typealias NavigationSettings = FeatureFlagsViewControllerNavigationSettings
+    public typealias NavigationSettings = ViewControllerNavigationSettings
     
     // MARK: State
-    var delegate: Delegate?
+    weak var delegate: Delegate?
     var navigationSettings: NavigationSettings?
     
     override func viewDidLoad() {
@@ -69,7 +69,9 @@ class FeatureFlagsViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCell.EditingStyle,
+                            forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             guard var features = FeatureFlags.configuration, indexPath.row < features.count else {
                 return
@@ -91,7 +93,6 @@ class FeatureFlagsViewController: UITableViewController {
         })
         return mutableFeatures
     }
-    
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
@@ -209,19 +210,21 @@ private extension FeatureFlagsViewController {
     }
     
     private func presentPickerViewController(on viewController: UIViewController, with feature: Feature) {
+        let viewControllerIdentifer = "TestVariationPickerViewController"
         let storyboard = UIStoryboard(name: "PickerViewController", bundle: currentBundle())
-        if let pickerViewController = storyboard.instantiateViewController(withIdentifier: "TestVariationPickerViewController") as? TestVariationPickerViewController {
-            let defaultValue: Test.Variation = feature.testVariation()
-            let selectedTestVariation = feature.testVariations.index(where: { $0 == defaultValue }) ?? 0
-            if let pickerOptionsViewModel = PickerOptionsViewModel<Test.Variation>(options: feature.testVariations, selectedOption: selectedTestVariation) {
-                pickerViewController.viewModel = ["Test Variation": pickerOptionsViewModel]
-                pickerViewController.modalPresentationStyle = .overFullScreen
-                pickerViewController.selection = { [weak self] selectedVariation in
-                    FeatureFlags.updateFeatureTestVariation(feature: feature.name, testVariation: selectedVariation)
-                    self?.tableView.reloadData()
-                }
-                viewController.present(pickerViewController, animated: false, completion: nil)
+        guard let pickerViewController = storyboard.instantiateViewController(withIdentifier:
+            viewControllerIdentifer) as? TestVariationPickerViewController else { return }
+        let defaultValue: Test.Variation = feature.testVariation()
+        let selectedTestVariation = feature.testVariations.index(where: { $0 == defaultValue }) ?? 0
+        if let pickerOptionsViewModel = PickerOptionsViewModel<Test.Variation>(options:
+            feature.testVariations, selectedOption: selectedTestVariation) {
+            pickerViewController.viewModel = ["Test Variation": pickerOptionsViewModel]
+            pickerViewController.modalPresentationStyle = .overFullScreen
+            pickerViewController.selection = { [weak self] selectedVariation in
+                FeatureFlags.updateFeatureTestVariation(feature: feature.name, testVariation: selectedVariation)
+                self?.tableView.reloadData()
             }
+            viewController.present(pickerViewController, animated: false, completion: nil)
         }
     }
     
@@ -236,7 +239,8 @@ private extension FeatureFlagsViewController {
 }
 
 extension FeatureFlagsViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing,
+                           viewControllerForLocation location: CGPoint) -> UIViewController? {
         if let indexPath = tableView.indexPathForRow(at: location) {
             previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
             return detailViewController(for: indexPath.row)
@@ -244,7 +248,8 @@ extension FeatureFlagsViewController: UIViewControllerPreviewingDelegate {
         return nil
     }
     
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing,
+                           commit viewControllerToCommit: UIViewController) {
         navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
     
