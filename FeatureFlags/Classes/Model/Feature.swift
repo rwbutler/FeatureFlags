@@ -49,7 +49,7 @@ public struct Feature {
     public func isEnabled(isDevelopment: Bool = false) -> Bool {
         switch type {
         case .featureTest(.featureFlagAB):
-            return testVariation().rawValue == "Enabled" ? true : false
+            return testVariation() == .enabled ? true : false
         default:
             guard !isDevelopment && !self.isDevelopment else {
                 #if DEBUG
@@ -80,10 +80,10 @@ public struct Feature {
     }
     
     public func testVariation() -> TestVariation {
-        guard enabled else { return .disabled }
         if let testVariationOverride = self.testVariationOverride {
             return testVariationOverride
         }
+        guard enabled else { return .disabled }
         var lowerBound = Percentage.min.rawValue
         for variation in zip(testVariations, testBiases) {
             let upperBound = lowerBound + variation.1.rawValue

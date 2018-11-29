@@ -46,7 +46,6 @@ class FeatureFlagsViewController: UITableViewController {
         cell.featureEnabled.isOn = feature.isEnabled()
         cell.featureType.text = feature.type.description
         cell.testVariation.text = testVariation.description
-        
         let allLabels = [cell.featureName, cell.featureType, cell.testVariation]
         
         let labelTextColor: UIColor

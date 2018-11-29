@@ -65,16 +65,17 @@ public struct FeatureFlags {
     public static func updateFeatureIsEnabled(feature named: Feature.Name, isEnabled: Bool) {
         guard var updatedConfiguration = configuration, var feature = Feature.named(named) else { return }
         if let featureIndex = self.configuration?.firstIndex(where: { $0 == feature }) {
-            updatedConfiguration.remove(at: featureIndex)
-            feature.enabled = isEnabled
-
+           
             if (feature.type == FeatureType.featureTest(.featureFlagAB)
                 || feature.type == FeatureType.featureFlag),
                 let alternateABVariant = feature.testVariations.filter({ $0 != feature.testVariation() }).first {
-                feature.setTestVariation(alternateABVariant)
+                updateFeatureTestVariation(feature: named, testVariation: alternateABVariant)
+            } else {
+                updatedConfiguration.remove(at: featureIndex)
+                feature.enabled = isEnabled
+                updatedConfiguration.append(feature)
+                self.configuration = updatedConfiguration
             }
-            updatedConfiguration.append(feature)
-            self.configuration = updatedConfiguration
         }
     }
 
@@ -83,6 +84,12 @@ public struct FeatureFlags {
         if let featureIndex = self.configuration?.firstIndex(where: { $0 == feature }) {
             updatedConfiguration.remove(at: featureIndex)
             feature.setTestVariation(testVariation)
+            if testVariation == .enabled {
+                feature.enabled = true
+            }
+            if testVariation == .disabled {
+                feature.enabled = false
+            }
             updatedConfiguration.append(feature)
             self.configuration = updatedConfiguration
         }
