@@ -49,6 +49,13 @@ public struct FeatureFlags {
     /// Where using a remote URL, a local fallback file may be specified
     public static var localFallbackConfigurationURL: URL?
 
+    /// Prints status of all feature flags
+    public static func printFeatureFlags() {
+        FeatureFlags.configuration?.forEach({ feature in
+            print("\(feature.name.rawValue): Enabled -> \(feature.isEnabled())")
+        })
+    }
+    
     @discardableResult
     public static func refresh(_ completion:(() -> Void)? = nil) -> ParsingServiceResult? {
         configuration = loadConfiguration(completion)
@@ -209,12 +216,8 @@ internal extension FeatureFlags {
             // Update development status of remote features from local
             mergedResult = mergedResult.map { remoteFeature in
                 var resultFeature: Feature = remoteFeature
-                if let localFeature = localFallback.first(where: { localFeature in
-                    localFeature.name == remoteFeature.name
-                }) {
-                    if localFeature.isDevelopment {
+                if let localFeature = localFallback.first(where: { $0.name == remoteFeature.name }), localFeature.isDevelopment {
                         resultFeature.isDevelopment = localFeature.isDevelopment
-                    }
                 }
                 return resultFeature
             }

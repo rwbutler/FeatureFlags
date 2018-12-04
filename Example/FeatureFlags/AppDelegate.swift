@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             isNavigationBarHidden: false)
         FeatureFlagsUI.pushFeatureFlags(navigationController: navigationController,
                                       navigationSettings: navigationSettings)
+        FeatureFlags.printFeatureFlags()
         return true
     }
 
