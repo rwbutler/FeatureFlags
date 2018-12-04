@@ -201,3 +201,18 @@ extension Feature: Codable {
         try container.encode(testVariations, forKey: .labels)
     }
 }
+
+extension Feature: CustomStringConvertible {
+    public var description: String {
+        var result = "Feature: \(self.name)"
+        result += "\nEnabled: \(self.isEnabled())"
+        let testVariationsStr = zip(testVariations, testBiases).map { testVariation, testBias in
+            return "\(testVariation) (\(testBias))"
+            }.joined(separator: ", ")
+        result += "\nTest variations: \(testVariationsStr)"
+        let testVariationAssignmentStr = String(format: "%.f", testVariationAssignment)
+        let assignmentStr = "\(testVariationAssignmentStr)% -> \(testVariation())"
+         result += "\nTest variation assignment: \(assignmentStr)"
+        return result
+    }
+}

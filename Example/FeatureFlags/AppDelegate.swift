@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             isNavigationBarHidden: false)
         FeatureFlagsUI.pushFeatureFlags(navigationController: navigationController,
                                       navigationSettings: navigationSettings)
-        FeatureFlags.printFeatureFlags()
+        printInformation()
         return true
     }
 
@@ -44,6 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+    }
+
+}
+
+private extension AppDelegate {
+
+    func printInformation() {
+        FeatureFlags.printFeatureFlags()
+        print("\n")
+        FeatureFlags.printExtendedFeatureFlagInformation()
     }
 
 }

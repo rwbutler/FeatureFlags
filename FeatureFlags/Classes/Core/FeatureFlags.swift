@@ -56,6 +56,12 @@ public struct FeatureFlags {
         })
     }
     
+    public static func printExtendedFeatureFlagInformation() {
+        FeatureFlags.configuration?.forEach({ feature in
+            print("\(feature.description)\n")
+        })
+    }
+    
     @discardableResult
     public static func refresh(_ completion:(() -> Void)? = nil) -> ParsingServiceResult? {
         configuration = loadConfiguration(completion)
@@ -216,7 +222,8 @@ internal extension FeatureFlags {
             // Update development status of remote features from local
             mergedResult = mergedResult.map { remoteFeature in
                 var resultFeature: Feature = remoteFeature
-                if let localFeature = localFallback.first(where: { $0.name == remoteFeature.name }), localFeature.isDevelopment {
+                let firstLocalFeature = localFallback.first(where: { $0.name == remoteFeature.name })
+                if let localFeature = firstLocalFeature, localFeature.isDevelopment {
                         resultFeature.isDevelopment = localFeature.isDevelopment
                 }
                 return resultFeature
