@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		132DE3E321B8044E00BC1D23 /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13365346217DD3C700E41564 /* Features.swift */; };
 		133653182178E86700E41564 /* Features.json in Resources */ = {isa = PBXBuildFile; fileRef = 133653172178E85F00E41564 /* Features.json */; };
 		13365347217DD3C700E41564 /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13365346217DD3C700E41564 /* Features.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -14,7 +15,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		607FACEC1AFB9204008FA782 /* BoundaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* BoundaryTests.swift */; };
 		D6EDC5CAC958DC43F5DB6AEA /* Pods_FeatureFlags_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F79A72D5D2FEECC3CF3EE038 /* Pods_FeatureFlags_Tests.framework */; };
 		F2EBDABBDB788F2E5927DBC5 /* Pods_FeatureFlags_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 217DEE2E1F4018A93B499868 /* Pods_FeatureFlags_Example.framework */; };
 /* End PBXBuildFile section */
@@ -45,7 +46,7 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* FeatureFlags_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FeatureFlags_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		607FACEB1AFB9204008FA782 /* BoundaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundaryTests.swift; sourceTree = "<group>"; };
 		876DA922934FC6805EF903AF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B7860BC82608F584A8E11953 /* Pods-FeatureFlags_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureFlags_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FeatureFlags_Tests/Pods-FeatureFlags_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		CAFDED9BAB20624197C89CEF /* Pods-FeatureFlags_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureFlags_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FeatureFlags_Tests/Pods-FeatureFlags_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -130,7 +131,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				607FACEB1AFB9204008FA782 /* BoundaryTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -358,7 +359,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				132DE3E321B8044E00BC1D23 /* Features.swift in Sources */,
+				607FACEC1AFB9204008FA782 /* BoundaryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

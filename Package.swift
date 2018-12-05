@@ -15,4 +15,3 @@ let package = Package(
             exclude: ["Classes/UI", "Classes/Extensions"])
     ]
 )
-

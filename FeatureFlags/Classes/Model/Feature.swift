@@ -85,13 +85,28 @@ public struct Feature {
         }
         guard enabled else { return .disabled }
         var lowerBound = Percentage.min.rawValue
+        var previousLowerBound: Double?
+        var previousVariation: (TestVariation, Percentage)?
         for variation in zip(testVariations, testBiases) {
             let upperBound = lowerBound + variation.1.rawValue
             let range = lowerBound..<upperBound
             if range.contains(testVariationAssignment) {
                 return variation.0
             }
+            previousLowerBound = lowerBound
+            previousVariation = variation
             lowerBound = upperBound
+        }
+        // Handle special case where the upper bound is 100.0 which in theory should not occur since
+        // drand48() generates in the range: [0.0, 1.0)
+        if let variation = previousVariation, let lowerBound = previousLowerBound {
+            let upperBound = lowerBound + variation.1.rawValue
+            if upperBound == 100.0 {
+                let range = lowerBound...upperBound
+                if range.contains(testVariationAssignment) {
+                    return variation.0
+                }
+            }
         }
         fatalError("A feature must always be categorizable into a test variation.")
     }
@@ -122,7 +137,7 @@ extension Feature: Codable {
         let isDevelopment = try container.decodeIfPresent(Bool.self, forKey: .isDevelopment)
         let testBiases = try container.decodeIfPresent([Percentage].self, forKey: .testBiases)
         self.testVariationAssignment = try container.decodeIfPresent(Double.self, forKey: .testVariationAssignment)
-            ?? drand48() * 100
+            ?? drand48() * 100 // [0.0, 1.0)
         let testVariations = try container.decodeIfPresent([String].self, forKey: .testVariations)
         let defaultTestVariations = [TestVariation(rawValue: "Enabled"), TestVariation(rawValue: "Disabled")]
         if let testVariations = testVariations {
