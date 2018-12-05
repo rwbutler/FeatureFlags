@@ -9,6 +9,33 @@ import Foundation
 
 public struct FeatureFlagsUI {
     
+    private static let notificationsObserver = FeatureFlagsUIObserver()
+    
+    // Allows FeatureFlags to refresh state information when app foregrounded
+    public static var autoRefresh: Bool {
+        get {
+            return _isObservingNotifications
+        }
+        set {
+            if newValue {
+                if !_isObservingNotifications {
+                    let observer = FeatureFlagsUI.notificationsObserver
+                    NotificationCenter.default.addObserver(observer,
+                        selector: #selector(observer.willEnterForeground),
+                        name: UIApplication.willEnterForegroundNotification,
+                        object: nil)
+                    _isObservingNotifications = true
+                }
+            } else if _isObservingNotifications {
+                let observer = FeatureFlagsUI.notificationsObserver
+                NotificationCenter.default.removeObserver(observer)
+                _isObservingNotifications = false
+            }
+        }
+    }
+    
+    private static var _isObservingNotifications: Bool = false
+    
     /// Presents FeatureFlagsViewController modally
     public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil,
                                            animated: Bool = false, shouldRefresh: Bool = true) {

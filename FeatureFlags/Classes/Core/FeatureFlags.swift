@@ -121,6 +121,11 @@ internal extension FeatureFlags {
             .appendingPathComponent("\(configurationName).\(configurationType.rawValue)")
     }
     
+    static func clearCache() {
+        guard let cachedConfigURL = cachedConfigurationURL else { return }
+        try? FileManager.default.removeItem(at: cachedConfigURL)
+    }
+    
     static var configuration: ParsingServiceResult? = loadConfiguration()
     
     static let configurationName: String = "Features"

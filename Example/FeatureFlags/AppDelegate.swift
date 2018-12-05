@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             closeButtonAlignment: .left,
             closeButton: .done,
             isNavigationBarHidden: false)
+        FeatureFlagsUI.autoRefresh = true
         FeatureFlagsUI.pushFeatureFlags(navigationController: navigationController,
                                       navigationSettings: navigationSettings)
         printInformation()

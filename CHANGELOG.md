@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Added
+- Added `FeatureFlagsUI.autoRefresh` property to automatically refresh data from configuration when the app is foregrounded (defaults to `false`).
+- Added ability to clear cache from `FeatureFlagsViewController`.
+
 ## [1.2.2] - 2018-12-05
 ### Added
 - Added function `printFeatureFlags()` for printing flag status.

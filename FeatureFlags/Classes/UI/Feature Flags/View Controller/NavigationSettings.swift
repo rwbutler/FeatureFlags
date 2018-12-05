@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 @objc public class ViewControllerNavigationSettings: NSObject {
+
+    let actionButton: UIBarButtonItem.SystemItem
     let animated: Bool
     let autoClose: Bool
     let closeButtonAlignment: CloseButtonAlignment
@@ -17,12 +19,15 @@ import UIKit
     let isNavigationBarHidden: Bool
     let shouldRefresh: Bool
 
-    public init(animated: Bool = false, autoClose: Bool = true,
+    public init(actionButton: UIBarButtonItem.SystemItem = .action,
+                animated: Bool = false,
+                autoClose: Bool = true,
                 closeButtonAlignment: CloseButtonAlignment = .left,
                 closeButton: UIBarButtonItem.SystemItem = .done,
                 isModal: Bool = false,
                 isNavigationBarHidden: Bool = false,
                 shouldRefresh: Bool = true) {
+        self.actionButton = actionButton
         self.animated = animated
         self.autoClose = autoClose
         self.closeButtonAlignment = closeButtonAlignment
@@ -31,4 +36,5 @@ import UIKit
         self.isNavigationBarHidden = isNavigationBarHidden
         self.shouldRefresh = shouldRefresh
     }
+
 }

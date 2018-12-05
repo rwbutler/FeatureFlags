@@ -129,15 +129,24 @@ extension FeatureFlagsViewController {
 
 private extension FeatureFlagsViewController {
     private func configureNavigationBar() {
+        let actionButtonType = navigationSettings?.actionButton ?? .action
         let closeButtonType = navigationSettings?.closeButton ?? .done
-        let doneButton = UIBarButtonItem(barButtonSystemItem: closeButtonType, target: self, action: #selector(close))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: closeButtonType,
+                                         target: self,
+                                         action: #selector(close))
+        let actionButton = UIBarButtonItem(barButtonSystemItem: actionButtonType,
+                                           target: self,
+                                           action: #selector(presentActionSheet))
         let closeButtonAlignment = navigationSettings?.closeButtonAlignment ?? .left
         switch closeButtonAlignment {
         case .left:
             navigationItem.leftBarButtonItem = doneButton
+            navigationItem.rightBarButtonItem = actionButton
         case .right:
+            navigationItem.leftBarButtonItem = actionButton
             navigationItem.rightBarButtonItem = doneButton
         }
+        navigationItem.leftItemsSupplementBackButton = true
     }
     
     private func configureTableView() {
@@ -187,6 +196,16 @@ private extension FeatureFlagsViewController {
             }
         }
         delegate?.viewControllerDidFinish()
+    }
+    
+    @objc func presentActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let clearCache = UIAlertAction(title: "Clear cache", style: .destructive) { _ in
+            FeatureFlags.clearCache()
+            self.dismiss(animated: true, completion: nil)
+        }
+        actionSheet.addAction(clearCache)
+        present(actionSheet, animated: true, completion: nil)
     }
     
     /// Determines whether or not this view controller should dismiss itself

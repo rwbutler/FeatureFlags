@@ -19,6 +19,7 @@
 		1336532F2179EF7500E41564 /* ConfigurationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1336532E2179EF7500E41564 /* ConfigurationType.swift */; };
 		13365349217DFF3500E41564 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13365348217DFF3500E41564 /* Test.swift */; };
 		133FDEFC21A0D30A00A157EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 133FDEFB21A0D30A00A157EA /* Images.xcassets */; };
+		134F2D7221B829E500B9D484 /* FeatureFlagsUIObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F2D7121B829E500B9D484 /* FeatureFlagsUIObserver.swift */; };
 		1356D67121ADF96400D8590B /* FeatureFlagsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1356D67021ADF96400D8590B /* FeatureFlagsUI.swift */; };
 		135FF824218214BF00F430C4 /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135FF80D218214BF00F430C4 /* PickerViewController.swift */; };
 		135FF825218214BF00F430C4 /* PickerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135FF80E218214BF00F430C4 /* PickerViewController.storyboard */; };
@@ -81,7 +82,7 @@
 		1336532E2179EF7500E41564 /* ConfigurationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationType.swift; sourceTree = "<group>"; };
 		13365348217DFF3500E41564 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		133FDEFB21A0D30A00A157EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FeatureFlags/Assets/Images.xcassets; sourceTree = "<group>"; };
-		1356D66F21ADF4F000D8590B /* FeatureFlags copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "FeatureFlags copy-Info.plist"; path = "/Users/butlerrr/Library/Mobile Documents/com~apple~CloudDocs/Documents/projects/feature-flags/Example/Pods/FeatureFlags copy-Info.plist"; sourceTree = "<absolute>"; };
+		134F2D7121B829E500B9D484 /* FeatureFlagsUIObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsUIObserver.swift; sourceTree = "<group>"; };
 		1356D67021ADF96400D8590B /* FeatureFlagsUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsUI.swift; sourceTree = "<group>"; };
 		135FF80D218214BF00F430C4 /* PickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
 		135FF80E218214BF00F430C4 /* PickerViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PickerViewController.storyboard; sourceTree = "<group>"; };
@@ -218,6 +219,7 @@
 		135FF80A218214BF00F430C4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				134F2D7121B829E500B9D484 /* FeatureFlagsUIObserver.swift */,
 				1356D67021ADF96400D8590B /* FeatureFlagsUI.swift */,
 				135FF80B218214BF00F430C4 /* Picker */,
 				135FF812218214BF00F430C4 /* Details */,
@@ -647,6 +649,7 @@
 				1336532C2178E98C00E41564 /* FeaturesModel.swift in Sources */,
 				135FF828218214BF00F430C4 /* FeatureDetailsViewController.swift in Sources */,
 				1336532F2179EF7500E41564 /* ConfigurationType.swift in Sources */,
+				134F2D7221B829E500B9D484 /* FeatureFlagsUIObserver.swift in Sources */,
 				135FF824218214BF00F430C4 /* PickerViewController.swift in Sources */,
 				13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */,
 				133653292178E98C00E41564 /* TestVariation.swift in Sources */,
