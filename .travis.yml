@@ -1,9 +1,21 @@
 language: objective-c
 osx_image: xcode10
+env:
+   global:
+     - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID
 before_install:
   - gem install cocoapods -v '1.5.0'
 install:
   - ./install_swiftlint.sh
+before_script:
+  - |
+    bash -c "
+      if [ ! -z "$CC_TEST_REPORTER_ID" ]; then
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter && \
+        chmod +x ./cc-test-reporter && \
+        ./cc-test-reporter before-build
+      fi
+    "
 script:
   - gem install travis --no-rdoc --no-ri
   - travis lint .travis.yml --no-interactive
@@ -11,3 +23,10 @@ script:
   - xcodebuild clean build test -workspace Example/FeatureFlags.xcworkspace -scheme FeatureFlags-Example -destination "platform=iOS Simulator,name=iPhone X" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
   - pod lib lint
   - swift build # Check Swift Package Manager module compiles
+after_script:
+   - |
+    bash -c "
+      if [ ! -z "$CC_TEST_REPORTER_ID" ]; then
+        ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+      fi
+    "
