@@ -28,6 +28,7 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 	- [Rolling Out Features](#rolling-out-features)
 	- [QA](#qa)
 	- [Refreshing Configuration](#refreshing-configuration)
+- [Objective-C](#objective-c)
 - [Author](#author)
 - [License](#license)
 - [Additional Software](#additional-software)
@@ -476,6 +477,18 @@ If you have opted to include your feature flag information as part of an existin
 
 ```
 FeatureFlags.refreshWithData(_:completion:) 
+```
+
+## Objective-C
+
+Whilst FeatureFlags is primarily intended for use by Swift apps, should the need arise to check whether a feature flag is enabled in Objective-C it is possible to do so as follows:
+
+```
+static NSString *const kMyNewFeatureFlag = @"My New Feature Flag";
+
+if (FEATURE_IS_ENABLED(kMyNewFeatureFlag)) {
+    ...
+}
 ```
 
 ## Author
