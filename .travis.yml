@@ -7,6 +7,6 @@ install:
 script:
   - gem install travis --no-rdoc --no-ri
   - travis lint .travis.yml --no-interactive
-  #- swiftlint
+  - swiftlint
   - xcodebuild clean build -workspace Example/FeatureFlags.xcworkspace -scheme FeatureFlags-Example -destination "platform=iOS Simulator,name=iPhone X" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
   - pod lib lint
