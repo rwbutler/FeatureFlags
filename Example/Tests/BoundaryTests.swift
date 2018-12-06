@@ -187,9 +187,7 @@ class BoundaryTests: XCTestCase {
     }
 
     /// Test that when the test variation assignment is 100 that a group can still be assigned.
-    /// This should never occur in practice as drand48 generates in the range [0.0, 1.0) see:
-    // swiftlint:disable:next line_length
-    /// https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/drand48.3.html
+    /// This should never occur in practice as numbers are generated in the range [0.0, 100.0).
     func testWhenTestVariationAssignmentIsOneHundredThatVariationIsGroupB() {
         let featureConfiguration =
         """

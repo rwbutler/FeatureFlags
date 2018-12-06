@@ -118,7 +118,7 @@ public struct Feature {
             lowerBound = upperBound
         }
         // Handle special case where the upper bound is 100.0 which in theory should not occur since
-        // drand48() generates in the range: [0.0, 1.0)
+        // numbers are generated in the range: [0.0, 100.0)
         if let variation = previousVariation, let lowerBound = previousLowerBound {
             let upperBound = lowerBound + variation.1.rawValue
             if upperBound == 100.0 {
@@ -152,7 +152,7 @@ extension Feature: Codable {
         let isDevelopment = try container.decodeIfPresent(Bool.self, forKey: .isDevelopment)
         let testBiases = try container.decodeIfPresent([Percentage].self, forKey: .testBiases)
         self.testVariationAssignment = try container.decodeIfPresent(Double.self, forKey: .testVariationAssignment)
-            ?? drand48() * 100 // [0.0, 1.0)
+            ?? Double.random(in: 0..<100) // [0.0, 100.0)
         let testVariations = try container.decodeIfPresent([String].self, forKey: .testVariations)
         let defaultTestVariations = [TestVariation(rawValue: "Enabled"), TestVariation(rawValue: "Disabled")]
         if let testVariations = testVariations {
