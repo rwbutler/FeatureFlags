@@ -202,9 +202,16 @@ private extension FeatureFlagsViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let clearCache = UIAlertAction(title: "Clear cache", style: .destructive) { _ in
             FeatureFlags.clearCache()
-            self.dismiss(animated: true, completion: nil)
+            FeatureFlags.refresh {
+                self.tableView.reloadData()
+                self.dismiss(animated: true, completion: nil)
+            }
         }
         actionSheet.addAction(clearCache)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
+        })
+        actionSheet.addAction(cancel)
         present(actionSheet, animated: true, completion: nil)
     }
     

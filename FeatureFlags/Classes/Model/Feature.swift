@@ -23,6 +23,12 @@ public struct Feature {
     internal let labels: [String?]
     internal var testVariationOverride: TestVariation?
     
+    /// Syntactic sugar for retrieving a feature by name
+    init?(named name: Feature.Name) {
+        guard let feature = Feature.named(name) else { return nil }
+        self = feature
+    }
+    
     public func label(_ testVariation: Test.Variation) -> String? {
         guard let variationLabel = zip(testVariations, labels).first(where: { $0.0 == testVariation })?.1,
             enabled else {
@@ -49,7 +55,7 @@ public struct Feature {
     public func isEnabled(isDevelopment: Bool = false) -> Bool {
         switch type {
         case .featureTest(.featureFlagAB):
-            return testVariation() == .enabled ? true : false
+            return testVariation() == .enabled // When disabled the test variation will be set to .disabled
         default:
             guard !isDevelopment && !self.isDevelopment else {
                 #if DEBUG
@@ -66,6 +72,20 @@ public struct Feature {
     public static func named(_ featureName: Feature.Name) -> Feature? {
         guard let features = FeatureFlags.configuration else { return nil }
         return features.first(where: { $0.name == featureName })
+    }
+    
+    /// Allows the developer to programmatically enable or disable the feature flag.
+    /// Note: That programmatic changes to enabled state are not persisted so this
+    /// value will only persist until a refresh from configuration occurs.
+    internal mutating func setEnabled(_ enabled: Bool) {
+        self.enabled = enabled
+    }
+    
+    /// Allows the developer to programmatically set the variation.
+    /// Note: That programmatic changes to variation state are not persisted so this
+    /// value will only persist until a refresh from configuration occurs.
+    internal mutating func setTestVariation(_ testVariation: Test.Variation) {
+        self.testVariationOverride = testVariation
     }
     
     func testBias(_ testVariation: Test.Variation) -> Percentage {
@@ -110,12 +130,7 @@ public struct Feature {
         }
         fatalError("A feature must always be categorizable into a test variation.")
     }
-    
-    /// Returns whether or not updated successfully
-    @discardableResult internal mutating func setTestVariation(_ testVariation: Test.Variation) -> Bool {
-        testVariationOverride = testVariation
-        return true
-    }
+
 }
 
 extension Feature: Codable {
