@@ -1,9 +1,16 @@
+//
+//  AssignmentBoundaryTests.swift
+//  FeatureFlags
+//
+//  Created by Ross Butler on 12/9/18.
+//
+
 import XCTest
 @testable import FeatureFlags
 
-/// Testing that given a test variation assignment that the user is assigned to the correct A/B testing group
+/// Testing that given a test variation assignment that the user is assigned to the correct A/B testing group.
 // swiftlint:disable:next type_body_length
-class BoundaryTests: XCTestCase {
+class AssignmentBoundaryTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
@@ -34,28 +41,6 @@ class BoundaryTests: XCTestCase {
         }
         feature.testVariationAssignment = 0.0
         XCTAssert(feature.isTestVariation(.groupA), "Pass")
-        XCTAssert(!feature.isTestVariation(.groupB), "Pass")
-    }
-
-    func testWhenFeatureNotEnabledThatNotInTestVariationGroup() {
-        let featureConfiguration =
-        """
-        [{
-        "name": "Example A/B Test",
-        "enabled": false,
-        "test-biases": [50, 50],
-        "test-variations": ["Group A", "Group B"]
-        }]
-        """
-        let decoder = JSONDecoder()
-        guard let featuresData = featureConfiguration.data(using: .utf8),
-            let features = try? decoder.decode([Feature].self, from: featuresData),
-            var feature = features.first else {
-                XCTAssert(false, "Fail")
-                return
-        }
-        feature.testVariationAssignment = 0.0
-        XCTAssert(!feature.isTestVariation(.groupA), "Pass")
         XCTAssert(!feature.isTestVariation(.groupB), "Pass")
     }
 
@@ -99,47 +84,6 @@ class BoundaryTests: XCTestCase {
         feature.testVariationAssignment = 50.0
         XCTAssert(!feature.isTestVariation(.enabled), "Pass")
         XCTAssert(feature.isTestVariation(.disabled), "Pass")
-    }
-
-    func testWhenFeatureABNotEnabledThatInTestVariationDisabled() {
-        let featureConfiguration =
-        """
-        [{
-        "name": "Example Feature A/B Test",
-        "enabled": false,
-        "test-variations": ["Enabled", "Disabled"]
-        }]
-        """
-        let decoder = JSONDecoder()
-        guard let featuresData = featureConfiguration.data(using: .utf8),
-            let features = try? decoder.decode([Feature].self, from: featuresData),
-            var feature = features.first else {
-                XCTAssert(false, "Fail")
-                return
-        }
-        feature.testVariationAssignment = 0.0
-        XCTAssert(!feature.isTestVariation(.enabled), "Pass")
-        XCTAssert(feature.isTestVariation(.disabled), "Pass")
-    }
-
-    func testWhenFeatureABNotEnabledThatIsDisabled() {
-        let featureConfiguration =
-        """
-        [{
-        "name": "Example Feature A/B Test",
-        "enabled": false,
-        "test-variations": ["Enabled", "Disabled"]
-        }]
-        """
-        let decoder = JSONDecoder()
-        guard let featuresData = featureConfiguration.data(using: .utf8),
-            let features = try? decoder.decode([Feature].self, from: featuresData),
-            var feature = features.first else {
-                XCTAssert(false, "Fail")
-                return
-        }
-        feature.testVariationAssignment = 0.0
-        XCTAssert(!feature.isEnabled(), "Pass")
     }
 
     func testWhenTestVariationAssignmentIsSmallAndNonZeroThatVariationIsGroupA() {
