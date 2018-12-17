@@ -77,11 +77,8 @@ class FeatureFlagsViewController: UITableViewController {
             }
             features = sortedFeatures(features)
             let feature = features[indexPath.row]
-            FeatureFlags.deleteFeatureFromCache(named: feature.name)
-            let refreshedFeatures = FeatureFlags.refresh() ?? []
-            if refreshedFeatures.count != features.count {
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
+            FeatureFlags.deleteFeature(named: feature.name)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     

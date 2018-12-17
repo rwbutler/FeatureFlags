@@ -33,6 +33,7 @@ public struct FeatureFlags {
         return .json // default
     }()
     
+    /// Removes the specified feature from the cache however the feature will remain in in-memory configuration.
     static func deleteFeatureFromCache(named name: Feature.Name) {
         // Load cached configuration, if exists
         if let cachedConfigurationURL = cachedConfigurationURL,
@@ -40,6 +41,18 @@ public struct FeatureFlags {
             var cachedResult = parseConfiguration(data: cachedData) {
             cachedResult = cachedResult.filter({ $0.name != name })
             cacheConfiguration(cachedResult)
+        }
+    }
+    
+    /// Deletes the feature with the specified name.
+    /// Note: If the feature still exists in the JSON then it will be re-added later.
+    static func deleteFeature(named name: Feature.Name) {
+        deleteFeatureFromCache(named: name)
+        let indexOfFeatureToBeRemoved = FeatureFlags.configuration?.firstIndex(where: { feature in
+            return feature.name.rawValue == name.rawValue
+        })
+        if let index = indexOfFeatureToBeRemoved {
+            FeatureFlags.configuration?.remove(at: index)
         }
     }
 
@@ -64,13 +77,15 @@ public struct FeatureFlags {
     
     @discardableResult
     public static func refresh(_ completion:(() -> Void)? = nil) -> ParsingServiceResult? {
-        configuration = loadConfiguration(completion)
+        configuration = loadConfiguration()
+        completion?()
         return configuration
     }
 
     @discardableResult
     public static func refreshWithData(_ data: Data, completion:(() -> Void)? = nil) -> ParsingServiceResult? {
-        configuration = loadConfigurationWithData(data, completion: completion)
+        configuration = loadConfigurationWithData(data)
+        completion?()
         return configuration
     }
     
@@ -134,8 +149,7 @@ internal extension FeatureFlags {
         return Bundle.main.url(forResource: configurationName, withExtension: configType.rawValue)
     }
     
-    static func loadConfigurationWithData(_ data: Data?,
-                                          completion:(() -> Void)? = nil) -> ParsingServiceResult? {
+    static func loadConfigurationWithData(_ data: Data?) -> ParsingServiceResult? {
         // Load cached configuration, if exists
         var cachedResult: ParsingServiceResult?
         if let cachedConfigurationURL = cachedConfigurationURL,
@@ -160,7 +174,6 @@ internal extension FeatureFlags {
                                                                          storedResult: cachedResult,
                                                                          localFallbackResult: localFallbackResult)
             cacheConfiguration(updatedRemoteResult) // cache merged result
-            completion?()
             return updatedRemoteResult
         } else if let storedResult = cachedResult {
             // Couldn't access remote configuration - merge fallback into cached result
@@ -174,29 +187,25 @@ internal extension FeatureFlags {
             let updatedResult = updateWithTestVariationAssignments(storedResult,
                                                                    storedResult: storedResult,
                                                                    localFallbackResult: localFallbackResult)
-            completion?()
             return updatedResult
         } else if let localFallbackURL = localFallbackConfigurationURL,
             let localFallbackData = try? Data(contentsOf: localFallbackURL) {
             let localFallbackResult = parseConfiguration(data: localFallbackData)
-            completion?()
             return localFallbackResult
         } else if let bundledConfigurationURL = bundledConfigurationURL(),
             let bundledData = try? Data(contentsOf: bundledConfigurationURL) {
             let bundledResult = parseConfiguration(data: bundledData)
-            completion?()
             return bundledResult
         }
-        completion?()
         return nil
     }
 
-    static func loadConfiguration(_ completion: (() -> Void)? = nil) -> ParsingServiceResult? {
+    static func loadConfiguration() -> ParsingServiceResult? {
         var remoteData: Data?
         if let configurationURL = configurationURL {
             remoteData = try? Data(contentsOf: configurationURL)
         }
-        return loadConfigurationWithData(remoteData, completion: completion)
+        return loadConfigurationWithData(remoteData)
     }
 
     private static func cacheConfiguration(_ result: ParsingServiceResult) {
