@@ -47,7 +47,7 @@ public struct FeatureFlagsUI {
         let navigationSettings = FeatureFlagsViewController
             .NavigationSettings(animated: animated,
                                 autoClose: true,
-                                closeButtonAlignment: .right,
+                                closeButtonAlignment: .closeButtonRightActionButtonLeft,
                                 isModal: true,
                                 isNavigationBarHidden: navigationController.isNavigationBarHidden,
                                 shouldRefresh: shouldRefresh)

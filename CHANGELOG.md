@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2018-12-21
+### Changed
+- Now possible to present FeatureFlagsViewController without a close button.
+- Fixed an issue where test variation assignments were not stored in the sitatuation where no remote data or cached data present (first launch scenario).
+
 ## [1.4.0] - 2018-12-17
 ### Changed
 - Swipe to delete on FeatureFlagsViewController now deletes the feature rather than clearing cache now that cache can be cleared via the action button. Note: If the feature is still present in the JSON then it will re-created on refresh.

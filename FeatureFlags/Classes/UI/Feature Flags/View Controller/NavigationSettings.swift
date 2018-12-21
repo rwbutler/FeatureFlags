@@ -22,7 +22,7 @@ import UIKit
     public init(actionButton: UIBarButtonItem.SystemItem = .action,
                 animated: Bool = false,
                 autoClose: Bool = true,
-                closeButtonAlignment: CloseButtonAlignment = .left,
+                closeButtonAlignment: CloseButtonAlignment = .closeButtonLeftActionButtonRight,
                 closeButton: UIBarButtonItem.SystemItem = .done,
                 isModal: Bool = false,
                 isNavigationBarHidden: Bool = false,

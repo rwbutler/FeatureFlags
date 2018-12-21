@@ -134,14 +134,18 @@ private extension FeatureFlagsViewController {
         let actionButton = UIBarButtonItem(barButtonSystemItem: actionButtonType,
                                            target: self,
                                            action: #selector(presentActionSheet))
-        let closeButtonAlignment = navigationSettings?.closeButtonAlignment ?? .left
+        let closeButtonAlignment = navigationSettings?.closeButtonAlignment ?? .closeButtonLeftActionButtonRight
         switch closeButtonAlignment {
-        case .left:
+        case .closeButtonLeftActionButtonRight:
             navigationItem.leftBarButtonItem = doneButton
             navigationItem.rightBarButtonItem = actionButton
-        case .right:
+        case .closeButtonRightActionButtonLeft:
             navigationItem.leftBarButtonItem = actionButton
             navigationItem.rightBarButtonItem = doneButton
+        case .noCloseButtonActionButtonLeft:
+            navigationItem.leftBarButtonItem = actionButton
+        case .noCloseButtonActionButtonRight:
+            navigationItem.rightBarButtonItem = actionButton
         }
         navigationItem.leftItemsSupplementBackButton = true
     }

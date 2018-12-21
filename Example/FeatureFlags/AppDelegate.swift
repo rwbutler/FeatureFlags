@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         let navigationSettings = ViewControllerNavigationSettings(
             autoClose: true,
-            closeButtonAlignment: .left,
+            closeButtonAlignment: .closeButtonLeftActionButtonRight,
             closeButton: .done,
             isNavigationBarHidden: false)
         FeatureFlagsUI.autoRefresh = true

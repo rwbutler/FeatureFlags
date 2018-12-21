@@ -8,6 +8,8 @@
 import Foundation
 
 @objc public enum CloseButtonAlignment: Int {
-    case left
-    case right
+    case closeButtonLeftActionButtonRight
+    case closeButtonRightActionButtonLeft
+    case noCloseButtonActionButtonLeft
+    case noCloseButtonActionButtonRight
 }

@@ -136,6 +136,11 @@ internal extension FeatureFlags {
             .appendingPathComponent("\(configurationName).\(configurationType.rawValue)")
     }
     
+    static func cacheExists() -> Bool {
+        guard let cachedConfigURL = cachedConfigurationURL else { return false }
+        return FileManager.default.fileExists(atPath: cachedConfigURL.path)
+    }
+    
     static func clearCache() {
         guard let cachedConfigURL = cachedConfigurationURL else { return }
         try? FileManager.default.removeItem(at: cachedConfigURL)
@@ -191,10 +196,16 @@ internal extension FeatureFlags {
         } else if let localFallbackURL = localFallbackConfigurationURL,
             let localFallbackData = try? Data(contentsOf: localFallbackURL) {
             let localFallbackResult = parseConfiguration(data: localFallbackData)
+            if !cacheExists(), let result = localFallbackResult {
+                cacheConfiguration(result)
+            }
             return localFallbackResult
         } else if let bundledConfigurationURL = bundledConfigurationURL(),
             let bundledData = try? Data(contentsOf: bundledConfigurationURL) {
             let bundledResult = parseConfiguration(data: bundledData)
+            if !cacheExists(), let result = bundledResult {
+                cacheConfiguration(result)
+            }
             return bundledResult
         }
         return nil
