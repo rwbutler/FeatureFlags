@@ -1,5 +1,5 @@
 //
-//  FeatureFlagsViewControllerCloseButtonAlignment.swift
+//  CloseButtonAlignment.swift
 //  FeatureFlags
 //
 //  Created by Ross Butler on 10/31/18.

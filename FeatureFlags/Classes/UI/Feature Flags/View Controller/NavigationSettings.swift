@@ -1,5 +1,5 @@
 //
-//  NavigationSettings.swift
+//  ViewControllerNavigationSettings.swift
 //  FeatureFlags
 //
 //  Created by Ross Butler on 10/30/18.

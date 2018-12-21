@@ -125,6 +125,7 @@ extension FeatureFlagsViewController {
 }
 
 private extension FeatureFlagsViewController {
+    
     private func configureNavigationBar() {
         let actionButtonType = navigationSettings?.actionButton ?? .action
         let closeButtonType = navigationSettings?.closeButton ?? .done
