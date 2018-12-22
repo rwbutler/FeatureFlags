@@ -52,19 +52,19 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 
 [CocoaPods](http://cocoapods.org) is a dependency manager which integrates dependencies into your Xcode workspace. To install it using [RubyGems](https://rubygems.org/) run:
 
-```
+```bash
 gem install cocoapods
 ```
 
 To install FeatureFlags using Cocoapods, simply add the following line to your Podfile:
 
-```
+```ruby
 pod "FeatureFlags"
 ```
 
 Then run the command:
 
-```
+```bash
 pod install
 ```
 
@@ -74,14 +74,14 @@ For more information [see here](https://cocoapods.org/#getstarted).
 
 Carthage is a dependency manager which produces a binary for manual integration into your project. It can be installed via [Homebrew](https://brew.sh/) using the commands:
 
-```
+```bash
 brew update
 brew install carthage
 ```
 
 In order to integrate FeatureFlags into your project via Carthage, add the following line to your project's Cartfile:
 
-```
+```ogdl
 github "rwbutler/FeatureFlags"
 ```
 
@@ -95,7 +95,7 @@ The [Swift Package Manager](https://swift.org/package-manager/) is a dependency 
 
 To include FeatureFlags as a dependency within a Swift package, add the package to the `dependencies` entry in your `Package.swift` file as follows:
 
-```
+```swift
 dependencies: [
     .package(url: "https://github.com/rwbutler/FeatureFlags.git", from: "4.2.0")
 ]
@@ -104,7 +104,7 @@ dependencies: [
 ## Usage
 With the framework integrated into your project, the next step is configuration using a JSON file which may be bundled as part of your app or hosted remotely. The JSON file may be newly-created or could be an existing configuration JSON file that you're using already. Simply add a key called `features` at the top level of your file mapping to an array of features as follows:
 
-```
+```json
 {
     "features": []
 }
@@ -114,21 +114,21 @@ The contents of the array depends on the feature flags and tests to be configure
 
 To let FeatureFlags know where to find your configuration file:
 
-```
+```swift
 guard let featuresURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
 FeatureFlags.configurationURL = featuresURL
 ```
 
 Or:
 
-```
+```swift
 guard let featuresURL = URL(string: "https://www.exampledomain.com/features.json") else { return }
 FeatureFlags.configurationURL = featuresURL
 ```
 
 In the event that you opt to host your JSON file remotely, you may provide a bundled fallback as part of your app bundle:
 
-```
+```swift
 guard let fallbackURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
 FeatureFlags.localFallbackConfigurationURL = fallbackURL
 ```
@@ -139,7 +139,7 @@ Your remotely-hosted JSON file will always take precedence over bundled settings
 
 In order to configure a feature flag add a feature object to the features array in your JSON configuration.
 
-```
+```json
 {
     "features": [{
         "name": "Example Feature Flag",
@@ -150,7 +150,7 @@ In order to configure a feature flag add a feature object to the features array 
 
 Then add an extension on `Feature.Name` to import your feature flag in code as follows:
 
-```
+```swift
 import FeatureFlags
 
 extension Feature.Name {
@@ -160,13 +160,13 @@ extension Feature.Name {
 
 Make sure that the raw value matches the string in your JSON file. Then call the following to check whether the feature flag is enabled:
 
-```
+```swift
 Feature.isEnabled(.exampleFeatureFlag)) 
 ```
 
 If the string specified in your `Feature.Name` extension doesn't match the value in your JSON file, the default value returned is `false`. If you need to check the feature exists, you can write:
 
-```
+```swift
 if let feature = Feature.named(.exampleFeatureFlag) {
 	print("Feature name -> \(feature.name)")
 	print("Feature enabled -> \(feature.isEnabled())")
@@ -177,7 +177,7 @@ if let feature = Feature.named(.exampleFeatureFlag) {
 
 To configure an A/B test, add the following feature object to the features array in your JSON file:
 
-```
+```json
 {
 	"name": "Example A/B Test",
 	"enabled": true, // whether or not the test is enabled
@@ -189,7 +189,7 @@ The only difference between a feature flag and an A/B test involves adding an ar
 
 Import your feature into code with an extension on `Feature.Name`:
 
-```
+```swift
 extension Feature.Name {
 	static let exampleABTest = Feature.Name(rawValue: "Example A/B Test")
 }
@@ -197,7 +197,7 @@ extension Feature.Name {
 
 And then use the following to check which group the user has been assigned to:
 
-```
+```swift
 if let test = ABTest(rawValue: .exampleABTest) {
 	print("Is in group A? -> \(test.isGroupA())")
 	print("Is in group B? -> \(test.isGroupB())")
@@ -206,7 +206,7 @@ if let test = ABTest(rawValue: .exampleABTest) {
 
 Alternatively, you may prefer the following syntax:
 
-```
+```swift
 if let feature = Feature.named(.exampleABTest) {
 	print("Feature name -> \(feature.name)")
 	print("Is group A? -> \(feature.isTestVariation(.groupA))")
@@ -222,13 +222,15 @@ A feature A/B test is a subtle variation on (and subtype of) an A/B test. In a g
 
 To configure a feature A/B test use the following JSON:
 
-```
+```json
 {
 	"name": "Example Feature A/B Test",
 	"enabled": true, // whether or not the test is enabled
 	"test-variations": ["Enabled", "Disabled"]
 }
+```
 
+```swift
 extension Feature.Name {
 	static let exampleFeatureABTest = Feature.Name(rawValue: "Example Feature A/B Test")
 }
@@ -238,7 +240,7 @@ By naming the test variations `Enabled` and `Disabled`, FeatureFlags knows that 
 
 Configuring a feature A/B test has the advantage over a generic A/B test in that instead of having to write:
 
-```
+```swift
 if let feature = Feature.named(.exampleFeatureABTest) {
 	print("Feature name -> \(feature.name)")
 	print("Is group A? -> \(feature.isTestVariation(.enabled))")
@@ -249,7 +251,7 @@ if let feature = Feature.named(.exampleFeatureABTest) {
 
 You may simply use the following to determine which test group the user has been assigned to:
 
-```
+```swift
 Feature.isEnabled(.exampleFeatureABTest))
 ```
 
@@ -259,7 +261,7 @@ Ordinarily using the `Feature.enabled()` method tests to see whether a feature i
 
 Configuration of a multivariate test follows much the same pattern as that of an A/B test. Add the following feature object to the features array in your JSON file:
 
-```
+```json
 {
 	"name": "Example MVT Test",
 	"enabled": true, // whether or not the test is enabled
@@ -269,7 +271,7 @@ Configuration of a multivariate test follows much the same pattern as that of an
 
 FeatureFlags knows that you are configuring a MVT test if you add more than two test variations to the array. Again, import your feature into code with an extension on `Feature.Name`:
 
-```
+```swift
 extension Feature.Name {
 	static let exampleMVTTest = Feature.Name(rawValue: "Example MVT Test")
 }
@@ -277,7 +279,7 @@ extension Feature.Name {
 
 Using the following to check which group the user has been assigned to:
 
-```
+```swift
 if let feature = Feature.named(.exampleMVTTest) {
 	print("Feature name -> \(feature.name)")
 	print("Is group A? -> \(feature.isTestVariation(.groupA))")
@@ -289,7 +291,7 @@ if let feature = Feature.named(.exampleMVTTest) {
 
 You are free to name your test variations whatever you wish:
 
-```
+```json
 {
 	"name": "Example MVT Test",
 	"enabled": true, // whether or not the test is enabled
@@ -299,7 +301,7 @@ You are free to name your test variations whatever you wish:
 
 Simply create an extension on `Test.Variation` to map your test variations in code:
 
-```
+```swift
 extension Test.Variation {
 	static let red = Test.Variation(rawValue: "Red")
 	static let green = Test.Variation(rawValue: "Green")
@@ -309,7 +311,7 @@ extension Test.Variation {
 
 Then check which group the user has been assigned to:
 
-```
+```swift
 if let feature = Feature.named(.exampleMVTTest) {
 	print("Feature name -> \(feature.name)")
 	print("Is red? -> \(feature.isTestVariation(.red))")
@@ -332,21 +334,21 @@ Consider if we were to use a remote feature flag to toggle off an unfinished fea
 
 To mark a feature flag as a development flag, first of all include a bundled JSON file as part of your app containing the `features` key. The JSON file may be an existing file or an entirely new file. Next, having defined your feature flags as part of this file, set the configuration URL to reference this file:
 
-```
+```swift
 guard let featuresURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
 FeatureFlags.configurationURL = featuresURL
 ```
 
 Or, if you are already using a remote configuration URL then set the fallback configuration URL instead:
 
-```
+```swift
 guard let fallbackURL = Bundle.main.url(forResource: "features", withExtension: "json") else { return }
 FeatureFlags.localFallbackConfigurationURL = fallbackURL
 ```
 
 Set up your feature flag in JSON as you would do normally but setting the `development` property to `true`:
 
-```
+```json
 {
     "features": [{
         "name": "Example Feature Flag",
@@ -365,7 +367,7 @@ Development flag code will be shown in the following cases:
 
 If you need more granular control over code that is in development then you may pass the `isDevelopment` flag when checking whether or not a feature is enabled e.g.:
 
-```
+```swift
 if let feature = Feature.named(.exampleFeatureFlag, isDevelopment: true) {
 	print("Feature name -> \(feature.name)")
 	print("Feature enabled -> \(feature.isEnabled())")
@@ -380,7 +382,7 @@ By default for any A/B or MVT test, the user is equally likely to be assigned ea
 
 It is possible to configure a test bias such that the likelihood of being assigned to each test variation is not equal. To do so, simply add the following JSON to your feature object:
 
-```
+```json
 {
 	"features": [{
 		"name": "Example A/B Test",
@@ -398,7 +400,7 @@ It is possible to attach labels to test variations in case you wish to send anal
 
 To do so, define an array of `labels` of equal length to the number of test variations specified:
 
-```
+```json
 {
 	"features": [{
 		"name": "Example A/B Test",
@@ -412,7 +414,7 @@ To do so, define an array of `labels` of equal length to the number of test vari
 
 Then to retrieve your labels in code you would write the following:
 
-```
+```swift
 if let feature = Feature.named(.exampleABTest) {
 	print("Group A label -> \(feature.label(.groupA))")
 	print("Group B label -> \(feature.label(.groupB))")
@@ -427,7 +429,7 @@ Simply update the weightings in the `test-biases` array and the next time the fr
 
 When you are done A/B or MVT testing a feature you will have gathered enough analytics to decide whether or not to roll out the feature to your entire user base. At this point, you may decide to disable the feature entirely by setting the `enabled` flag to `false` in your JSON file or in the case of a successful test, you may decide to roll out the feature to all users by adjusting the feature object in your JSON file from:
 
-```
+```json
 {
 	"features": [{
 		"name": "Example A/B Test",
@@ -442,7 +444,7 @@ When you are done A/B or MVT testing a feature you will have gathered enough ana
 
 To a feature flag globally enabled for all users as follows:
 
-```
+```json
 {
 	"features": [{
 		"name": "Example A/B Test",
@@ -456,7 +458,7 @@ In order to test that both variations of your new feature work correctly you may
 
 To display the view controller specify the navigational preferences desired and then push the view controller by providing a `UINavigationController`:
 
-```
+```swift
  let navigationSettings = FeatureFlagsViewControllerNavigationSettings(autoClose: true, closeButtonAlignment: .right, closeButton: .save, isNavigationBarHidden: false)
  
 FeatureFlags.pushFeatureFlags(delegate: self, navigationController: navigationController, navigationSettings: navigationSettings)
@@ -475,7 +477,7 @@ Should you need to refresh your configuration at any time you may call `FeatureF
 
 If you have opted to include your feature flag information as part of an existing JSON file which your app has already fetched you may wish to use the following method passing the JSON file data to avoid repeated network calls:
 
-```
+```swift
 FeatureFlags.refreshWithData(_:completion:) 
 ```
 
@@ -483,7 +485,7 @@ FeatureFlags.refreshWithData(_:completion:)
 
 Whilst FeatureFlags is primarily intended for use by Swift apps, should the need arise to check whether a feature flag is enabled in Objective-C it is possible to do so as follows:
 
-```
+```objc
 static NSString *const kMyNewFeatureFlag = @"My New Feature Flag";
 
 if (FEATURE_IS_ENABLED(kMyNewFeatureFlag)) {
