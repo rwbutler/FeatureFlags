@@ -16,6 +16,7 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 - [Installation](#installation)
 	- [Cocoapods](#cocoapods)
 	- [Carthage](#carthage)
+	- [Swift Package Manager](#swift-package-manager)
 - [Usage](#usage)
 	- [Feature Flags](#feature-flags)
 	- [A/B Tests](#ab-tests)
