@@ -76,14 +76,14 @@ public struct FeatureFlags {
     }
     
     @discardableResult
-    public static func refresh(_ completion:(() -> Void)? = nil) -> ParsingServiceResult? {
+    public static func refresh(_ completion:(() -> Void)? = nil) -> [Feature]? {
         configuration = loadConfiguration()
         completion?()
         return configuration
     }
 
     @discardableResult
-    public static func refreshWithData(_ data: Data, completion:(() -> Void)? = nil) -> ParsingServiceResult? {
+    public static func refreshWithData(_ data: Data, completion:(() -> Void)? = nil) -> [Feature]? {
         configuration = loadConfigurationWithData(data)
         completion?()
         return configuration
@@ -146,7 +146,7 @@ internal extension FeatureFlags {
         try? FileManager.default.removeItem(at: cachedConfigURL)
     }
     
-    static var configuration: ParsingServiceResult? = loadConfiguration()
+    static var configuration: [Feature]? = loadConfiguration()
     
     static let configurationName: String = "Features"
     
@@ -154,7 +154,7 @@ internal extension FeatureFlags {
         return Bundle.main.url(forResource: configurationName, withExtension: configType.rawValue)
     }
     
-    static func loadConfigurationWithData(_ data: Data?) -> ParsingServiceResult? {
+    static func loadConfigurationWithData(_ data: Data?) -> [Feature]? {
         // Load cached configuration, if exists
         var cachedResult: ParsingServiceResult?
         if let cachedConfigurationURL = cachedConfigurationURL,
@@ -211,7 +211,7 @@ internal extension FeatureFlags {
         return nil
     }
 
-    static func loadConfiguration() -> ParsingServiceResult? {
+    static func loadConfiguration() -> [Feature]? {
         var remoteData: Data?
         if let configurationURL = configurationURL {
             remoteData = try? Data(contentsOf: configurationURL)
@@ -219,18 +219,18 @@ internal extension FeatureFlags {
         return loadConfigurationWithData(remoteData)
     }
 
-    private static func cacheConfiguration(_ result: ParsingServiceResult) {
+    private static func cacheConfiguration(_ result: [Feature]) {
         let encoder = JSONEncoder()
         guard let data = try? encoder.encode(result),
             let cachedConfigurationURL = cachedConfigurationURL else { return }
         try? data.write(to: cachedConfigurationURL)
     }
 
-    private static func updateWithTestVariationAssignments(_ remoteResult: ParsingServiceResult,
-                                                           storedResult: ParsingServiceResult?,
-                                                           localFallbackResult: ParsingServiceResult? = nil)
-        -> ParsingServiceResult {
-        var mergedResult: ParsingServiceResult = []
+    private static func updateWithTestVariationAssignments(_ remoteResult: [Feature],
+                                                           storedResult: [Feature]?,
+                                                           localFallbackResult: [Feature]? = nil)
+        -> [Feature] {
+        var mergedResult: [Feature] = []
         for remoteFeature in remoteResult {
             var updatedRemoteFeature = remoteFeature
             if let storedFeature = storedResult?.first(where: { $0.name == remoteFeature.name }) {
