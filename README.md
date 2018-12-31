@@ -181,10 +181,12 @@ To configure an A/B test, add the following feature object to the features array
 ```json
 {
 	"name": "Example A/B Test",
-	"enabled": true, // whether or not the test is enabled
+	"enabled": true,
 	"test-variations": ["Group A", "Group B"]
 }
 ```
+
+* `enabled` indicates whether or not the A/B test is enabled.
 
 The only difference between a feature flag and an A/B test involves adding an array of test variations. FeatureFlags will assume that you are configuring an A/B test if you add two test variations to the array - add any more and the test will automatically become a multivariate test (MVT).
 
@@ -226,10 +228,12 @@ To configure a feature A/B test use the following JSON:
 ```json
 {
 	"name": "Example Feature A/B Test",
-	"enabled": true, // whether or not the test is enabled
+	"enabled": true,
 	"test-variations": ["Enabled", "Disabled"]
 }
 ```
+
+* `enabled` indicates whether or not the A/B test is enabled.
 
 ```swift
 extension Feature.Name {
@@ -265,10 +269,12 @@ Configuration of a multivariate test follows much the same pattern as that of an
 ```json
 {
 	"name": "Example MVT Test",
-	"enabled": true, // whether or not the test is enabled
+	"enabled": true,
 	"test-variations": ["Group A", "Group B", "Group C"]
 }
 ```
+
+* `enabled` indicates whether or not the MVT test is enabled.
 
 FeatureFlags knows that you are configuring a MVT test if you add more than two test variations to the array. Again, import your feature into code with an extension on `Feature.Name`:
 
@@ -295,10 +301,12 @@ You are free to name your test variations whatever you wish:
 ```json
 {
 	"name": "Example MVT Test",
-	"enabled": true, // whether or not the test is enabled
+	"enabled": true,
 	"test-variations": ["Red", "Green", "Blue"]
 }
 ```
+
+* `enabled` indicates whether or not the MVT test is enabled.
 
 Simply create an extension on `Test.Variation` to map your test variations in code:
 
