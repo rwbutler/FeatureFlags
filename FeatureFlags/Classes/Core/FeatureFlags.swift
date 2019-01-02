@@ -127,6 +127,10 @@ public struct FeatureFlags {
 
 internal extension FeatureFlags {
     
+    static func bundledConfigurationURL(_ configType: ConfigurationType = FeatureFlags.configurationType) -> URL? {
+        return Bundle.main.url(forResource: configurationName, withExtension: configType.rawValue)
+    }
+    
     private static var cachedConfigurationURL: URL? {
         return try? FileManager.default
             .url(for: .cachesDirectory,
@@ -134,6 +138,13 @@ internal extension FeatureFlags {
                  appropriateFor: nil,
                  create: true)
             .appendingPathComponent("\(configurationName).\(configurationType.rawValue)")
+    }
+    
+    private static func cacheConfiguration(_ result: [Feature]) {
+        let encoder = JSONEncoder()
+        guard let data = try? encoder.encode(result),
+            let cachedConfigurationURL = cachedConfigurationURL else { return }
+        try? data.write(to: cachedConfigurationURL)
     }
     
     static func cacheExists() -> Bool {
@@ -149,10 +160,6 @@ internal extension FeatureFlags {
     static var configuration: [Feature]? = loadConfiguration()
     
     static let configurationName: String = "Features"
-    
-    static func bundledConfigurationURL(_ configType: ConfigurationType = FeatureFlags.configurationType) -> URL? {
-        return Bundle.main.url(forResource: configurationName, withExtension: configType.rawValue)
-    }
     
     static func loadConfigurationWithData(_ data: Data?) -> [Feature]? {
         // Load cached configuration, if exists
@@ -217,13 +224,6 @@ internal extension FeatureFlags {
             remoteData = try? Data(contentsOf: configurationURL)
         }
         return loadConfigurationWithData(remoteData)
-    }
-
-    private static func cacheConfiguration(_ result: [Feature]) {
-        let encoder = JSONEncoder()
-        guard let data = try? encoder.encode(result),
-            let cachedConfigurationURL = cachedConfigurationURL else { return }
-        try? data.write(to: cachedConfigurationURL)
     }
 
     private static func updateWithTestVariationAssignments(_ remoteResult: [Feature],

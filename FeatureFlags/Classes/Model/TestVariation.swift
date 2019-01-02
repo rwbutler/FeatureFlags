@@ -19,6 +19,9 @@ public struct TestVariation: RawRepresentable {
     public static let e = Test.Variation(rawValue: "E")
     public static let f = Test.Variation(rawValue: "F")
     
+    // Note: A logic error has occurred and a Test.Variation could not be assigned.
+    public static let unassigned = Test.Variation(rawValue: "Unassigned")
+    
     private let name: RawValue
     public typealias RawValue = String
     

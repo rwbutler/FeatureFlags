@@ -37,9 +37,10 @@ public struct FeatureFlagsUI {
     private static var _isObservingNotifications: Bool = false
     
     /// Presents FeatureFlagsViewController modally
-    public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil,
-                                           animated: Bool = false, shouldRefresh: Bool = true) {
-        guard let presenter = UIApplication.shared.keyWindow?.rootViewController else { return }
+    public static func presentFeatureFlags(animated: Bool = false,
+                                           delegate: FeatureFlagsViewControllerDelegate? = nil,
+                                           presenter: UIViewController,
+                                           shouldRefresh: Bool = true) {
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.modalPresentationStyle = .overCurrentContext
@@ -59,8 +60,8 @@ public struct FeatureFlagsUI {
     }
     
     public static func presentFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil,
-                                           navigationSettings: ViewControllerNavigationSettings) {
-        guard let presenter = UIApplication.shared.keyWindow?.rootViewController else { return }
+                                           navigationSettings: ViewControllerNavigationSettings,
+                                           presenter: UIViewController) {
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.modalPresentationStyle = .overCurrentContext

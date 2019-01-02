@@ -88,18 +88,21 @@ public struct Feature {
         self.testVariationOverride = testVariation
     }
     
-    func testBias(_ testVariation: Test.Variation) -> Percentage {
+    func testBias(_ testVariation: Test.Variation) -> Percentage? {
         guard enabled else { return Percentage.min }
         guard let testBiasForVariation = zip(testVariations, testBiases).first(where: { pair in
             let currentTestVariation = pair.0
             return currentTestVariation == testVariation
         }) else {
-            fatalError("A test variation should always have a bias.")
+            // If we have ended up here then checks which ensure testVariations and testBiases array count
+            // equality have been bypassed.
+            assertionFailure("A test variation should always have a bias.")
+            return nil
         }
         return testBiasForVariation.1
     }
     
-    public func testVariation() -> TestVariation {
+    public func testVariation() -> Test.Variation {
         if let testVariationOverride = self.testVariationOverride {
             return testVariationOverride
         }
@@ -128,7 +131,8 @@ public struct Feature {
                 }
             }
         }
-        fatalError("A feature must always be categorizable into a test variation.")
+        assertionFailure("A feature must always be categorizable into a test variation.")
+        return .unassigned
     }
 
 }
