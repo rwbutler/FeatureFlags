@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'FeatureFlags'
-  s.version          = '1.5.1'
+  s.version          = '1.5.2'
   s.swift_version    = '4.2'
   s.summary          = 'Feature flagging, A/B testing, MVT and phased feature roll out for iOS.'
   s.description      = <<-DESC
@@ -11,6 +11,6 @@ FeatureFlags makes it easy to configure feature flags, A/B and MVT tests via a J
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Ross Butler' => 'github@rwbutler.com' }
   s.source           = { :git => 'https://github.com/rwbutler/FeatureFlags.git', :tag => s.version.to_s }
-  s.ios.deployment_target = '9.3'
+  s.ios.deployment_target = '9.0'
   s.source_files = 'FeatureFlags/Classes/**/*'
 end
