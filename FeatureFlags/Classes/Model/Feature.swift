@@ -154,6 +154,7 @@ extension Feature: Codable {
         self.name = try container.decode(FeatureName.self, forKey: .name)
         let isEnabled = try container.decodeIfPresent(Bool.self, forKey: .isEnabled)
         let isDevelopment = try container.decodeIfPresent(Bool.self, forKey: .isDevelopment)
+        let type = try container.decodeIfPresent(FeatureType.self, forKey: .type)
         let testBiases = try container.decodeIfPresent([Percentage].self, forKey: .testBiases)
         self.testVariationAssignment = try container.decodeIfPresent(Double.self, forKey: .testVariationAssignment)
             ?? Double.random(in: 0..<100) // [0.0, 100.0)
@@ -164,37 +165,37 @@ extension Feature: Codable {
                 self.isDevelopment = isDevelopment ?? false
                 self.enabled = isEnabled ?? false
                 self.testVariations = defaultTestVariations
-                self.type = .featureFlag
+                self.type = type ?? .featureFlag
                 self.testVariationAssignment = enabled ? 1.0 : 99.0
             } else if testVariations.count == 1, let firstVariation = testVariations.first {
                 self.enabled = isEnabled ?? false
                 self.isDevelopment = isDevelopment ?? false
                 self.testVariations = [TestVariation(rawValue: firstVariation),
                                        TestVariation(rawValue: "!\(firstVariation)")]
-                self.type = .featureFlag
+                self.type = type ?? .featureFlag
             } else if testVariations.count == 2 {
                 self.enabled = isEnabled ?? true
                 self.isDevelopment = isDevelopment ?? false
                 let testVariations = testVariations.map({ TestVariation(rawValue: $0) })
                 if Feature.testVariationsContains(variationNames: ["enabled", "disabled"], in: testVariations)
                     || Feature.testVariationsContains(variationNames: ["on", "off"], in: testVariations) {
-                    self.type = .featureTest(.featureFlagAB)
+                    self.type = type ?? .featureTest(.featureFlagAB)
                     self.testVariations = defaultTestVariations
                 } else {
-                    self.type = .featureTest(.ab)
+                    self.type = type ?? .featureTest(.ab)
                     self.testVariations = testVariations
                 }
             } else {
                 self.enabled = isEnabled ?? true
                 self.isDevelopment = isDevelopment ?? false
                 self.testVariations = testVariations.map({ TestVariation(rawValue: $0) })
-                self.type = .featureTest(.mvt)
+                self.type = type ?? .featureTest(.mvt)
             }
         } else {
             self.enabled = isEnabled ?? false
             self.isDevelopment = isDevelopment ?? false
             self.testVariations = defaultTestVariations
-            self.type = .featureFlag
+            self.type = type ?? .featureFlag
             self.testVariationAssignment = enabled ? 1.0 : 99.0
         }
         let variations = self.testVariations // Silences compiler error
@@ -229,6 +230,7 @@ extension Feature: Codable {
         try container.encode(name, forKey: .name)
         try container.encode(isDevelopment, forKey: .isDevelopment)
         try container.encode(enabled, forKey: .isEnabled)
+        try container.encode(type, forKey: .type)
         try container.encode(testBiases, forKey: .testBiases)
         try container.encode(testVariationAssignment, forKey: .testVariationAssignment)
         try container.encode(testVariations, forKey: .testVariations)
