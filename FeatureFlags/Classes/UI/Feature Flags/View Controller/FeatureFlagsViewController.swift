@@ -209,7 +209,14 @@ private extension FeatureFlagsViewController {
                 self.dismiss(animated: true, completion: nil)
             }
         }
+        let refresh = UIAlertAction(title: "Refresh", style: .default) { _ in
+            FeatureFlags.refresh {
+                self.tableView.reloadData()
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
         actionSheet.addAction(clearCache)
+        actionSheet.addAction(refresh)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             self.dismiss(animated: true, completion: nil)
         })
