@@ -388,7 +388,7 @@ In this example, the `print` statements will only be executed if `exampleFeature
 
 ### Unlock Flags
 
-Regardless of whether a feature flag is controlled locally or remotely, the type of flag above operate at global level i.e. they will enable or disable a feature for all users. But if we want to unlock a feature for individual users following an in-app purchase or as a reward for the completion of some goal then we need a way to unlock the feature and have it remain unlocked - we achieve this with *unlock flags*.
+Regardless of whether a feature flag is controlled locally or remotely, the types of flag above operate at global level i.e. they will enable or disable a feature for all users. But if we want to unlock a feature for individual users following an in-app purchase or as a reward for the completion of some goal then we need a way to unlock the feature and have it remain unlocked - we achieve this with *unlock flags*.
 
 To configure an unlock flag in your configuration JSON file add the following:
 
