@@ -45,26 +45,38 @@ class FeatureFlagsViewController: UITableViewController {
         cell.featureName.text = feature.name.rawValue
         cell.featureEnabled.isOn = feature.isEnabled()
         cell.featureType.text = feature.type.description
-        cell.testVariation.text = testVariation.description
+        let unlockedDescription = feature.isUnlocked() ? "Unlocked" : "Locked"
+        cell.testVariation.text = feature.type == .unlockFlag ? unlockedDescription : testVariation.description
         let allLabels = [cell.featureName, cell.featureType, cell.testVariation]
         
         let labelTextColor: UIColor
         switch feature.type {
+        case .unlockFlag:
+            labelTextColor = UIColor.white
+            cell.contentView.backgroundColor = feature.isUnlocked()
+                ? UIColor.featureFlagsGreen
+                : UIColor.featureFlagsRed
+            let imageName = feature.isUnlocked() ? "unlock" : "lock"
+            cell.iconView.image = UIImage(named: imageName, in: self.currentBundle(), compatibleWith: nil)
+            cell.iconView.tintColor = UIColor.white
         case .featureFlag, .featureTest(.featureFlagAB):
             labelTextColor = UIColor.white
             cell.contentView.backgroundColor = feature.isEnabled()
                 ? UIColor.featureFlagsGreen
                 : UIColor.featureFlagsRed
-            cell.isDevelopment.tintColor = UIColor.white
+            cell.iconView.tintColor = UIColor.white
         case .featureTest(.ab), .featureTest(.mvt), .deprecated:
             labelTextColor = UIColor.black
             cell.contentView.backgroundColor = UIColor.white
-            cell.isDevelopment.tintColor = UIColor.gray
+            cell.iconView.tintColor = UIColor.gray
         }
         allLabels.forEach({ label in
             label?.textColor = labelTextColor
         })
-        cell.isDevelopment.isHidden = !feature.isDevelopment
+        cell.iconView.isHidden = !(feature.isDevelopment || feature.type == .unlockFlag)
+        if feature.isDevelopment {
+            cell.iconView.image = UIImage(named: "cog", in: self.currentBundle(), compatibleWith: nil)
+        }
         return cell
     }
     
@@ -106,7 +118,7 @@ extension FeatureFlagsViewController {
             return
         }
         features = sortedFeatures(features)
-        let feature = features[indexPath.row]
+        var feature = features[indexPath.row]
         switch feature.type {
         case .featureTest(.ab):
             if let alternateABVariant = feature.testVariations.filter({ $0 != feature.testVariation() }).first {
@@ -118,6 +130,9 @@ extension FeatureFlagsViewController {
             tableView.reloadRows(at: [indexPath], with: .fade)
         case .featureTest(.mvt):
             presentPickerViewController(on: self, with: feature)
+        case .unlockFlag:
+            feature.setUnlocked(!feature.isUnlocked())
+            tableView.reloadRows(at: [indexPath], with: .fade)
         case .deprecated:
             break
         }

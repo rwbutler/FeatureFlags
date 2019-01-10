@@ -22,6 +22,8 @@ public struct Feature {
     internal let testVariations: [TestVariation]
     internal let labels: [String?]
     internal var testVariationOverride: TestVariation?
+    /// Whether an unlockable feature is unlocked or not.
+    internal var unlocked: Bool
     
     /// Syntactic sugar for retrieving a feature by name
     init?(named name: Feature.Name) {
@@ -69,6 +71,10 @@ public struct Feature {
         }
     }
     
+    public func isUnlocked() -> Bool {
+        return isEnabled() && type == .unlockFlag && unlocked
+    }
+    
     public static func named(_ featureName: Feature.Name) -> Feature? {
         guard let features = FeatureFlags.configuration else { return nil }
         return features.first(where: { $0.name == featureName })
@@ -79,6 +85,46 @@ public struct Feature {
     /// value will only persist until a refresh from configuration occurs.
     internal mutating func setEnabled(_ enabled: Bool) {
         self.enabled = enabled
+    }
+    
+    /// Allows the developer to programmatically lock or unlock the feature.
+    /// Note: Unlike with the `enabled` flag, programmatic changes are persisted.
+    /// Ordinarily changes to features are overridden by remote config which has
+    /// precedence but here programmatic changes have precedence.
+    internal mutating func setUnlocked(_ unlocked: Bool = true) {
+        self.unlocked = unlocked
+        if var cachedFeatures = FeatureFlags.loadCachedConfiguration(),
+            let idx = cachedFeatures.firstIndex(where: { $0.name == self.name }) {
+            var cachedFeature = cachedFeatures[idx]
+            cachedFeature.unlocked = unlocked
+            cachedFeatures.remove(at: idx)
+            cachedFeatures.append(cachedFeature)
+            FeatureFlags.cacheConfiguration(cachedFeatures)
+        } else {
+            FeatureFlags.cacheConfiguration([self])
+        }
+        if var currentFeatures = FeatureFlags.configuration,
+            let idx = currentFeatures.firstIndex(where: { $0.name == self.name }) {
+            var currentFeature = currentFeatures[idx]
+            currentFeature.unlocked = unlocked
+            currentFeatures.remove(at: idx)
+            currentFeatures.append(currentFeature)
+            FeatureFlags.configuration = currentFeatures
+        }
+    }
+    
+    /// Convenience method for locking an unlock flag.
+    @discardableResult
+    public mutating func lock() -> Bool {
+        setUnlocked(false)
+        return !isUnlocked()
+    }
+    
+    /// Convenience method for unlocking an unlock flag.
+    @discardableResult
+    public mutating func unlock() -> Bool {
+        setUnlocked(true)
+        return isUnlocked()
     }
     
     /// Allows the developer to programmatically set the variation.
@@ -142,6 +188,7 @@ extension Feature: Codable {
         case name
         case isDevelopment = "development"
         case isEnabled = "enabled"
+        case isUnlocked = "unlocked"
         case type
         case testBiases = "test-biases"
         case testVariationAssignment = "test-variation-assignment"
@@ -154,12 +201,19 @@ extension Feature: Codable {
         self.name = try container.decode(FeatureName.self, forKey: .name)
         let isEnabled = try container.decodeIfPresent(Bool.self, forKey: .isEnabled)
         let isDevelopment = try container.decodeIfPresent(Bool.self, forKey: .isDevelopment)
-        let type = try container.decodeIfPresent(FeatureType.self, forKey: .type)
+        var type = try container.decodeIfPresent(FeatureType.self, forKey: .type)
+        let unlocked = try container.decodeIfPresent(Bool.self, forKey: .isUnlocked)
+        if unlocked != .none {
+            type = .unlockFlag
+        } else if type == .some(.unlockFlag) {
+            type = nil
+        }
         let testBiases = try container.decodeIfPresent([Percentage].self, forKey: .testBiases)
         self.testVariationAssignment = try container.decodeIfPresent(Double.self, forKey: .testVariationAssignment)
             ?? Double.random(in: 0..<100) // [0.0, 100.0)
         let testVariations = try container.decodeIfPresent([String].self, forKey: .testVariations)
         let defaultTestVariations = [TestVariation(rawValue: "Enabled"), TestVariation(rawValue: "Disabled")]
+        self.unlocked = unlocked ?? false
         if let testVariations = testVariations {
             if testVariations.isEmpty {
                 self.isDevelopment = isDevelopment ?? false
@@ -235,6 +289,7 @@ extension Feature: Codable {
         try container.encode(testVariationAssignment, forKey: .testVariationAssignment)
         try container.encode(testVariations, forKey: .testVariations)
         try container.encode(testVariations, forKey: .labels)
+        try container.encode(unlocked, forKey: .isUnlocked)
     }
 }
 
@@ -242,6 +297,9 @@ extension Feature: CustomStringConvertible {
     public var description: String {
         var result = "Feature: \(self.name)"
         result += "\nEnabled: \(self.isEnabled())"
+        if type == .unlockFlag {
+            result += "\nUnlocked: \(self.isUnlocked())"
+        }
         let testVariationsStr = zip(testVariations, testBiases).map { testVariation, testBias in
             return "\(testVariation) (\(testBias))"
             }.joined(separator: ", ")

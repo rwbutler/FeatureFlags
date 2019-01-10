@@ -69,7 +69,7 @@
                 <outlet property="featureEnabled" destination="uEc-y8-RFI" id="3Ed-xR-rRH"/>
                 <outlet property="featureName" destination="RIh-xK-M9f" id="JmT-jL-SGz"/>
                 <outlet property="featureType" destination="SyP-mo-Slb" id="8gL-0q-6il"/>
-                <outlet property="isDevelopment" destination="mBh-zM-os8" id="Hfl-mp-GBb"/>
+                <outlet property="iconView" destination="mBh-zM-os8" id="JzD-Pm-Euj"/>
                 <outlet property="testVariation" destination="cbb-xH-E5a" id="VZc-tJ-QXd"/>
             </connections>
             <point key="canvasLocation" x="88.799999999999997" y="15.742128935532236"/>

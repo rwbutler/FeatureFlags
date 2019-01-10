@@ -23,6 +23,7 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 	- [Feature A/B Tests](#feature-ab-tests)
 	- [Multivariate (MVT) Tests](#multivariate-mvt-tests)
 	- [Development Flags](#development-flags)
+	- [Unlock Flags](#unlock-flags)
 - [Advanced Usage](#advanced-usage)
 	- [Test Bias](#test-bias)
 	- [Labels](#labels)
@@ -384,6 +385,45 @@ if let feature = Feature.named(.exampleFeatureFlag, isDevelopment: true) {
 ```
 
 In this example, the `print` statements will only be executed if `exampleFeatureFlag` is enabled and the app is development (i.e. either `#DEBUG` or `FeatureFlags.isDevelopment` is set).
+
+### Unlock Flags
+
+Regardless of whether a feature flag is controlled locally or remotely, the type of flag above operate at global level i.e. they will enable or disable a feature for all users. But if we want to unlock a feature for individual users following an in-app purchase or as a reward for the completion of some goal then we need a way to unlock the feature and have it remain unlocked - we achieve this with *unlock flags*.
+
+To configure an unlock flag in your configuration JSON file add the following:
+
+```
+{
+    "features": [{
+        "name": "Example Unlock Flag",
+        "enabled": true,
+        "unlocked": false
+    }]
+}
+```
+
+The `unlocked` property indicates to FeatureFlags that this is to be an unlock flag whose default value is `false` i.e. the feature will be locked to begin with. Note that if `enabled` property is set to `false` then the feature will be disabled for all users regardless of whether the feature has been unlocked for a particular user as this property operates at a global level.
+
+It is possible to query whether or not an unlock flag is unlocked as follows:
+
+```
+if let feature = Feature.named(.exampleUnlockFlag) {
+    print("Is unlocked? -> \(feature.isUnlocked())")
+}
+```
+
+When you wish to unlock a feature for the user, call `feature.unlock()`. Conversely, if you only wish to unlock a feature for a certain period of time e.g. to allow the user to trial a feature, you may later call `feature.lock()` to make the feature unavailable again. Both methods return a `Bool` to indicate whether or not the feature has been unlocked / locked. 
+
+```
+if let feature = Feature.named(.exampleUnlockFlag) {
+    print("Is unlocked? -> \(feature.unlock())")
+}
+```
+
+Note that a feature may not be unlocked if:
+
+* The feature flag is not an unlock flag i.e. the `unlocked` property was not defined in JSON.
+* The `enabled` property is set to `false`.
 
 ## Advanced Usage
 ### Test Bias

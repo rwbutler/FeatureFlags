@@ -140,7 +140,7 @@ internal extension FeatureFlags {
             .appendingPathComponent("\(configurationName).\(configurationType.rawValue)")
     }
     
-    private static func cacheConfiguration(_ result: [Feature]) {
+    static func cacheConfiguration(_ result: [Feature]) {
         let encoder = JSONEncoder()
         guard let data = try? encoder.encode(result),
             let cachedConfigurationURL = cachedConfigurationURL else { return }
@@ -161,13 +161,25 @@ internal extension FeatureFlags {
     
     static let configurationName: String = "Features"
     
-    static func loadConfigurationWithData(_ data: Data?) -> [Feature]? {
-        // Load cached configuration, if exists
-        var cachedResult: ParsingServiceResult?
+    static func loadCachedConfiguration() -> [Feature]? {
         if let cachedConfigurationURL = cachedConfigurationURL,
             let cachedData = try? Data(contentsOf: cachedConfigurationURL) {
-            cachedResult = parseConfiguration(data: cachedData)
+            return parseConfiguration(data: cachedData)
         }
+        return nil
+    }
+    
+    static func loadConfiguration() -> [Feature]? {
+        var remoteData: Data?
+        if let configurationURL = configurationURL {
+            remoteData = try? Data(contentsOf: configurationURL)
+        }
+        return loadConfigurationWithData(remoteData)
+    }
+    
+    static func loadConfigurationWithData(_ data: Data?) -> [Feature]? {
+        // Load cached configuration, if exists
+        let cachedResult = loadCachedConfiguration()
         
         // Load remote data
         if let remoteData = data,
@@ -218,14 +230,6 @@ internal extension FeatureFlags {
         return nil
     }
 
-    static func loadConfiguration() -> [Feature]? {
-        var remoteData: Data?
-        if let configurationURL = configurationURL {
-            remoteData = try? Data(contentsOf: configurationURL)
-        }
-        return loadConfigurationWithData(remoteData)
-    }
-
     private static func updateWithTestVariationAssignments(_ remoteResult: [Feature],
                                                            storedResult: [Feature]?,
                                                            localFallbackResult: [Feature]? = nil)
@@ -235,6 +239,8 @@ internal extension FeatureFlags {
             var updatedRemoteFeature = remoteFeature
             if let storedFeature = storedResult?.first(where: { $0.name == remoteFeature.name }) {
                 updatedRemoteFeature.testVariationAssignment = storedFeature.testVariationAssignment
+                updatedRemoteFeature.unlocked = storedFeature.unlocked
+                updatedRemoteFeature.isDevelopment = updatedRemoteFeature.isDevelopment || storedFeature.isDevelopment
             }
             mergedResult.append(updatedRemoteFeature)
         }
@@ -247,9 +253,9 @@ internal extension FeatureFlags {
             // Update development status of remote features from local
             mergedResult = mergedResult.map { remoteFeature in
                 var resultFeature: Feature = remoteFeature
-                let firstLocalFeature = localFallback.first(where: { $0.name == remoteFeature.name })
-                if let localFeature = firstLocalFeature, localFeature.isDevelopment {
-                        resultFeature.isDevelopment = localFeature.isDevelopment
+                if let localFeature = localFallback.first(where: { $0.name == remoteFeature.name }) {
+                    // Should remain true if has ever previously been set to true
+                    resultFeature.isDevelopment = resultFeature.isDevelopment || localFeature.isDevelopment
                 }
                 return resultFeature
             }

@@ -10,6 +10,7 @@ import FeatureFlags
 
 extension Feature.Name {
     static let exampleFeatureFlag = Feature.Name(rawValue: "Example Feature Flag")
+    static let exampleUnlockFlag = Feature.Name(rawValue: "Example Unlock Flag")
     static let exampleABTest = Feature.Name(rawValue: "Example A/B Test")
     static let exampleFeatureOnOffTest = Feature.Name(rawValue: "Example Feature On/Off A/B Test")
     static let exampleMVTTest = Feature.Name(rawValue: "Example MVT Test")

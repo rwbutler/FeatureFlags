@@ -18,7 +18,7 @@ public class Test {
                 return nil
         }
         switch feature.type {
-        case .deprecated, .featureFlag:
+        case .deprecated, .featureFlag, .unlockFlag:
             return nil
         case .featureTest:
             self.feature = feature

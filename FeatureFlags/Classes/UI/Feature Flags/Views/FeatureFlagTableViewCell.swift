@@ -12,5 +12,5 @@ class FeatureFlagTableViewCell: UITableViewCell {
     @IBOutlet weak var featureType: UILabel!
     @IBOutlet weak var featureEnabled: UISwitch!
     @IBOutlet weak var testVariation: UILabel!
-    @IBOutlet weak var isDevelopment: UIImageView!
+    @IBOutlet weak var iconView: UIImageView!
 }

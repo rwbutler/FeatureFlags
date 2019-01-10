@@ -34,6 +34,7 @@ class FeatureDetailsViewController: UITableViewController {
     private enum CellType {
         case featureType
         case enabled
+        case unlocked
         case labels
         case testVariations
         case testVariationAssignment
@@ -43,6 +44,8 @@ class FeatureDetailsViewController: UITableViewController {
         switch featureType {
         case .featureFlag:
             return [.featureType, .enabled, .labels]
+        case .unlockFlag:
+            return [.featureType, .enabled, .unlocked, .labels]
         case .featureTest(.ab), .featureTest(.mvt), .featureTest(.featureFlagAB):
             return [.featureType, .enabled, .testVariations, .testVariationAssignment, .labels]
         case .deprecated:
@@ -78,6 +81,10 @@ class FeatureDetailsViewController: UITableViewController {
             let enabled = feature.isEnabled()
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = enabled ? "Enabled" : "Disabled"
+        case .unlocked:
+            let unlocked = feature.isUnlocked()
+            cell.textLabel?.text = ""
+            cell.detailTextLabel?.text = unlocked ? "Unlocked" : "Locked"
         case .labels:
             bindLabelsCell(cell, to: feature)
         case .testVariations:

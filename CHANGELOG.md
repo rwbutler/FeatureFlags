@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2019-01-09
+### Added
+- Added unlock flags which can be used for unlocking (or locking) a feature permanently e.g. after the user has made an in-app purchase or a feature needs to be permanently unlocked programmatically following a certain date. To unlock or lock, optionally specify a default value for `unlocked` in the JSON config and then call `unlock()` or `lock()` as required. Use `isUnlocked()` to check current state.
+
 ## [1.6.1] - 2019-01-09
 ### Changed
 - Relaxing SwiftLint requirement from an error to a warning as this prevents consumers from building where SwiftLint is not installed.

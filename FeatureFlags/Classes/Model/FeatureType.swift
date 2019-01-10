@@ -11,6 +11,7 @@ public enum FeatureType {
     case deprecated
     case featureFlag
     case featureTest(FeatureTest)
+    case unlockFlag
 }
 
 extension FeatureType: Codable {
@@ -18,6 +19,7 @@ extension FeatureType: Codable {
     enum CodingKeys: String, CodingKey {
         case featureFlag = "feature-flag"
         case featureTest = "feature-test"
+        case unlockFlag = "unlock-flag"
     }
 
     public init(from decoder: Decoder) throws {
@@ -40,6 +42,8 @@ extension FeatureType: Codable {
             try container.encode(CodingKeys.featureFlag.rawValue, forKey: .featureFlag)
         case .featureTest(let featureTest):
             try container.encode(featureTest, forKey: .featureTest)
+        case .unlockFlag:
+            try container.encode(CodingKeys.featureFlag.rawValue, forKey: .featureFlag)
         }
     }
 
@@ -58,6 +62,8 @@ extension FeatureType: CustomStringConvertible {
              return "Feature On/Off (A/B) Test"
         case .featureTest(.mvt):
             return "MVT Test"
+        case .unlockFlag:
+            return "Unlock Flag"
         }
     }
 }
@@ -68,7 +74,8 @@ extension FeatureType: Equatable {
         case (.featureFlag, .featureFlag),
              (.featureTest(.ab), .featureTest(.ab)),
              (.featureTest(.featureFlagAB), .featureTest(.featureFlagAB)),
-             (.featureTest(.mvt), .featureTest(.mvt)):
+             (.featureTest(.mvt), .featureTest(.mvt)),
+             (.unlockFlag, .unlockFlag):
             return true
         default:
             return false

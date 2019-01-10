@@ -4,6 +4,10 @@
         "development": true,
         "enabled": false
     }, {
+        "name": "Example Unlock Flag",
+        "enabled": true,
+        "unlocked": false
+    }, {
         "name": "Example A/B Test",
         "enabled": true,
         "test-biases": [50, 50],
