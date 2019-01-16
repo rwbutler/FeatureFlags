@@ -544,7 +544,7 @@ if (FEATURE_IS_ENABLED(kMyNewFeatureFlag)) {
 
 ## Author
 
-Ross Butler
+[Ross Butler](https://github.com/rwbutler)
 
 ## License
 
@@ -554,6 +554,7 @@ FeatureFlags is available under the MIT license. See the [LICENSE file](./LICENS
 
 ### Frameworks
 
+* [Cheats](https://github.com/rwbutler/Cheats) - Retro cheat codes for modern iOS apps.
 * [Connectivity](https://github.com/rwbutler/Connectivity) - Improves on Reachability for determining Internet connectivity in your iOS application.
 * [FeatureFlags](https://github.com/rwbutler/FeatureFlags) - Allows developers to configure feature flags, run multiple A/B or MVT tests using a bundled / remotely-hosted JSON configuration file.
 * [Skylark](https://github.com/rwbutler/Skylark) - Fully Swift BDD testing framework for writing Cucumber scenarios using Gherkin syntax.
