@@ -23,7 +23,7 @@ public struct Feature {
     internal let labels: [String?]
     internal var testVariationOverride: TestVariation?
     /// Whether an unlockable feature is unlocked or not.
-    internal var unlocked: Bool
+    internal var unlocked: Bool?
     
     /// Syntactic sugar for retrieving a feature by name
     init?(named name: Feature.Name) {
@@ -72,6 +72,7 @@ public struct Feature {
     }
     
     public func isUnlocked() -> Bool {
+        guard let unlocked = self.unlocked else { return false }
         return isEnabled() && type == .unlockFlag && unlocked
     }
     
@@ -213,7 +214,7 @@ extension Feature: Codable {
             ?? Double.random(in: 0..<100) // [0.0, 100.0)
         let testVariations = try container.decodeIfPresent([String].self, forKey: .testVariations)
         let defaultTestVariations = [TestVariation(rawValue: "Enabled"), TestVariation(rawValue: "Disabled")]
-        self.unlocked = unlocked ?? false
+        self.unlocked = unlocked
         if let testVariations = testVariations {
             if testVariations.isEmpty {
                 self.isDevelopment = isDevelopment ?? false
