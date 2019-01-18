@@ -149,7 +149,7 @@ private extension FeatureFlagsViewController {
                                          action: #selector(close))
         let actionButton = UIBarButtonItem(barButtonSystemItem: actionButtonType,
                                            target: self,
-                                           action: #selector(presentActionSheet))
+                                           action: #selector(presentActionSheet(_:)))
         let closeButtonAlignment = navigationSettings?.closeButtonAlignment ?? .closeButtonLeftActionButtonRight
         switch closeButtonAlignment {
         case .closeButtonLeftActionButtonRight:
@@ -215,7 +215,21 @@ private extension FeatureFlagsViewController {
         delegate?.viewControllerDidFinish()
     }
     
-    @objc func presentActionSheet() {
+    /// Presents the action sheet to be displayed in response to right bar button item touched.
+    @objc func presentActionSheet(_ sender: UIBarButtonItem) {
+        let actionSheet = alertController()
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            actionSheet.modalPresentationStyle = .popover
+            let popoverController = actionSheet.popoverPresentationController
+            popoverController?.barButtonItem = sender
+            popoverController?.permittedArrowDirections = .up
+        }
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    /// Returns action sheet to be presented in response to right bar button item touched.
+    /// - returns: A UIAlertController to be presented as an action sheet.
+    private func alertController() -> UIAlertController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let clearCache = UIAlertAction(title: "Clear cache", style: .destructive) { _ in
             FeatureFlags.clearCache()
@@ -236,7 +250,7 @@ private extension FeatureFlagsViewController {
             self.dismiss(animated: true, completion: nil)
         })
         actionSheet.addAction(cancel)
-        present(actionSheet, animated: true, completion: nil)
+        return actionSheet
     }
     
     /// Determines whether or not this view controller should dismiss itself
