@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.3] - 2019-01-28
+### Changed
+- Made `isDevelopment` flag less aggressive so it is possible to return development feature flags to regular feature flags once development complete. If `is-development` is set in either remote or local configuration then the flag will remain a development flag.
+
 ## [1.7.2] - 2019-01-18
 ### Changed
 - Fixed an issue whereby feature flags were incorrectly being treated as unlock flags after being retrieved from persistence.

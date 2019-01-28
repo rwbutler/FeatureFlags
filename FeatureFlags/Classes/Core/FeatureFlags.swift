@@ -205,6 +205,9 @@ internal extension FeatureFlags {
             if let localFallbackURL = localFallbackConfigurationURL,
                 let localFallbackData = try? Data(contentsOf: localFallbackURL) {
                 localFallbackResult = parseConfiguration(data: localFallbackData)
+            } else if let bundledConfigurationURL = bundledConfigurationURL(),
+                let bundledData = try? Data(contentsOf: bundledConfigurationURL) {
+                localFallbackResult = parseConfiguration(data: bundledData)
             } else {
                 localFallbackResult = nil
             }
@@ -240,7 +243,6 @@ internal extension FeatureFlags {
             if let storedFeature = storedResult?.first(where: { $0.name == remoteFeature.name }) {
                 updatedRemoteFeature.testVariationAssignment = storedFeature.testVariationAssignment
                 updatedRemoteFeature.unlocked = storedFeature.unlocked
-                updatedRemoteFeature.isDevelopment = updatedRemoteFeature.isDevelopment || storedFeature.isDevelopment
             }
             mergedResult.append(updatedRemoteFeature)
         }
