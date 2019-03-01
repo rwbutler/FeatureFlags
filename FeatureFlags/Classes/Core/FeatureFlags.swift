@@ -59,6 +59,19 @@ public struct FeatureFlags {
     /// Whether or not the app is running in development mode
     public static var isDevelopment: Bool = false
     
+    static func isNoLongerUnderDevelopment(named name: Feature.Name) {
+        if let cachedConfigurationURL = cachedConfigurationURL,
+            let cachedData = try? Data(contentsOf: cachedConfigurationURL),
+            let cachedResult = parseConfiguration(data: cachedData) {
+            let featureToRemove = cachedResult.first(where: { $0.name == name })
+            let shouldRemoveFeature = featureToRemove?.isDevelopment ?? false
+            if shouldRemoveFeature {
+                let updatedResult = cachedResult.filter({ $0.name != name })
+                cacheConfiguration(updatedResult)
+            }
+        }
+    }
+    
     /// Where using a remote URL, a local fallback file may be specified
     public static var localFallbackConfigurationURL: URL?
 

@@ -71,6 +71,14 @@ public struct Feature {
         }
     }
     
+    /// Removes the feature from the cache so that the feature's development status will no longer be persisted.
+    /// You should invoke either `FeatureFlags.refresh(_ completion:)`
+    /// or `FeatureFlags.refreshWithData(_ data: completion:)`  following invocation of this method so that the
+    /// feature is reloaded from the data source.
+    public func isNoLongerUnderDevelopment() {
+        FeatureFlags.isNoLongerUnderDevelopment(named: name)
+    }
+    
     public func isUnlocked() -> Bool {
         guard let unlocked = self.unlocked else { return false }
         return isEnabled() && type == .unlockFlag && unlocked
