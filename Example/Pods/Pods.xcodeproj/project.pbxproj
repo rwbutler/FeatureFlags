@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1307A1D021AC642F00C692CE /* UIColorAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1307A1CF21AC642F00C692CE /* UIColorAdditions.swift */; };
+		13219CDB2231789600C58714 /* FeatureFlags+Internal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13219CDA2231789600C58714 /* FeatureFlags+Internal.swift */; };
+		13219CDD2231794400C58714 /* Feature+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13219CDC2231794400C58714 /* Feature+Codable.swift */; };
 		133653262178E98C00E41564 /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1336531D2178E98B00E41564 /* FeatureFlags.swift */; };
 		133653272178E98C00E41564 /* FeatureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1336531F2178E98B00E41564 /* FeatureType.swift */; };
 		133653282178E98C00E41564 /* Percentage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133653202178E98B00E41564 /* Percentage.swift */; };
@@ -71,6 +73,8 @@
 		027C297A2925D75AB31C8DF0A717BF32 /* Pods-FeatureFlags_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FeatureFlags_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		11E1967FE1A78D4D27F60F89F0C1E849 /* FeatureFlags-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "FeatureFlags-dummy.m"; sourceTree = "<group>"; };
 		1307A1CF21AC642F00C692CE /* UIColorAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorAdditions.swift; sourceTree = "<group>"; };
+		13219CDA2231789600C58714 /* FeatureFlags+Internal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlags+Internal.swift"; sourceTree = "<group>"; };
+		13219CDC2231794400C58714 /* Feature+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feature+Codable.swift"; sourceTree = "<group>"; };
 		1336531D2178E98B00E41564 /* FeatureFlags.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		1336531F2178E98B00E41564 /* FeatureType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureType.swift; sourceTree = "<group>"; };
 		133653202178E98B00E41564 /* Percentage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Percentage.swift; sourceTree = "<group>"; };
@@ -193,6 +197,7 @@
 				1336531D2178E98B00E41564 /* FeatureFlags.swift */,
 				13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */,
 				13AE3EC3219449A6003BFA34 /* FeatureFlags.h */,
+				13219CDA2231789600C58714 /* FeatureFlags+Internal.swift */,
 			);
 			name = Core;
 			path = FeatureFlags/Classes/Core;
@@ -211,6 +216,7 @@
 				133653212178E98B00E41564 /* TestVariation.swift */,
 				13365348217DFF3500E41564 /* Test.swift */,
 				138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */,
+				13219CDC2231794400C58714 /* Feature+Codable.swift */,
 			);
 			name = Model;
 			path = FeatureFlags/Classes/Model;
@@ -634,6 +640,7 @@
 				135FF82A218214BF00F430C4 /* FeatureFlagTableViewCell.swift in Sources */,
 				1307A1D021AC642F00C692CE /* UIColorAdditions.swift in Sources */,
 				7F1F2D2AD4886F384EA3B0A3DF206F92 /* FeatureFlags-dummy.m in Sources */,
+				13219CDB2231789600C58714 /* FeatureFlags+Internal.swift in Sources */,
 				1336532D2178E98C00E41564 /* FeatureName.swift in Sources */,
 				13365349217DFF3500E41564 /* Test.swift in Sources */,
 				135FF82E218214BF00F430C4 /* JSONParsingService.swift in Sources */,
@@ -656,6 +663,7 @@
 				1389AE652188C4D800CD8AF8 /* NavigationSettings.swift in Sources */,
 				135FF82F218214BF00F430C4 /* ParsingServiceResult.swift in Sources */,
 				135FF829218214BF00F430C4 /* FeatureFlagsViewController.swift in Sources */,
+				13219CDD2231794400C58714 /* Feature+Codable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
