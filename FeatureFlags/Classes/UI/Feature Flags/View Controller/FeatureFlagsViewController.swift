@@ -278,7 +278,7 @@ private extension FeatureFlagsViewController {
         guard let pickerViewController = storyboard.instantiateViewController(withIdentifier:
             viewControllerIdentifer) as? TestVariationPickerViewController else { return }
         let defaultValue: Test.Variation = feature.testVariation()
-        let selectedTestVariation = feature.testVariations.index(where: { $0 == defaultValue }) ?? 0
+        let selectedTestVariation = feature.testVariations.firstIndex(where: { $0 == defaultValue }) ?? 0
         if let pickerOptionsViewModel = PickerOptionsViewModel<Test.Variation>(options:
             feature.testVariations, selectedOption: selectedTestVariation) {
             pickerViewController.viewModel = ["Test Variation": pickerOptionsViewModel]

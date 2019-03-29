@@ -4,13 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2019-03-29
+### Changed
+- Updated from Swift 4.2 to Swift 5.
+
 ## [1.7.5] - 2019-03-07
 ### Added
 - It is now possible to instantiate and add a feature flag programmatically.
 
 ## [1.7.4] - 2019-03-01
 ### Added
-- Added method `isNoLongerUpderDevelopment()` which can be used to flush development status of a feature flag when development work on a feature is complete.
+- Added method `isNoLongerUnderDevelopment()` which can be used to flush development status of a feature flag when development work on a feature is complete.
 
 ## [1.7.3] - 2019-01-28
 ### Changed

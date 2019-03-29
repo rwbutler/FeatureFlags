@@ -49,6 +49,10 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 - [x] Convert an A/B test into a feature flag once you have decided whether the feature test was a success i.e. rollout a feature to 100% of users
 - [x] Visualise the state of your flags and tests using FeatureFlagsViewController in debug builds of your app
 
+## What's new in FeatureFlags 2.0.0?
+
+FeatureFlags 2.0.0 brings support for Swift 5.0. The previous version supporting Swift 4.2 is version 1.7.5.
+
 ## Installation
 
 ### Cocoapods

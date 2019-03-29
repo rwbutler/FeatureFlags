@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc open class FeatureFlagsAdapter: NSObject {
+@objc public class FeatureFlagsAdapter: NSObject {
     @objc public static func isEnabled(_ feature: NSString) -> Bool {
         let featureName = Feature.Name(rawValue: feature as String)
         return Feature.isEnabled(featureName)
