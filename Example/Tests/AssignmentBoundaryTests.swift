@@ -350,4 +350,47 @@ class AssignmentBoundaryTests: XCTestCase {
         XCTAssert(feature.isTestVariation(.groupC), "Pass")
     }
 
+    func testUsersDistributedEvenlyOverOneHundredThousandAttempts() {
+        let percentageTolerance = 0.5
+        let featureConfiguration =
+        """
+        [{
+        "name": "Example A/B Test",
+        "enabled": true,
+        "test-variations": ["Group A", "Group B"]
+        }]
+        """
+        let decoder = JSONDecoder()
+        guard let featuresData = featureConfiguration.data(using: .utf8) else {
+            XCTFail("Unable to decode feature data.")
+            return
+        }
+
+        var groupACount = 0
+        var groupBCount = 0
+        for _ in 0..<100000 {
+            guard let features = try? decoder.decode([Feature].self, from: featuresData),
+            let feature = features.first else {
+                XCTFail("Unable to decode feature data.")
+                return
+            }
+            if feature.isTestVariation(.groupA) {
+                groupACount += 1
+            }
+            if feature.isTestVariation(.groupB) {
+                groupBCount += 1
+            }
+        }
+        let totalTestCount = groupACount + groupBCount
+        let percentageGroupA = Double(groupACount) / Double(totalTestCount) * 100.0
+        let percentageGroupB = Double(groupBCount) / Double(totalTestCount) * 100.0
+        if percentageGroupA > percentageGroupB {
+            let percentageDifference = percentageGroupA - percentageGroupB
+            XCTAssert(percentageDifference < percentageTolerance, "Users should be distributed equally into groups.")
+        } else {
+            let percentageDifference = percentageGroupB - percentageGroupA
+            XCTAssert(percentageDifference < percentageTolerance, "Users should be distributed equally into groups.")
+        }
+    }
+
 }
