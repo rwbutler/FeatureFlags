@@ -116,7 +116,7 @@ To include FeatureFlags as a dependency within a Swift package, add the package 
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/rwbutler/FeatureFlags.git", from: "4.2.0")
+    .package(url: "https://github.com/rwbutler/FeatureFlags.git", from: "2.0.0")
 ]
 ```
 
