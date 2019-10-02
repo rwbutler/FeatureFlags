@@ -113,7 +113,7 @@ extension Feature: Codable {
         try container.encode(testBiases, forKey: .testBiases)
         try container.encode(testVariationAssignment, forKey: .testVariationAssignment)
         try container.encode(testVariations, forKey: .testVariations)
-        try container.encode(testVariations, forKey: .labels)
+        try container.encode(labels, forKey: .labels)
         try container.encode(unlocked, forKey: .isUnlocked)
     }
 }
