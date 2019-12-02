@@ -32,6 +32,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    /// For testing.
+    private func loadStoryboardViewController(navigationController: UINavigationController) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "Main")
+        navigationController.pushViewController(viewController, animated: true)
+    }
+
     func applicationWillResignActive(_ application: UIApplication) {
     }
 

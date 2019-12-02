@@ -31,4 +31,18 @@ class ViewController: UIViewController {
 
     }
 
+    @IBAction func pushFeatureFlagsViewController(_ sender: UIButton) {
+        guard let navigationController = self.navigationController else {
+            return
+        }
+        let navigationSettings = ViewControllerNavigationSettings(
+            autoClose: true,
+            closeButtonAlignment: .closeButtonLeftActionButtonRight,
+            closeButton: .done,
+            isNavigationBarHidden: false)
+        FeatureFlagsUI.autoRefresh = true
+        FeatureFlagsUI.pushFeatureFlags(navigationController: navigationController,
+                                      navigationSettings: navigationSettings)
+    }
+
 }

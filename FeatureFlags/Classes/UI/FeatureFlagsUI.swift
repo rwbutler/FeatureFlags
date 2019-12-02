@@ -40,7 +40,7 @@ public struct FeatureFlagsUI {
     public static func presentFeatureFlags(animated: Bool = false,
                                            delegate: FeatureFlagsViewControllerDelegate? = nil,
                                            presenter: UIViewController,
-                                           shouldRefresh: Bool = true) {
+                                           shouldRefresh: Bool = false) {
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.modalPresentationStyle = .overCurrentContext
@@ -53,7 +53,7 @@ public struct FeatureFlagsUI {
                                 isNavigationBarHidden: navigationController.isNavigationBarHidden,
                                 shouldRefresh: shouldRefresh)
         featureFlagsViewController.navigationSettings = navigationSettings
-        if navigationSettings.shouldRefresh {
+        if navigationSettings.shouldRefresh || FeatureFlags.configuration == nil {
             FeatureFlags.refresh()
         }
         presenter.present(navigationController, animated: animated, completion: nil)
@@ -67,7 +67,7 @@ public struct FeatureFlagsUI {
         featureFlagsViewController.modalPresentationStyle = .overCurrentContext
         let navigationController = UINavigationController(rootViewController: featureFlagsViewController)
         featureFlagsViewController.navigationSettings = navigationSettings
-        if navigationSettings.shouldRefresh {
+        if navigationSettings.shouldRefresh || FeatureFlags.configuration == nil {
             FeatureFlags.refresh()
         }
         presenter.present(navigationController, animated: navigationSettings.animated, completion: nil)
@@ -77,7 +77,7 @@ public struct FeatureFlagsUI {
     public static func pushFeatureFlags(delegate: FeatureFlagsViewControllerDelegate? = nil,
                                         navigationController: UINavigationController,
                                         animated: Bool = false,
-                                        shouldRefresh: Bool = true) {
+                                        shouldRefresh: Bool = false) {
         let featureFlagsViewController = FeatureFlagsViewController(style: .grouped)
         let navigationSettings = FeatureFlagsViewController
             .NavigationSettings(animated: animated,
@@ -87,7 +87,7 @@ public struct FeatureFlagsUI {
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.navigationSettings = navigationSettings
         navigationController.isNavigationBarHidden = false
-        if navigationSettings.shouldRefresh {
+        if navigationSettings.shouldRefresh || FeatureFlags.configuration == nil {
             FeatureFlags.refresh()
         }
         navigationController.pushViewController(featureFlagsViewController, animated: animated)
@@ -100,7 +100,7 @@ public struct FeatureFlagsUI {
         featureFlagsViewController.delegate = delegate
         featureFlagsViewController.navigationSettings = navigationSettings
         navigationController.isNavigationBarHidden = false
-        if navigationSettings.shouldRefresh {
+        if navigationSettings.shouldRefresh || FeatureFlags.configuration == nil {
             FeatureFlags.refresh()
         }
         navigationController.pushViewController(featureFlagsViewController, animated: navigationSettings.animated)

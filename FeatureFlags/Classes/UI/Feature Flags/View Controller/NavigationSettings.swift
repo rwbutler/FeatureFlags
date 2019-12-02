@@ -26,7 +26,7 @@ import UIKit
                 closeButton: UIBarButtonItem.SystemItem = .done,
                 isModal: Bool = false,
                 isNavigationBarHidden: Bool = false,
-                shouldRefresh: Bool = true) {
+                shouldRefresh: Bool = false) {
         self.actionButton = actionButton
         self.animated = animated
         self.autoClose = autoClose
