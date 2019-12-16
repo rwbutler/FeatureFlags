@@ -10,6 +10,7 @@ import Foundation
 extension Feature: Codable {
     enum CodingKeys: String, CodingKey {
         case name
+        case description
         case isDevelopment = "development"
         case isEnabled = "enabled"
         case isUnlocked = "unlocked"
@@ -23,6 +24,7 @@ extension Feature: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(FeatureName.self, forKey: .name)
+        self.detailText = try container.decodeIfPresent(String.self, forKey: .description)
         let isEnabled = try container.decodeIfPresent(Bool.self, forKey: .isEnabled)
         let isDevelopment = try container.decodeIfPresent(Bool.self, forKey: .isDevelopment)
         var type = try container.decodeIfPresent(FeatureType.self, forKey: .type)
@@ -107,6 +109,7 @@ extension Feature: Codable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
+        try container.encodeIfPresent(detailText, forKey: .description)
         try container.encode(isDevelopment, forKey: .isDevelopment)
         try container.encode(enabled, forKey: .isEnabled)
         try container.encode(type, forKey: .type)

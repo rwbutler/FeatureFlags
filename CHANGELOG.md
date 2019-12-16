@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2019-12-16
+### Added
+Feature flags may now have a `description` field in JSON which will display in FeatureFlagsViewController providing more context around what the feature flag is used for.
+
 ## [2.1.2] - 2019-12-02
 ### Changed
 - Stopped `FeatureFlagsViewController` reloading data by default on open as this prevents the user from inspecting the current state of feature flag by resetting their values. Instead feature flags will only be refreshed if `shouldRefresh` explicitly set `true` or refreshed by user via the UI. Additionally, feature flags will be refreshed in the event that `FeatureFlags.configuration` is nil.

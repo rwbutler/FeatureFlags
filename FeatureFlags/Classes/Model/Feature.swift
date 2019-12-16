@@ -15,6 +15,7 @@ public struct Feature {
     // MARK: State
     public let name: Name
     internal var enabled: Bool
+    internal let detailText: String?
     public let type: FeatureType
     internal var isDevelopment: Bool
     internal var testVariationAssignment: Double
@@ -31,9 +32,11 @@ public struct Feature {
         self = feature
     }
     
-    init(name: Name, enabled: Bool, isDevelopment: Bool, type: FeatureType, testBiases: [Percentage] = [],
-         testVariations: [TestVariation] = [], labels: [String?] = [], unlocked: Bool?) {
+    init(name: Name, description: String? = nil, enabled: Bool, isDevelopment: Bool,
+         type: FeatureType, testBiases: [Percentage] = [], testVariations: [TestVariation] = [],
+         labels: [String?] = [], unlocked: Bool?) {
         self.name = name
+        self.detailText = description
         self.enabled = enabled
         self.type = type
         self.isDevelopment = isDevelopment

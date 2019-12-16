@@ -43,11 +43,17 @@ class FeatureFlagsViewController: UITableViewController {
     private func bindCell(_ cell: FeatureFlagTableViewCell, feature: Feature) -> FeatureFlagTableViewCell {
         let testVariation = feature.testVariation()
         cell.featureName.text = feature.name.rawValue
+        if let description = feature.detailText {
+            cell.featureDescription.text = description
+            cell.featureDescription.isHidden = false
+        } else {
+            cell.featureDescription.isHidden = true
+        }
         cell.featureEnabled.isOn = feature.isEnabled()
         cell.featureType.text = feature.type.description
         let unlockedDescription = feature.isUnlocked() ? "Unlocked" : "Locked"
         cell.testVariation.text = feature.type == .unlockFlag ? unlockedDescription : testVariation.description
-        let allLabels = [cell.featureName, cell.featureType, cell.testVariation]
+        let allLabels = [cell.featureName, cell.featureType, cell.featureDescription, cell.testVariation]
         
         let labelTextColor: UIColor
         switch feature.type {

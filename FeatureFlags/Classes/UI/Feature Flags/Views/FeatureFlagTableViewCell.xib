@@ -1,63 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeatureFlagTableViewCell" rowHeight="177" id="pm7-Jm-VKs" customClass="FeatureFlagTableViewCell" customModule="FeatureFlags">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="177"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeatureFlagTableViewCell" rowHeight="205" id="pm7-Jm-VKs" customClass="FeatureFlagTableViewCell" customModule="FeatureFlags">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pm7-Jm-VKs" id="5DE-Ua-9LB">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="176.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SyP-mo-Slb">
-                        <rect key="frame" x="16" y="48.5" width="33.5" height="22"/>
+                        <rect key="frame" x="15" y="48.5" width="33.5" height="22"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Variation" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbb-xH-E5a">
-                        <rect key="frame" x="16" y="80.5" width="95" height="22"/>
-                        <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="16"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feature name" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RIh-xK-M9f">
-                        <rect key="frame" x="16" y="11" width="125" height="27.5"/>
+                        <rect key="frame" x="15" y="11" width="125" height="27.5"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Descriptive text" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="csL-iu-7Iq">
+                        <rect key="frame" x="15" y="112.5" width="345" height="13.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uEc-y8-RFI">
-                        <rect key="frame" x="300" y="73" width="51" height="31"/>
+                        <rect key="frame" x="301" y="87" width="51" height="31"/>
                     </switch>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cog" translatesAutoresizingMaskIntoConstraints="NO" id="mBh-zM-os8">
-                        <rect key="frame" x="327" y="11" width="32" height="32"/>
+                        <rect key="frame" x="328" y="11" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="32" id="Smq-O6-CCW"/>
                             <constraint firstAttribute="height" constant="32" id="yRd-4y-ssN"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Variation" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbb-xH-E5a">
+                        <rect key="frame" x="15" y="80.5" width="95" height="22"/>
+                        <fontDescription key="fontDescription" name="Avenir-LightOblique" family="Avenir" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="csL-iu-7Iq" firstAttribute="top" secondItem="cbb-xH-E5a" secondAttribute="bottom" constant="10" id="8fZ-Xv-H7Z"/>
                     <constraint firstItem="uEc-y8-RFI" firstAttribute="centerY" secondItem="5DE-Ua-9LB" secondAttribute="centerY" id="FUT-Iu-wCI"/>
                     <constraint firstItem="cbb-xH-E5a" firstAttribute="leading" secondItem="SyP-mo-Slb" secondAttribute="leading" id="K5T-P3-yF8"/>
                     <constraint firstItem="SyP-mo-Slb" firstAttribute="top" secondItem="RIh-xK-M9f" secondAttribute="bottom" constant="10" id="O6p-iK-3Vv"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="csL-iu-7Iq" secondAttribute="bottom" constant="10" id="OoZ-Qj-7lX"/>
+                    <constraint firstAttribute="bottom" secondItem="cbb-xH-E5a" secondAttribute="bottom" priority="249" constant="10" id="POy-0o-8R6"/>
                     <constraint firstAttribute="trailingMargin" secondItem="uEc-y8-RFI" secondAttribute="trailing" constant="10" id="Rq2-gZ-f1H"/>
+                    <constraint firstAttribute="bottom" secondItem="csL-iu-7Iq" secondAttribute="bottom" priority="249" constant="10" id="SeQ-db-6Cb"/>
                     <constraint firstItem="cbb-xH-E5a" firstAttribute="leading" secondItem="SyP-mo-Slb" secondAttribute="leading" id="TEi-Cy-HW6"/>
                     <constraint firstItem="uEc-y8-RFI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RIh-xK-M9f" secondAttribute="trailing" constant="10" id="TTe-By-oes"/>
-                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="cbb-xH-E5a" secondAttribute="bottom" constant="10" id="Y8P-Hm-cMH"/>
                     <constraint firstItem="SyP-mo-Slb" firstAttribute="leading" secondItem="RIh-xK-M9f" secondAttribute="leading" id="aaR-Vz-84L"/>
                     <constraint firstItem="RIh-xK-M9f" firstAttribute="leading" secondItem="5DE-Ua-9LB" secondAttribute="leadingMargin" id="eMl-Pv-vue"/>
                     <constraint firstItem="uEc-y8-RFI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SyP-mo-Slb" secondAttribute="trailing" constant="10" id="h9W-Ia-XiY"/>
+                    <constraint firstItem="csL-iu-7Iq" firstAttribute="leading" secondItem="cbb-xH-E5a" secondAttribute="leading" id="jEC-AH-WSH"/>
+                    <constraint firstItem="mBh-zM-os8" firstAttribute="trailing" secondItem="csL-iu-7Iq" secondAttribute="trailing" id="k1e-m4-4U9"/>
                     <constraint firstItem="uEc-y8-RFI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cbb-xH-E5a" secondAttribute="trailing" constant="10" id="nQ4-bb-Tga"/>
                     <constraint firstItem="RIh-xK-M9f" firstAttribute="top" secondItem="5DE-Ua-9LB" secondAttribute="topMargin" id="uSH-m5-djs"/>
                     <constraint firstAttribute="trailingMargin" secondItem="mBh-zM-os8" secondAttribute="trailing" id="uzD-1M-0Z4"/>
@@ -66,13 +75,14 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="featureDescription" destination="csL-iu-7Iq" id="E1A-3p-GmW"/>
                 <outlet property="featureEnabled" destination="uEc-y8-RFI" id="3Ed-xR-rRH"/>
                 <outlet property="featureName" destination="RIh-xK-M9f" id="JmT-jL-SGz"/>
                 <outlet property="featureType" destination="SyP-mo-Slb" id="8gL-0q-6il"/>
                 <outlet property="iconView" destination="mBh-zM-os8" id="JzD-Pm-Euj"/>
                 <outlet property="testVariation" destination="cbb-xH-E5a" id="VZc-tJ-QXd"/>
             </connections>
-            <point key="canvasLocation" x="88.799999999999997" y="15.742128935532236"/>
+            <point key="canvasLocation" x="88.799999999999997" y="28.335832083958024"/>
         </tableViewCell>
     </objects>
     <resources>
