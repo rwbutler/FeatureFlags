@@ -46,7 +46,11 @@ class FeatureFlagsViewController: UITableViewController {
         if let description = feature.detailText {
             cell.featureDescription.text = description
             cell.featureDescription.isHidden = false
+            cell.featureDescriptionHeight.constant = cell.featureDescription.intrinsicContentSize.height
+            cell.bottomMargin.constant = 10
         } else {
+            cell.bottomMargin.constant = 0
+            cell.featureDescriptionHeight.constant = 0
             cell.featureDescription.isHidden = true
         }
         cell.featureEnabled.isOn = feature.isEnabled()

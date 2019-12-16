@@ -30,6 +30,9 @@
                     </label>
                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Descriptive text" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="csL-iu-7Iq">
                         <rect key="frame" x="15" y="112.5" width="345" height="13.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13.5" id="gud-Ux-kW8"/>
+                        </constraints>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -56,8 +59,6 @@
                     <constraint firstItem="uEc-y8-RFI" firstAttribute="centerY" secondItem="5DE-Ua-9LB" secondAttribute="centerY" id="FUT-Iu-wCI"/>
                     <constraint firstItem="cbb-xH-E5a" firstAttribute="leading" secondItem="SyP-mo-Slb" secondAttribute="leading" id="K5T-P3-yF8"/>
                     <constraint firstItem="SyP-mo-Slb" firstAttribute="top" secondItem="RIh-xK-M9f" secondAttribute="bottom" constant="10" id="O6p-iK-3Vv"/>
-                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="csL-iu-7Iq" secondAttribute="bottom" constant="10" id="OoZ-Qj-7lX"/>
-                    <constraint firstAttribute="bottom" secondItem="cbb-xH-E5a" secondAttribute="bottom" priority="249" constant="10" id="POy-0o-8R6"/>
                     <constraint firstAttribute="trailingMargin" secondItem="uEc-y8-RFI" secondAttribute="trailing" constant="10" id="Rq2-gZ-f1H"/>
                     <constraint firstAttribute="bottom" secondItem="csL-iu-7Iq" secondAttribute="bottom" priority="249" constant="10" id="SeQ-db-6Cb"/>
                     <constraint firstItem="cbb-xH-E5a" firstAttribute="leading" secondItem="SyP-mo-Slb" secondAttribute="leading" id="TEi-Cy-HW6"/>
@@ -75,7 +76,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="bottomMargin" destination="SeQ-db-6Cb" id="MIt-Cx-Tp3"/>
                 <outlet property="featureDescription" destination="csL-iu-7Iq" id="E1A-3p-GmW"/>
+                <outlet property="featureDescriptionHeight" destination="gud-Ux-kW8" id="di8-bY-lKX"/>
                 <outlet property="featureEnabled" destination="uEc-y8-RFI" id="3Ed-xR-rRH"/>
                 <outlet property="featureName" destination="RIh-xK-M9f" id="JmT-jL-SGz"/>
                 <outlet property="featureType" destination="SyP-mo-Slb" id="8gL-0q-6il"/>
