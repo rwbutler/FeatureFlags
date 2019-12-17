@@ -1,6 +1,10 @@
 {
     "features": [{
         "name": "Example Feature Flag",
+        "enabled": true
+    }, {
+        "name": "Example Development Flag",
+        "description": "Example of a feature under development",
         "development": true,
         "enabled": true
     }, {

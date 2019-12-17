@@ -60,14 +60,20 @@ class FeatureFlagsViewController: UITableViewController {
         let allLabels = [cell.featureName, cell.featureType, cell.featureDescription, cell.testVariation]
         
         let labelTextColor: UIColor
+        
+        if let iconName = feature.iconName {
+            cell.iconView.image = UIImage(named: iconName, in: currentBundle(), compatibleWith: nil)
+            cell.iconView.isHidden = false
+        } else {
+            cell.iconView.isHidden = true
+        }
+        
         switch feature.type {
         case .unlockFlag:
             labelTextColor = UIColor.white
             cell.contentView.backgroundColor = feature.isUnlocked()
                 ? UIColor.featureFlagsGreen
                 : UIColor.featureFlagsRed
-            let imageName = feature.isUnlocked() ? "unlock" : "lock"
-            cell.iconView.image = UIImage(named: imageName, in: self.currentBundle(), compatibleWith: nil)
             cell.iconView.tintColor = UIColor.white
         case .featureFlag, .featureTest(.featureFlagAB):
             labelTextColor = UIColor.white
@@ -76,17 +82,13 @@ class FeatureFlagsViewController: UITableViewController {
                 : UIColor.featureFlagsRed
             cell.iconView.tintColor = UIColor.white
         case .featureTest(.ab), .featureTest(.mvt), .deprecated:
+            cell.iconView.tintColor = UIColor.black
             labelTextColor = UIColor.black
             cell.contentView.backgroundColor = UIColor.white
-            cell.iconView.tintColor = UIColor.gray
         }
         allLabels.forEach({ label in
             label?.textColor = labelTextColor
         })
-        cell.iconView.isHidden = !(feature.isDevelopment || feature.type == .unlockFlag)
-        if feature.isDevelopment {
-            cell.iconView.image = UIImage(named: "cog", in: self.currentBundle(), compatibleWith: nil)
-        }
         return cell
     }
     

@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2019-12-17
+### Added
+New icons for feature flags and experiments (A/B tests and MVT tests).
+### Changed
+Fixed constraints in `FeatureFlagsTableViewCell` to close additional space where description label is hidden.
+
 ## [2.2.0] - 2019-12-16
 ### Added
 Feature flags may now have a `description` field in JSON which will display in FeatureFlagsViewController providing more context around what the feature flag is used for.

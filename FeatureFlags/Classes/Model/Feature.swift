@@ -26,6 +26,19 @@ public struct Feature {
     /// Whether an unlockable feature is unlocked or not.
     internal var unlocked: Bool?
     
+    var iconName: String? {
+        switch type {
+        case .featureFlag:
+            return isDevelopment ? "cog" : "flag"
+        case .featureTest:
+            return "test"
+        case .unlockFlag:
+            return isUnlocked() ? "unlock" : "lock"
+        case .deprecated:
+            return nil
+        }
+    }
+    
     /// Syntactic sugar for retrieving a feature by name
     init?(named name: Feature.Name) {
         guard let feature = Feature.named(name) else { return nil }
