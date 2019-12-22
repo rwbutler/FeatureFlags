@@ -17,6 +17,7 @@ class FeatureFlagsViewController: UITableViewController {
     // MARK: State
     weak var delegate: Delegate?
     var navigationSettings: NavigationSettings?
+    var filter: FeatureType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,9 @@ class FeatureFlagsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let appliedFilter = self.filter, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
+            return filteredFeatures.count
+        }
         let numberOfRows = FeatureFlags.configuration?.count ?? 0
         return numberOfRows
     }
@@ -35,6 +39,10 @@ class FeatureFlagsViewController: UITableViewController {
         guard let featureFlagCell = cell as? FeatureFlagTableViewCell,
             let features = FeatureFlags.configuration, indexPath.row < features.count else {
                 return cell
+        }
+        if let appliedFilter = self.filter, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
+            let feature = sortedFeatures(filteredFeatures)[indexPath.row]
+            return bindCell(featureFlagCell, feature: feature)
         }
         let feature = sortedFeatures(features)[indexPath.row]
         return bindCell(featureFlagCell, feature: feature)
@@ -229,7 +237,19 @@ private extension FeatureFlagsViewController {
     
     /// Presents the action sheet to be displayed in response to right bar button item touched.
     @objc func presentActionSheet(_ sender: UIBarButtonItem) {
-        let actionSheet = alertController()
+        let actionSheet = menuAlertController(sender)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            actionSheet.modalPresentationStyle = .popover
+            let popoverController = actionSheet.popoverPresentationController
+            popoverController?.barButtonItem = sender
+            popoverController?.permittedArrowDirections = .up
+        }
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    /// Presents the action sheet to be displayed in response to right bar button item touched.
+    @objc func presentFilterActionSheet(_ sender: UIBarButtonItem) {
+        let actionSheet = filterAlertController(sender)
         if UIDevice.current.userInterfaceIdiom == .pad {
             actionSheet.modalPresentationStyle = .popover
             let popoverController = actionSheet.popoverPresentationController
@@ -241,7 +261,7 @@ private extension FeatureFlagsViewController {
     
     /// Returns action sheet to be presented in response to right bar button item touched.
     /// - returns: A UIAlertController to be presented as an action sheet.
-    private func alertController() -> UIAlertController {
+    private func menuAlertController(_ sender: UIBarButtonItem) -> UIAlertController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let clearCache = UIAlertAction(title: "Clear cache", style: .destructive) { _ in
             FeatureFlags.clearCache()
@@ -250,15 +270,41 @@ private extension FeatureFlagsViewController {
                 self.dismiss(animated: true, completion: nil)
             }
         }
+        let filterByType = UIAlertAction(title: "Filter by type", style: .default) { _ in
+            self.dismiss(animated: true, completion: nil)
+            self.presentFilterActionSheet(sender)
+        }
         let refresh = UIAlertAction(title: "Refresh", style: .default) { _ in
+            self.filter = nil
             FeatureFlags.refresh {
                 self.tableView.reloadData()
                 self.dismiss(animated: true, completion: nil)
             }
         }
-        actionSheet.addAction(clearCache)
-        actionSheet.addAction(refresh)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
+        })
+        actionSheet.addAction(clearCache)
+        actionSheet.addAction(filterByType)
+        actionSheet.addAction(refresh)
+        actionSheet.addAction(cancel)
+        return actionSheet
+    }
+    
+    /// Returns action sheet to be presented in response to filter menu option selected.
+    /// - returns: A UIAlertController to be presented as an action sheet.
+    private func filterAlertController(_ sender: UIBarButtonItem) -> UIAlertController {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        FeatureType.all.forEach { type in
+            let filterOption = UIAlertAction(title: type.description, style: .default) { _ in
+                self.filter = type
+                self.tableView.reloadData()
+                self.dismiss(animated: true, completion: nil)
+            }
+            actionSheet.addAction(filterOption)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            self.presentActionSheet(sender)
             self.dismiss(animated: true, completion: nil)
         })
         actionSheet.addAction(cancel)

@@ -67,6 +67,12 @@ public struct FeatureFlags {
         }
     }
 
+    /// Returns only feature flags of the specified type. Used by `FeatureFlagsViewController` to provide
+    /// filtering.
+    public static func filter(_ type: FeatureType) -> [Feature]? {
+        return configuration?.filter { $0.type == type }
+    }
+    
     /// Whether or not the app is running in development mode
     public static var isDevelopment: Bool = false
     

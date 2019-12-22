@@ -12,16 +12,21 @@ public enum FeatureType {
     case featureFlag
     case featureTest(FeatureTest)
     case unlockFlag
+    
+    public static var all: [FeatureType] {
+        return [.featureFlag, .featureTest(.ab), .featureTest(.featureFlagAB),
+                .featureTest(.mvt), .unlockFlag]
+    }
 }
 
 extension FeatureType: Codable {
-
+    
     enum CodingKeys: String, CodingKey {
         case featureFlag = "feature-flag"
         case featureTest = "feature-test"
         case unlockFlag = "unlock-flag"
     }
-
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         do {
@@ -32,12 +37,12 @@ extension FeatureType: Codable {
             self = .featureTest(featureTest)
         }
     }
-
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
         case .deprecated:
-            break // Don't save deprecated features - they are to be removed
+        break // Don't save deprecated features - they are to be removed
         case .featureFlag:
             try container.encode(CodingKeys.featureFlag.rawValue, forKey: .featureFlag)
         case .featureTest(let featureTest):
@@ -46,7 +51,7 @@ extension FeatureType: Codable {
             try container.encode(CodingKeys.featureFlag.rawValue, forKey: .featureFlag)
         }
     }
-
+    
 }
 
 extension FeatureType: CustomStringConvertible {
@@ -59,7 +64,7 @@ extension FeatureType: CustomStringConvertible {
         case .featureTest(.ab):
             return "A/B Test"
         case .featureTest(.featureFlagAB):
-             return "Feature On/Off (A/B) Test"
+            return "Feature On/Off (A/B) Test"
         case .featureTest(.mvt):
             return "MVT Test"
         case .unlockFlag:
@@ -75,7 +80,8 @@ extension FeatureType: Equatable {
              (.featureTest(.ab), .featureTest(.ab)),
              (.featureTest(.featureFlagAB), .featureTest(.featureFlagAB)),
              (.featureTest(.mvt), .featureTest(.mvt)),
-             (.unlockFlag, .unlockFlag):
+             (.unlockFlag, .unlockFlag),
+             (.deprecated, .deprecated):
             return true
         default:
             return false
