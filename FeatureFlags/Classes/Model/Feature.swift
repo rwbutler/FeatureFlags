@@ -14,6 +14,7 @@ public struct Feature {
     
     // MARK: State
     public let name: Name
+    internal let section: String?
     internal var enabled: Bool
     internal let detailText: String?
     public let type: FeatureType
@@ -45,7 +46,7 @@ public struct Feature {
         self = feature
     }
     
-    init(name: Name, description: String? = nil, enabled: Bool, isDevelopment: Bool,
+    init(name: Name, description: String? = nil, section: String? = nil, enabled: Bool, isDevelopment: Bool,
          type: FeatureType, testBiases: [Percentage] = [], testVariations: [TestVariation] = [],
          labels: [String?] = [], unlocked: Bool?) {
         self.name = name
@@ -59,6 +60,7 @@ public struct Feature {
         self.testVariationOverride = nil
         self.labels = labels
         self.unlocked = unlocked
+        self.section = section
     }
     
     public func label(_ testVariation: Test.Variation) -> String? {

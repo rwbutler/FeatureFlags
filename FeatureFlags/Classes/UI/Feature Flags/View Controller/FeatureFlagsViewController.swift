@@ -17,7 +17,8 @@ class FeatureFlagsViewController: UITableViewController {
     // MARK: State
     weak var delegate: Delegate?
     var navigationSettings: NavigationSettings?
-    var filter: FeatureType?
+    var filterBySection: String?
+    var filterByType: FeatureType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,10 @@ class FeatureFlagsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let appliedFilter = self.filter, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
+        if let appliedFilter = self.filterByType, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
+            return filteredFeatures.count
+        }
+        if let appliedFilter = self.filterBySection, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
             return filteredFeatures.count
         }
         let numberOfRows = FeatureFlags.configuration?.count ?? 0
@@ -40,7 +44,11 @@ class FeatureFlagsViewController: UITableViewController {
             let features = FeatureFlags.configuration, indexPath.row < features.count else {
                 return cell
         }
-        if let appliedFilter = self.filter, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
+        if let appliedFilter = self.filterBySection, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
+            let feature = sortedFeatures(filteredFeatures)[indexPath.row]
+            return bindCell(featureFlagCell, feature: feature)
+        }
+        if let appliedFilter = self.filterByType, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
             let feature = sortedFeatures(filteredFeatures)[indexPath.row]
             return bindCell(featureFlagCell, feature: feature)
         }
@@ -247,9 +255,21 @@ private extension FeatureFlagsViewController {
         present(actionSheet, animated: true, completion: nil)
     }
     
-    /// Presents the action sheet to be displayed in response to right bar button item touched.
-    @objc func presentFilterActionSheet(_ sender: UIBarButtonItem) {
-        let actionSheet = filterAlertController(sender)
+    /// Presents the action sheet to be displayed in response to Filter By Section option selected.
+    @objc func presentFilterBySectionActionSheet(_ sender: UIBarButtonItem) {
+        let actionSheet = filterBySectionAlertController(sender)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            actionSheet.modalPresentationStyle = .popover
+            let popoverController = actionSheet.popoverPresentationController
+            popoverController?.barButtonItem = sender
+            popoverController?.permittedArrowDirections = .up
+        }
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    /// Presents the action sheet to be displayed in response to Filter By Type option selected.
+    @objc func presentFilterByTypeActionSheet(_ sender: UIBarButtonItem) {
+        let actionSheet = filterByTypeAlertController(sender)
         if UIDevice.current.userInterfaceIdiom == .pad {
             actionSheet.modalPresentationStyle = .popover
             let popoverController = actionSheet.popoverPresentationController
@@ -270,34 +290,73 @@ private extension FeatureFlagsViewController {
                 self.dismiss(animated: true, completion: nil)
             }
         }
+        actionSheet.addAction(clearCache)
+        if filterBySection != nil || filterByType != nil {
+            let clearFilters = UIAlertAction(title: "Clear filters", style: .default) { _ in
+                self.filterBySection = nil
+                self.filterByType = nil
+                FeatureFlags.refresh {
+                    self.tableView.reloadData()
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+            actionSheet.addAction(clearFilters)
+        }
+        if !FeatureFlags.sections().isEmpty {
+            let filterBySection = UIAlertAction(title: "Filter by section", style: .default) { _ in
+                self.dismiss(animated: true, completion: nil)
+                self.presentFilterBySectionActionSheet(sender)
+            }
+            actionSheet.addAction(filterBySection)
+        }
         let filterByType = UIAlertAction(title: "Filter by type", style: .default) { _ in
             self.dismiss(animated: true, completion: nil)
-            self.presentFilterActionSheet(sender)
+            self.presentFilterByTypeActionSheet(sender)
         }
+        actionSheet.addAction(filterByType)
         let refresh = UIAlertAction(title: "Refresh", style: .default) { _ in
-            self.filter = nil
+            self.filterBySection = nil
+            self.filterByType = nil
             FeatureFlags.refresh {
                 self.tableView.reloadData()
                 self.dismiss(animated: true, completion: nil)
             }
         }
+        actionSheet.addAction(refresh)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             self.dismiss(animated: true, completion: nil)
         })
-        actionSheet.addAction(clearCache)
-        actionSheet.addAction(filterByType)
-        actionSheet.addAction(refresh)
         actionSheet.addAction(cancel)
         return actionSheet
     }
     
     /// Returns action sheet to be presented in response to filter menu option selected.
     /// - returns: A UIAlertController to be presented as an action sheet.
-    private func filterAlertController(_ sender: UIBarButtonItem) -> UIAlertController {
+    private func filterBySectionAlertController(_ sender: UIBarButtonItem) -> UIAlertController {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        FeatureFlags.sections().forEach { section in
+            let filterOption = UIAlertAction(title: section, style: .default) { _ in
+                self.filterBySection = section
+                self.tableView.reloadData()
+                self.dismiss(animated: true, completion: nil)
+            }
+            actionSheet.addAction(filterOption)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            self.presentActionSheet(sender)
+            self.dismiss(animated: true, completion: nil)
+        })
+        actionSheet.addAction(cancel)
+        return actionSheet
+    }
+    
+    /// Returns action sheet to be presented in response to filter menu option selected.
+    /// - returns: A UIAlertController to be presented as an action sheet.
+    private func filterByTypeAlertController(_ sender: UIBarButtonItem) -> UIAlertController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         FeatureType.all.forEach { type in
             let filterOption = UIAlertAction(title: type.description, style: .default) { _ in
-                self.filter = type
+                self.filterByType = type
                 self.tableView.reloadData()
                 self.dismiss(animated: true, completion: nil)
             }

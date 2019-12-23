@@ -38,6 +38,7 @@
 		1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */; };
 		1389AE652188C4D800CD8AF8 /* NavigationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */; };
 		138FE03F21A58D15005C9B76 /* Feature+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */; };
+		13A75B9723B0EC9200DAE839 /* CollectionAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A75B9623B0EC9200DAE839 /* CollectionAdditions.swift */; };
 		13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */; };
 		13D7B720218A49150081071A /* CloseButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7B71F218A49150081071A /* CloseButtonAlignment.swift */; };
 		13EA6C2B21944C1C0057724A /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 13AE3EC3219449A6003BFA34 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,6 +104,7 @@
 		1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSettings.swift; sourceTree = "<group>"; };
 		138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feature+Equatable.swift"; sourceTree = "<group>"; };
+		13A75B9623B0EC9200DAE839 /* CollectionAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionAdditions.swift; sourceTree = "<group>"; };
 		13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsAdapter.swift; sourceTree = "<group>"; };
 		13AE3EC3219449A6003BFA34 /* FeatureFlags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeatureFlags.h; sourceTree = "<group>"; };
 		13D7B71F218A49150081071A /* CloseButtonAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonAlignment.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				1307A1CF21AC642F00C692CE /* UIColorAdditions.swift */,
+				13A75B9623B0EC9200DAE839 /* CollectionAdditions.swift */,
 			);
 			name = Extensions;
 			path = FeatureFlags/Classes/Extensions;
@@ -665,6 +668,7 @@
 				135FF82F218214BF00F430C4 /* ParsingServiceResult.swift in Sources */,
 				135FF829218214BF00F430C4 /* FeatureFlagsViewController.swift in Sources */,
 				13219CDD2231794400C58714 /* Feature+Codable.swift in Sources */,
+				13A75B9723B0EC9200DAE839 /* CollectionAdditions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,7 +717,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = 2.5.0;
 				MODULEMAP_FILE = "Target Support Files/FeatureFlags/FeatureFlags.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.FeatureFlags;
 				PRODUCT_MODULE_NAME = FeatureFlags;
@@ -1009,7 +1013,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = 2.5.0;
 				MODULEMAP_FILE = "Target Support Files/FeatureFlags/FeatureFlags.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.FeatureFlags;
 				PRODUCT_MODULE_NAME = FeatureFlags;

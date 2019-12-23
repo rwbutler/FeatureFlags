@@ -6,32 +6,37 @@
         "name": "Example Development Flag",
         "description": "Example of a feature under development",
         "development": true,
-        "enabled": true
+        "enabled": true,
+        "section": "Remote Config"
     }, {
         "name": "Example Unlock Flag",
         "description": "Example of an unlockable feature",
         "enabled": true,
-        "unlocked": false
+        "unlocked": false,
+        "section": "QA"
     }, {
         "name": "Example A/B Test",
         "description": "Example of an A/B test",
         "enabled": true,
         "test-biases": [50, 50],
         "test-variations": ["Group A", "Group B"],
-        "labels": ["label1-for-analytics", "label2-for-analytics"]
+        "labels": ["label1-for-analytics", "label2-for-analytics"],
+        "section": "Remote Config"
     }, {
         "name": "Example Feature On/Off A/B Test",
         "description": "Example of an A/B test whereby a new feature is introduced and compared against the prior implementation",
         "enabled": true,
         "test-biases": [80, 20],
         "test-variations": ["enabled", "disabled"],
-        "labels": ["label1-for-analytics", "label2-for-analytics"]
+        "labels": ["label1-for-analytics", "label2-for-analytics"],
+        "section": "QA"
     }, {
         "name": "Example MVT Test",
         "description": "An example multivariate test",
         "enabled": true,
         "test-biases": [70, 20, 10],
         "test-variations": ["Group A", "Group B", "Group C"],
-        "labels": ["label1-for-analytics", "label2-for-analytics", "label3-for-analytics"]
+        "labels": ["label1-for-analytics", "label2-for-analytics", "label3-for-analytics"],
+        "section": "Development"
     }]
 }

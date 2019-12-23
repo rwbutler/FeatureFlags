@@ -11,6 +11,7 @@ extension Feature: Codable {
     enum CodingKeys: String, CodingKey {
         case name
         case description
+        case section
         case isDevelopment = "development"
         case isEnabled = "enabled"
         case isUnlocked = "unlocked"
@@ -25,6 +26,7 @@ extension Feature: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(FeatureName.self, forKey: .name)
         self.detailText = try container.decodeIfPresent(String.self, forKey: .description)
+        self.section = try container.decodeIfPresent(String.self, forKey: .section)
         let isEnabled = try container.decodeIfPresent(Bool.self, forKey: .isEnabled)
         let isDevelopment = try container.decodeIfPresent(Bool.self, forKey: .isDevelopment)
         var type = try container.decodeIfPresent(FeatureType.self, forKey: .type)
@@ -110,6 +112,7 @@ extension Feature: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
         try container.encodeIfPresent(detailText, forKey: .description)
+        try container.encodeIfPresent(section, forKey: .section)
         try container.encode(isDevelopment, forKey: .isDevelopment)
         try container.encode(enabled, forKey: .isEnabled)
         try container.encode(type, forKey: .type)

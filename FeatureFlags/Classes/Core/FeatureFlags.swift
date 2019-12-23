@@ -69,6 +69,17 @@ public struct FeatureFlags {
 
     /// Returns only feature flags of the specified type. Used by `FeatureFlagsViewController` to provide
     /// filtering.
+    public static func filter(_ section: String) -> [Feature]? {
+        return configuration?.filter {
+            guard let featureSection = $0.section else {
+                return false
+            }
+            return section == featureSection
+        }
+    }
+    
+    /// Returns only feature flags of the specified type. Used by `FeatureFlagsViewController` to provide
+    /// filtering.
     public static func filter(_ type: FeatureType) -> [Feature]? {
         return configuration?.filter { $0.type == type }
     }
@@ -117,6 +128,13 @@ public struct FeatureFlags {
         configuration = loadConfigurationWithData(data)
         completion?()
         return configuration
+    }
+    
+    /// Returns all sections titles for those features which have a section specified.
+    public static func sections() -> [String] {
+        let allSections = configuration?.compactMap { $0.section }
+        let distinctSections = allSections?.mapDistinct { $0 } ?? []
+        return distinctSections.sorted()
     }
     
     /// Transient update - will not be persisted
