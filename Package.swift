@@ -12,6 +12,6 @@ let package = Package(
         .target(
             name: "FeatureFlagsPackage",
             path: "FeatureFlags",
-            exclude: ["Classes/UI", "Classes/Extensions"])
+            exclude: ["Classes/UI", "Classes/Extensions/UIColorAdditions.swift"])
     ]
 )
