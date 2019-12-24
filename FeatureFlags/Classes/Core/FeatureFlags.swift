@@ -44,6 +44,10 @@ public struct FeatureFlags {
         return .json // default
     }()
     
+    public static func deleteAllFeaturesFromCache() {
+        FeatureFlags.clearCache()
+    }
+    
     /// Removes the specified feature from the cache however the feature will remain in in-memory configuration.
     static func deleteFeatureFromCache(named name: Feature.Name) {
         // Load cached configuration, if exists
@@ -69,12 +73,15 @@ public struct FeatureFlags {
 
     /// Returns only feature flags of the specified type. Used by `FeatureFlagsViewController` to provide
     /// filtering.
-    public static func filter(_ section: String) -> [Feature]? {
+    public static func filter(_ section: String?) -> [Feature]? {
+        guard let filterSection = section else {
+            return configuration?.filter { $0.section == nil }
+        }
         return configuration?.filter {
             guard let featureSection = $0.section else {
                 return false
             }
-            return section == featureSection
+            return filterSection == featureSection
         }
     }
     
@@ -131,10 +138,14 @@ public struct FeatureFlags {
     }
     
     /// Returns all sections titles for those features which have a section specified.
-    public static func sections() -> [String] {
+    public static func sections() -> [String?] {
         let allSections = configuration?.compactMap { $0.section }
         let distinctSections = allSections?.mapDistinct { $0 } ?? []
-        return distinctSections.sorted()
+        var sortedSections: [String?] = distinctSections.sorted()
+        if FeatureFlags.filter(nil) != nil { // Check whether features without sections exist
+            sortedSections.append(nil)
+        }
+        return sortedSections
     }
     
     /// Transient update - will not be persisted

@@ -39,7 +39,10 @@
 		1389AE652188C4D800CD8AF8 /* NavigationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */; };
 		138FE03F21A58D15005C9B76 /* Feature+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */; };
 		13A75B9723B0EC9200DAE839 /* CollectionAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A75B9623B0EC9200DAE839 /* CollectionAdditions.swift */; };
+		13A75B9923B0F4AD00DAE839 /* FeatureFlagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A75B9823B0F4AD00DAE839 /* FeatureFlagsViewModel.swift */; };
+		13A75B9B23B0F4C500DAE839 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A75B9A23B0F4C500DAE839 /* Filter.swift */; };
 		13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */; };
+		13C8F1CC23B17A7800AF347B /* FeatureFlagsViewController+UIViewControllerPreviewingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C8F1CB23B17A7800AF347B /* FeatureFlagsViewController+UIViewControllerPreviewingDelegate.swift */; };
 		13D7B720218A49150081071A /* CloseButtonAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D7B71F218A49150081071A /* CloseButtonAlignment.swift */; };
 		13EA6C2B21944C1C0057724A /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 13AE3EC3219449A6003BFA34 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FD713615BDF74D9B2EE769255074C13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
@@ -105,8 +108,11 @@
 		1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSettings.swift; sourceTree = "<group>"; };
 		138FE03E21A58D15005C9B76 /* Feature+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Feature+Equatable.swift"; sourceTree = "<group>"; };
 		13A75B9623B0EC9200DAE839 /* CollectionAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionAdditions.swift; sourceTree = "<group>"; };
+		13A75B9823B0F4AD00DAE839 /* FeatureFlagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsViewModel.swift; sourceTree = "<group>"; };
+		13A75B9A23B0F4C500DAE839 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		13AE3EC121944973003BFA34 /* FeatureFlagsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlagsAdapter.swift; sourceTree = "<group>"; };
 		13AE3EC3219449A6003BFA34 /* FeatureFlags.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeatureFlags.h; sourceTree = "<group>"; };
+		13C8F1CB23B17A7800AF347B /* FeatureFlagsViewController+UIViewControllerPreviewingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagsViewController+UIViewControllerPreviewingDelegate.swift"; sourceTree = "<group>"; };
 		13D7B71F218A49150081071A /* CloseButtonAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonAlignment.swift; sourceTree = "<group>"; };
 		14877BE95EDD6695AAA45510BDA5099E /* FeatureFlags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FeatureFlags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		283DD01CF54326970BDF4106EE4F114B /* Pods-FeatureFlags_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-FeatureFlags_Tests-umbrella.h"; sourceTree = "<group>"; };
@@ -284,6 +290,7 @@
 		135FF815218214BF00F430C4 /* Feature Flags */ = {
 			isa = PBXGroup;
 			children = (
+				13C8F1CD23B17B0B00AF347B /* View Model */,
 				135FF816218214BF00F430C4 /* View Controller */,
 				135FF818218214BF00F430C4 /* Views */,
 			);
@@ -297,6 +304,8 @@
 				1389AE622188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift */,
 				1389AE642188C4D800CD8AF8 /* NavigationSettings.swift */,
 				13D7B71F218A49150081071A /* CloseButtonAlignment.swift */,
+				13A75B9A23B0F4C500DAE839 /* Filter.swift */,
+				13C8F1CB23B17A7800AF347B /* FeatureFlagsViewController+UIViewControllerPreviewingDelegate.swift */,
 			);
 			path = "View Controller";
 			sourceTree = "<group>";
@@ -352,6 +361,14 @@
 				135FF823218214BF00F430C4 /* ParsingServiceResult.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		13C8F1CD23B17B0B00AF347B /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				13A75B9823B0F4AD00DAE839 /* FeatureFlagsViewModel.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		38DAD0E284CB4CE1AFEE4A91254A2523 /* FeatureFlags */ = {
@@ -642,6 +659,7 @@
 				135FF826218214BF00F430C4 /* TestVariationPickerViewController.swift in Sources */,
 				1336532A2178E98C00E41564 /* Feature.swift in Sources */,
 				135FF82A218214BF00F430C4 /* FeatureFlagTableViewCell.swift in Sources */,
+				13A75B9923B0F4AD00DAE839 /* FeatureFlagsViewModel.swift in Sources */,
 				1307A1D021AC642F00C692CE /* UIColorAdditions.swift in Sources */,
 				7F1F2D2AD4886F384EA3B0A3DF206F92 /* FeatureFlags-dummy.m in Sources */,
 				13219CDB2231789600C58714 /* FeatureFlags+Internal.swift in Sources */,
@@ -663,10 +681,12 @@
 				134F2D7221B829E500B9D484 /* FeatureFlagsUIObserver.swift in Sources */,
 				135FF824218214BF00F430C4 /* PickerViewController.swift in Sources */,
 				13AE3EC221944973003BFA34 /* FeatureFlagsAdapter.swift in Sources */,
+				13C8F1CC23B17A7800AF347B /* FeatureFlagsViewController+UIViewControllerPreviewingDelegate.swift in Sources */,
 				133653292178E98C00E41564 /* TestVariation.swift in Sources */,
 				1389AE652188C4D800CD8AF8 /* NavigationSettings.swift in Sources */,
 				135FF82F218214BF00F430C4 /* ParsingServiceResult.swift in Sources */,
 				135FF829218214BF00F430C4 /* FeatureFlagsViewController.swift in Sources */,
+				13A75B9B23B0F4C500DAE839 /* Filter.swift in Sources */,
 				13219CDD2231794400C58714 /* Feature+Codable.swift in Sources */,
 				13A75B9723B0EC9200DAE839 /* CollectionAdditions.swift in Sources */,
 			);
@@ -717,7 +737,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.6.0;
 				MODULEMAP_FILE = "Target Support Files/FeatureFlags/FeatureFlags.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.FeatureFlags;
 				PRODUCT_MODULE_NAME = FeatureFlags;
@@ -1013,7 +1033,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.5.1;
+				MARKETING_VERSION = 2.6.0;
 				MODULEMAP_FILE = "Target Support Files/FeatureFlags/FeatureFlags.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.FeatureFlags;
 				PRODUCT_MODULE_NAME = FeatureFlags;

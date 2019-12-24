@@ -17,8 +17,7 @@ class FeatureFlagsViewController: UITableViewController {
     // MARK: State
     weak var delegate: Delegate?
     var navigationSettings: NavigationSettings?
-    var filterBySection: String?
-    var filterByType: FeatureType?
+    let viewModel = FeatureFlagsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,34 +25,26 @@ class FeatureFlagsViewController: UITableViewController {
         configureView()
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let appliedFilter = self.filterByType, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
-            return filteredFeatures.count
-        }
-        if let appliedFilter = self.filterBySection, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
-            return filteredFeatures.count
-        }
-        let numberOfRows = FeatureFlags.configuration?.count ?? 0
-        return numberOfRows
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellReuseIdentifier = String(describing: FeatureFlagTableViewCell.self)
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath)
-        guard let featureFlagCell = cell as? FeatureFlagTableViewCell,
-            let features = FeatureFlags.configuration, indexPath.row < features.count else {
-                return cell
+        guard let feature = viewModel.feature(for: indexPath),
+            let featureFlagCell = cell as? FeatureFlagTableViewCell else {
+            return cell
         }
-        if let appliedFilter = self.filterBySection, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
-            let feature = sortedFeatures(filteredFeatures)[indexPath.row]
-            return bindCell(featureFlagCell, feature: feature)
-        }
-        if let appliedFilter = self.filterByType, let filteredFeatures = FeatureFlags.filter(appliedFilter) {
-            let feature = sortedFeatures(filteredFeatures)[indexPath.row]
-            return bindCell(featureFlagCell, feature: feature)
-        }
-        let feature = sortedFeatures(features)[indexPath.row]
         return bindCell(featureFlagCell, feature: feature)
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.sectionTitle(for: section)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows(in: section)
     }
     
     private func bindCell(_ cell: FeatureFlagTableViewCell, feature: Feature) -> FeatureFlagTableViewCell {
@@ -112,22 +103,9 @@ class FeatureFlagsViewController: UITableViewController {
                             commit editingStyle: UITableViewCell.EditingStyle,
                             forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard var features = FeatureFlags.configuration, indexPath.row < features.count else {
-                return
-            }
-            features = sortedFeatures(features)
-            let feature = features[indexPath.row]
-            FeatureFlags.deleteFeature(named: feature.name)
+            viewModel.deleteFeature(at: indexPath)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-    }
-    
-    private func sortedFeatures(_ features: [Feature]) -> [Feature] {
-        var mutableFeatures = features
-        mutableFeatures.sort(by: { (lhs, rhs) -> Bool in
-            return lhs.name.rawValue < rhs.name.rawValue
-        })
-        return mutableFeatures
     }
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -142,11 +120,9 @@ class FeatureFlagsViewController: UITableViewController {
 // MARK: UITableViewDelegate
 extension FeatureFlagsViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard var features = FeatureFlags.configuration, indexPath.row < features.count else {
+        guard var feature = viewModel.feature(for: indexPath) else {
             return
         }
-        features = sortedFeatures(features)
-        var feature = features[indexPath.row]
         switch feature.type {
         case .featureTest(.ab):
             if let alternateABVariant = feature.testVariations.filter({ $0 != feature.testVariation() }).first {
@@ -286,23 +262,22 @@ private extension FeatureFlagsViewController {
         let clearCache = UIAlertAction(title: "Clear cache", style: .destructive) { _ in
             FeatureFlags.clearCache()
             FeatureFlags.refresh {
-                self.tableView.reloadData()
                 self.dismiss(animated: true, completion: nil)
+                self.tableView.reloadData()
             }
         }
         actionSheet.addAction(clearCache)
-        if filterBySection != nil || filterByType != nil {
+        if viewModel.filterIsApplied() {
             let clearFilters = UIAlertAction(title: "Clear filters", style: .default) { _ in
-                self.filterBySection = nil
-                self.filterByType = nil
+                self.viewModel.clearFilters()
                 FeatureFlags.refresh {
-                    self.tableView.reloadData()
                     self.dismiss(animated: true, completion: nil)
+                    self.tableView.reloadData()
                 }
             }
             actionSheet.addAction(clearFilters)
         }
-        if !FeatureFlags.sections().isEmpty {
+        if FeatureFlags.sections().count != 1 {
             let filterBySection = UIAlertAction(title: "Filter by section", style: .default) { _ in
                 self.dismiss(animated: true, completion: nil)
                 self.presentFilterBySectionActionSheet(sender)
@@ -310,16 +285,15 @@ private extension FeatureFlagsViewController {
             actionSheet.addAction(filterBySection)
         }
         let filterByType = UIAlertAction(title: "Filter by type", style: .default) { _ in
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(
+                animated: true, completion: nil)
             self.presentFilterByTypeActionSheet(sender)
         }
         actionSheet.addAction(filterByType)
         let refresh = UIAlertAction(title: "Refresh", style: .default) { _ in
-            self.filterBySection = nil
-            self.filterByType = nil
             FeatureFlags.refresh {
-                self.tableView.reloadData()
                 self.dismiss(animated: true, completion: nil)
+                self.tableView.reloadData()
             }
         }
         actionSheet.addAction(refresh)
@@ -334,17 +308,17 @@ private extension FeatureFlagsViewController {
     /// - returns: A UIAlertController to be presented as an action sheet.
     private func filterBySectionAlertController(_ sender: UIBarButtonItem) -> UIAlertController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        FeatureFlags.sections().forEach { section in
-            let filterOption = UIAlertAction(title: section, style: .default) { _ in
-                self.filterBySection = section
-                self.tableView.reloadData()
+        viewModel.filtersBySection().forEach { filter in
+            let filterOption = UIAlertAction(title: filter.name, style: .default) { _ in
                 self.dismiss(animated: true, completion: nil)
+                self.viewModel.applyFilter(filter)
+                self.tableView.reloadData()
             }
             actionSheet.addAction(filterOption)
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-            self.presentActionSheet(sender)
             self.dismiss(animated: true, completion: nil)
+            self.presentActionSheet(sender)
         })
         actionSheet.addAction(cancel)
         return actionSheet
@@ -354,17 +328,17 @@ private extension FeatureFlagsViewController {
     /// - returns: A UIAlertController to be presented as an action sheet.
     private func filterByTypeAlertController(_ sender: UIBarButtonItem) -> UIAlertController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        FeatureType.all.forEach { type in
-            let filterOption = UIAlertAction(title: type.description, style: .default) { _ in
-                self.filterByType = type
-                self.tableView.reloadData()
+        viewModel.filtersByType().forEach { filter in
+            let filterOption = UIAlertAction(title: filter.name, style: .default) { _ in
                 self.dismiss(animated: true, completion: nil)
+                self.viewModel.applyFilter(filter)
+                self.tableView.reloadData()
             }
             actionSheet.addAction(filterOption)
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-            self.presentActionSheet(sender)
             self.dismiss(animated: true, completion: nil)
+            self.presentActionSheet(sender)
         })
         actionSheet.addAction(cancel)
         return actionSheet
@@ -406,31 +380,6 @@ private extension FeatureFlagsViewController {
             }
             viewController.present(pickerViewController, animated: false, completion: nil)
         }
-    }
-    
-    func detailViewController(for index: Int) -> FeatureDetailsViewController {
-        let viewController = FeatureDetailsViewController(style: .grouped)
-        if var features = FeatureFlags.configuration {
-            features = sortedFeatures(features)
-            viewController.feature = features[index]
-        }
-        return viewController
-    }
-}
-
-extension FeatureFlagsViewController: UIViewControllerPreviewingDelegate {
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing,
-                           viewControllerForLocation location: CGPoint) -> UIViewController? {
-        if let indexPath = tableView.indexPathForRow(at: location) {
-            previewingContext.sourceRect = tableView.rectForRow(at: indexPath)
-            return detailViewController(for: indexPath.row)
-        }
-        return nil
-    }
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing,
-                           commit viewControllerToCommit: UIViewController) {
-        navigationController?.pushViewController(viewControllerToCommit, animated: true)
     }
     
 }

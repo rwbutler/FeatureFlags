@@ -36,6 +36,7 @@ class FeatureDetailsViewController: UITableViewController {
         case enabled
         case unlocked
         case labels
+        case section
         case testVariations
         case testVariationAssignment
     }
@@ -43,11 +44,11 @@ class FeatureDetailsViewController: UITableViewController {
     private func cells(for featureType: FeatureType) -> [CellType] {
         switch featureType {
         case .featureFlag:
-            return [.featureType, .enabled, .labels]
+            return [.featureType, .enabled, .labels, .section]
         case .unlockFlag:
-            return [.featureType, .enabled, .unlocked, .labels]
+            return [.featureType, .enabled, .unlocked, .labels, .section]
         case .featureTest(.ab), .featureTest(.mvt), .featureTest(.featureFlagAB):
-            return [.featureType, .enabled, .testVariations, .testVariationAssignment, .labels]
+            return [.featureType, .enabled, .testVariations, .testVariationAssignment, .labels, .section]
         case .deprecated:
             return []
         }
@@ -91,6 +92,9 @@ class FeatureDetailsViewController: UITableViewController {
             bindTestVariationCell(cell, to: feature)
         case .testVariationAssignment:
             bindTestVariationAssignmentCell(cell, to: feature)
+        case .section:
+            cell.textLabel?.text = "Section"
+            cell.detailTextLabel?.text = feature.section ?? "Uncategorized"
         }
         return cell
     }
