@@ -33,6 +33,7 @@ class FeatureDetailsViewController: UITableViewController {
 
     private enum CellType {
         case featureType
+        case description
         case enabled
         case unlocked
         case labels
@@ -44,11 +45,11 @@ class FeatureDetailsViewController: UITableViewController {
     private func cells(for featureType: FeatureType) -> [CellType] {
         switch featureType {
         case .featureFlag:
-            return [.featureType, .enabled, .labels, .section]
+            return [.featureType, .description, .enabled, .labels, .section]
         case .unlockFlag:
-            return [.featureType, .enabled, .unlocked, .labels, .section]
+            return [.featureType, .description, .enabled, .unlocked, .labels, .section]
         case .featureTest(.ab), .featureTest(.mvt), .featureTest(.featureFlagAB):
-            return [.featureType, .enabled, .testVariations, .testVariationAssignment, .labels, .section]
+            return [.featureType, .description, .enabled, .testVariations, .testVariationAssignment, .labels, .section]
         case .deprecated:
             return []
         }
@@ -78,13 +79,16 @@ class FeatureDetailsViewController: UITableViewController {
         case .featureType:
             cell.textLabel?.text = "Feature type"
             cell.detailTextLabel?.text = feature.type.description
+        case .description:
+            cell.textLabel?.text = "Description"
+            cell.detailTextLabel?.text = feature.detailText ??  "None"
         case .enabled:
             let enabled = feature.isEnabled()
-            cell.textLabel?.text = ""
+            cell.textLabel?.text = "Enabled / Disabled State"
             cell.detailTextLabel?.text = enabled ? "Enabled" : "Disabled"
         case .unlocked:
             let unlocked = feature.isUnlocked()
-            cell.textLabel?.text = ""
+            cell.textLabel?.text = "Unlocked / Locked State"
             cell.detailTextLabel?.text = unlocked ? "Unlocked" : "Locked"
         case .labels:
             bindLabelsCell(cell, to: feature)
