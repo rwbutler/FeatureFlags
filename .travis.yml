@@ -21,7 +21,7 @@ script:
   - gem install travis
   - travis lint .travis.yml --no-interactive
   - swiftlint
-  - xcodebuild clean build test -workspace Example/FeatureFlags.xcworkspace -scheme FeatureFlags-Example -destination "platform=iOS Simulator,name=iPhone X" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+  - xcodebuild clean build test -workspace Example/FeatureFlags.xcworkspace -scheme FeatureFlags-Example -destination "platform=iOS Simulator,name=iPhone 11 Pro Max" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
   - pod lib lint
   - swift build # Check Swift Package Manager module compiles
 after_script:
