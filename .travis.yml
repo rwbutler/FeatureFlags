@@ -1,10 +1,10 @@
 language: objective-c
-osx_image: xcode10.2
+osx_image: xcode12
 env:
    global:
      - CC_TEST_REPORTER_ID=$CC_TEST_REPORTER_ID
 before_install:
-  - gem install cocoapods -v '1.5.0'
+  - gem install cocoapods -v '1.8.3'
 install:
   - brew install swiftlint
   - brew install swiftformat
