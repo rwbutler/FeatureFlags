@@ -7,6 +7,6 @@
 
 import Foundation
 
-@objc public protocol FeatureFlagsViewControllerDelegate: class {
+@objc public protocol FeatureFlagsViewControllerDelegate: AnyObject {
     @objc func viewControllerDidFinish()
 }

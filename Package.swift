@@ -6,11 +6,11 @@ let package = Package(
     products: [
         .library(
             name: "FeatureFlags",
-            targets: ["FeatureFlagsPackage"])
+            targets: ["FeatureFlags"])
     ],
     targets: [
         .target(
-            name: "FeatureFlagsPackage",
+            name: "FeatureFlags",
             path: "FeatureFlags",
             exclude: ["Classes/UI", "Classes/Extensions/UIColorAdditions.swift"])
     ]

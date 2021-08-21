@@ -49,21 +49,9 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 - [x] Convert an A/B test into a feature flag once you have decided whether the feature test was a success i.e. rollout a feature to 100% of users
 - [x] Visualize the state of your flags and tests using FeatureFlagsViewController in debug builds of your app
 
-## What's new in FeatureFlags 2.0.0?
+## What's new in FeatureFlags 2.6.3?
 
-FeatureFlags 2.0.0 brings support for Swift 5.0. The previous version supporting Swift 4.2 is version 1.7.5.
-
-If you require the Swift 4.2 version then in your `Podfile`:
-
-```ruby
-pod "FeatureFlags" "~> 1.7" 
-```
-
-Or if you are using Carthage add the following to your `Cartfile`:
-
-```ogdl
-github "rwbutler/FeatureFlags" ~> 1.7.5
-```
+When using FeatureFlags 2.6.3 with SPM, import `FeatureFlags` rather than `FeatureFlagsPackage`.
 
 ## Installation
 
