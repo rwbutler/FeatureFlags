@@ -5,6 +5,7 @@
 //  Created by Ross Butler on 10/19/18.
 //
 
+#if canImport(UIKit)
 import Foundation
 import UIKit
 
@@ -383,3 +384,4 @@ private extension FeatureFlagsViewController {
     }
     
 }
+#endif

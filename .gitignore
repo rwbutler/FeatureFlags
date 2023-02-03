@@ -26,7 +26,7 @@ DerivedData
 .swiftpm
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
-
+*.icloud
 *.svg
 Carthage/Build
 docs/images/*.pdf

@@ -5,6 +5,7 @@
 //  Created by Ross Butler on 23/12/2019.
 //
 
+#if canImport(UIKit)
 import Foundation
 
 class FeatureFlagsViewModel {
@@ -123,3 +124,4 @@ class FeatureFlagsViewModel {
     }
     
 }
+#endif

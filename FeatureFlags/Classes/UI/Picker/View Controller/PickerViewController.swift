@@ -5,34 +5,35 @@
 //  Created by Ross Butler on 10/23/18.
 //
 
+#if canImport(UIKit)
 import Foundation
 import UIKit
 
 class PickerViewController<PickerOption: Equatable & CustomStringConvertible>:
-UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource {
-
+    UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource {
+    
     // MARK: Type definitions
     typealias PickerItemTapped = (PickerOption) -> Void
-
+    
     // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var closeOverlay: UIControl!
-
+    
     // MARK: State
     public var selection: PickerItemTapped? // Callback
     private var selectedItem: PickerOption?
     public var viewModel: [String: PickerOptionsViewModel<PickerOption>]?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.isScrollEnabled = false
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setSelectedRows()
     }
-
+    
     @IBAction func dismiss() {
         guard selectedItem == nil else {
             self.dismiss(animated: false, completion: nil)
@@ -44,7 +45,7 @@ UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataS
         }
         self.dismiss(animated: false, completion: nil)
     }
-
+    
     private func setSelectedRows() {
         guard let sectionTitles = viewModel?.keys.compactMap({ $0 }) else {
             return
@@ -53,31 +54,31 @@ UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataS
         let sectionViewModels = sectionTitles.compactMap({ return viewModel?[$0] })
         for sectionViewModel in sectionViewModels {
             for i in 0..<sectionViewModel.pickerOptions.count where
-                sectionViewModel.pickerOptions[i] == sectionViewModel.pickerOptions[sectionViewModel.selectedIndex] {
-                    let cell = tableView.cellForRow(at:
-                        IndexPath(row: 0, section: sectionCounter)) // Currently 1 row per section
-                    let pickerTagOffset = sectionCounter
-                    if let pickerView = cell?.viewWithTag(pickerTagOffset) as? UIPickerView {
-                        pickerView.selectRow(i, inComponent: 0, animated: false)
-                    }
-                    break
+            sectionViewModel.pickerOptions[i] == sectionViewModel.pickerOptions[sectionViewModel.selectedIndex] {
+                let cell = tableView.cellForRow(at:
+                                                    IndexPath(row: 0, section: sectionCounter)) // Currently 1 row per section
+                let pickerTagOffset = sectionCounter
+                if let pickerView = cell?.viewWithTag(pickerTagOffset) as? UIPickerView {
+                    pickerView.selectRow(i, inComponent: 0, animated: false)
+                }
+                break
             }
             sectionCounter += 1
         }
     }
-
+    
     // MARK: UIPickerViewDataSource
     @objc func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-
+    
     @objc func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         let sectionKeys = viewModel?.keys.compactMap({ $0 }) ?? []
         let sectionKey = sectionKeys[pickerView.tag]
         let options = viewModel?[sectionKey]
         return options?.pickerOptions.count ?? 0
     }
-
+    
     // MARK: UIPickerViewDelegate
     @objc func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let sectionKeys = viewModel?.keys.compactMap({ $0 }) ?? []
@@ -85,7 +86,7 @@ UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataS
         let options = viewModel?[sectionKey]
         return options?.pickerOptions[row].description ?? ""
     }
-
+    
     @objc func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let sectionKeys = viewModel?.keys.compactMap({ $0 }) ?? []
         let sectionKey = sectionKeys[pickerView.tag]
@@ -95,15 +96,15 @@ UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataS
             selection?(selectedPickerOption)
         }
     }
-
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel?.keys.count ?? 0
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "picker-cell", for: indexPath)
         if let pickerView = cell.viewWithTag(1) as? UIPickerView {
@@ -112,7 +113,7 @@ UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataS
         }
         return cell
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int,
                     forComponent component: Int, reusing view: UIView?) -> UIView {
         var pickerLabel: UILabel? = view as? UILabel
@@ -124,4 +125,6 @@ UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataS
         pickerLabel?.text = self.pickerView(pickerView, titleForRow: row, forComponent: component)
         return pickerLabel!
     }
+    
 }
+#endif

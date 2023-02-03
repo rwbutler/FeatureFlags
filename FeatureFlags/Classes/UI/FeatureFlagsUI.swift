@@ -5,7 +5,9 @@
 //  Created by Ross Butler on 11/27/18.
 //
 
+#if canImport(UIKit)
 import Foundation
+import UIKit
 
 public struct FeatureFlagsUI {
     
@@ -107,3 +109,4 @@ public struct FeatureFlagsUI {
     }
     
 }
+#endif

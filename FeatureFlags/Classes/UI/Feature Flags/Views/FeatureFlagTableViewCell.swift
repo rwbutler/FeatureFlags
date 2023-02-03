@@ -5,7 +5,9 @@
 //  Created by Ross Butler on 10/19/18.
 //
 
+#if canImport(UIKit)
 import Foundation
+import UIKit
 
 class FeatureFlagTableViewCell: UITableViewCell {
     @IBOutlet weak var featureName: UILabel!
@@ -17,3 +19,4 @@ class FeatureFlagTableViewCell: UITableViewCell {
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var bottomMargin: NSLayoutConstraint!
 }
+#endif

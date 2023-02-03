@@ -5,11 +5,12 @@
 //  Created by Ross Butler on 10/30/18.
 //
 
+#if canImport(UIKit)
 import Foundation
 import UIKit
 
 @objc public class ViewControllerNavigationSettings: NSObject {
-
+    
     let actionButton: UIBarButtonItem.SystemItem
     let animated: Bool
     let autoClose: Bool
@@ -36,5 +37,6 @@ import UIKit
         self.isNavigationBarHidden = isNavigationBarHidden
         self.shouldRefresh = shouldRefresh
     }
-
+    
 }
+#endif

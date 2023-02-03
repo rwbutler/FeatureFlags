@@ -5,6 +5,7 @@
 //  Created by Ross Butler on 10/23/18.
 //
 
+#if canImport(UIKit)
 import Foundation
 import UIKit
 
@@ -18,3 +19,4 @@ class TestVariationPickerViewController: PickerViewController<Test.Variation> {
         set { super.viewModel = newValue }
     }
 }
+#endif

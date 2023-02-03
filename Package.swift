@@ -1,8 +1,12 @@
-// swift-tools-version:4.2
+// swift-tools-version:5.1
 import PackageDescription
 
 let package = Package(
     name: "FeatureFlags",
+    platforms: [
+        .iOS(.v11),
+        .macOS(.v10_13)
+    ],
     products: [
         .library(
             name: "FeatureFlags",
@@ -11,7 +15,7 @@ let package = Package(
     targets: [
         .target(
             name: "FeatureFlags",
-            path: "FeatureFlags",
-            exclude: ["Classes/UI", "Classes/Extensions/UIColorAdditions.swift"])
+            path: "FeatureFlags"
+        )
     ]
 )

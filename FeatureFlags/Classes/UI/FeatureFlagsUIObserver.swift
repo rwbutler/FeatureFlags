@@ -5,7 +5,9 @@
 //  Created by Ross Butler on 12/5/18.
 //
 
+#if canImport(UIKit)
 import Foundation
+import UIKit
 
 @objc class FeatureFlagsUIObserver: NSObject {
     
@@ -16,3 +18,4 @@ import Foundation
     }
 
 }
+#endif

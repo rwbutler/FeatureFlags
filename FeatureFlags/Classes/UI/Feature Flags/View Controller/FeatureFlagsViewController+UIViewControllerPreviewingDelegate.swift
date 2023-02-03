@@ -5,7 +5,9 @@
 //  Created by Ross Butler on 23/12/2019.
 //
 
+#if canImport(UIKit)
 import Foundation
+import UIKit
 
 extension FeatureFlagsViewController: UIViewControllerPreviewingDelegate {
     
@@ -30,3 +32,4 @@ extension FeatureFlagsViewController: UIViewControllerPreviewingDelegate {
     }
     
 }
+#endif

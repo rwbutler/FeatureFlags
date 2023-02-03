@@ -5,6 +5,7 @@
 //  Created by Ross Butler on 10/23/18.
 //
 
+#if canImport(UIKit)
 import Foundation
 import UIKit
 
@@ -171,3 +172,4 @@ private extension FeatureDetailsViewController {
         }
     }
 }
+#endif
