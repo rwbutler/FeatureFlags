@@ -510,8 +510,10 @@
 			baseConfigurationReference = 54924E0C57E29ACFE49AB01C /* Pods-FeatureFlags_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = FeatureFlags/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.6.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rwbutler.demo.FeatureFlags-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -525,8 +527,10 @@
 			baseConfigurationReference = 0C5EB5D9EDF130DB7E936583 /* Pods-FeatureFlags_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = FeatureFlags/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.6.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rwbutler.demo.FeatureFlags-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
