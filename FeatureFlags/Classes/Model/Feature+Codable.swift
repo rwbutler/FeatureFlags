@@ -62,7 +62,11 @@ extension Feature: Codable {
                 if Feature.testVariationsContains(variationNames: ["enabled", "disabled"], in: testVariations)
                     || Feature.testVariationsContains(variationNames: ["on", "off"], in: testVariations) {
                     self.type = type ?? .featureTest(.featureFlagAB)
-                    self.testVariations = defaultTestVariations
+                    if ["disabled", "off"].contains(testVariations.first?.rawValue.lowercased()) {
+                        self.testVariations = defaultTestVariations.reversed()
+                    } else {
+                        self.testVariations = defaultTestVariations
+                    }
                 } else {
                     self.type = type ?? .featureTest(.ab)
                     self.testVariations = testVariations
