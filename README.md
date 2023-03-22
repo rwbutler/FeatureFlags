@@ -1,6 +1,6 @@
 ![FeatureFlags](https://raw.githubusercontent.com/rwbutler/FeatureFlags/main/docs/images/feature-flags-banner.png)
 
-[![CI Status](http://img.shields.io/travis/rwbutler/FeatureFlags.svg?style=flat)](https://travis-ci.org/rwbutler/FeatureFlags)
+[![Build Status](https://img.shields.io/bitrise/577a6c12-fa7f-4d64-b0e3-e47884cb90fe/main?label=build&logo=bitrise&token=27nR7InBsLXisNDfibGPaw)](https://app.bitrise.io/app/577a6c12-fa7f-4d64-b0e3-e47884cb90fe?branch=main)
 [![Version](https://img.shields.io/cocoapods/v/FeatureFlags.svg?style=flat)](http://cocoapods.org/pods/Featureflags)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/777e0d2788515e5f61a8/maintainability)](https://codeclimate.com/github/rwbutler/FeatureFlags/maintainability)
