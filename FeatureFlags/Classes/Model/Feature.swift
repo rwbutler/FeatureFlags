@@ -9,7 +9,7 @@ import Foundation
 
 public struct Feature {
     
-    // MARK: Type defintions
+    // MARK: Type definitions
     public typealias Name = FeatureName
     
     // MARK: State

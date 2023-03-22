@@ -22,21 +22,39 @@ public struct TestVariation: RawRepresentable {
     // Note: A logic error has occurred and a Test.Variation could not be assigned.
     public static let unassigned = Test.Variation(rawValue: "Unassigned")
     
+    private static let disabledRawValues = ["disabled", "off"]
+    private static let enabledRawValues = ["enabled", "on"]
     private let name: RawValue
     public typealias RawValue = String
     
     public init(rawValue: RawValue) {
-        self.name = rawValue
+        name = Self.name(from: rawValue)
     }
     
     public var rawValue: RawValue {
-        return self.name
+        return name
+    }
+    
+    static func name(from rawValue: RawValue) -> String {
+        if disabledRawValues.contains(rawValue) {
+            return Self.disabled.rawValue
+        } else if enabledRawValues.contains(rawValue) {
+            return Self.enabled.rawValue
+        } else {
+            return rawValue
+        }
     }
 }
 
 extension TestVariation: Equatable {
     public static func == (lhs: TestVariation, rhs: TestVariation) -> Bool {
-        return lhs.rawValue.lowercased() == rhs.rawValue.lowercased()
+        lhs.rawValue.lowercased() == rhs.rawValue.lowercased()
+    }
+}
+
+extension TestVariation: Comparable {
+    public static func < (lhs: TestVariation, rhs: TestVariation) -> Bool {
+        lhs.rawValue.lowercased() < rhs.rawValue.lowercased()
     }
 }
 
