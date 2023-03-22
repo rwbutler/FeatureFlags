@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2023-03-22
+### Added
+- Added an arrow button to cells on the `FeatureFlagsViewController` which allows the user to view more information about the specific feature flag / test.
+
+### Changed 
+- Resolved pull [#7](https://github.com/rwbutler/FeatureFlags/pull/7) whereby if test variations were specified as `disabled`,`enabled` (as opposed to `enabled`, `disabled`) then test biases would be applied the wrong way round.
+
 ## [2.6.4] - 2023-02-03
 ### Changed
 - Updated iOS deployment target to 11.0.
