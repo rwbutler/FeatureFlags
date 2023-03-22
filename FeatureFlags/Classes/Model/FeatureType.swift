@@ -14,8 +14,13 @@ public enum FeatureType {
     case unlockFlag
     
     public static var all: [FeatureType] {
-        return [.featureFlag, .featureTest(.ab), .featureTest(.featureFlagAB),
-                .featureTest(.mvt), .unlockFlag]
+        return [
+            .featureFlag,
+            .featureTest(.ab),
+            .featureTest(.featureFlagAB),
+            .featureTest(.mvt),
+            .unlockFlag
+        ]
     }
 }
 

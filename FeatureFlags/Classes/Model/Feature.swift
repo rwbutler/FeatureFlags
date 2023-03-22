@@ -176,7 +176,9 @@ public struct Feature {
     }
     
     func testBias(_ testVariation: Test.Variation) -> Percentage? {
-        guard enabled else { return Percentage.min }
+        guard enabled else {
+            return Percentage.min
+        }
         guard let testBiasForVariation = zip(testVariations, testBiases).first(where: { pair in
             let currentTestVariation = pair.0
             return currentTestVariation == testVariation

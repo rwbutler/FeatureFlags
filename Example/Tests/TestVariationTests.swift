@@ -75,4 +75,104 @@ class TestVariationTests: XCTestCase {
         XCTAssert(!feature.isEnabled(), "Pass")
     }
 
+    func testWhenTestVariationsAreEnabledAndDisabledThenTypeIsFeatureFlagAB() {
+        let featureConfiguration =
+        """
+        [{
+        "name": "Example Feature A/B Test",
+        "enabled": false,
+        "test-variations": ["Enabled", "Disabled"]
+        }]
+        """
+        let decoder = JSONDecoder()
+        guard let featuresData = featureConfiguration.data(using: .utf8),
+            let features = try? decoder.decode([Feature].self, from: featuresData),
+            let feature = features.first else {
+                XCTAssert(false, "Fail")
+                return
+        }
+        XCTAssertEqual(feature.type, .featureTest(.featureFlagAB))
+    }
+
+    func testWhenTestVariationsAreEnabled_DisabledAndBiasesAre80_20ThenEnabledBiasIs80() {
+        let featureConfiguration =
+        """
+        [{
+        "name": "Example Feature A/B Test",
+        "enabled": true,
+        "test-biases": [80, 20],
+        "test-variations": ["Enabled", "Disabled"]
+        }]
+        """
+        let decoder = JSONDecoder()
+        guard let featuresData = featureConfiguration.data(using: .utf8),
+            let features = try? decoder.decode([Feature].self, from: featuresData),
+            let feature = features.first else {
+                XCTAssert(false, "Fail")
+                return
+        }
+        XCTAssertEqual(feature.testVariations.count, 2)
+        XCTAssertEqual(feature.testBias(.enabled)?.rawValue, 80)
+        XCTAssertEqual(feature.testBias(.disabled)?.rawValue, 20)
+    }
+
+    func testWhenTestVariationsAreDisabledAndEnabledThenTypeIsFeatureFlagAB() {
+        let featureConfiguration =
+        """
+        [{
+        "name": "Example Feature A/B Test",
+        "enabled": false,
+        "test-variations": ["Disabled", "Enabled"]
+        }]
+        """
+        let decoder = JSONDecoder()
+        guard let featuresData = featureConfiguration.data(using: .utf8),
+            let features = try? decoder.decode([Feature].self, from: featuresData),
+            let feature = features.first else {
+                XCTAssert(false, "Fail")
+                return
+        }
+        XCTAssertEqual(feature.type, .featureTest(.featureFlagAB))
+    }
+
+    func testWhenTestVariationsAreDisabled_EnabledAndBiasesAre80_20ThenEnabledBiasIs20() {
+        let featureConfiguration =
+        """
+        [{
+        "name": "Example Feature A/B Test",
+        "enabled": true,
+        "test-biases": [80, 20],
+        "test-variations": ["Disabled", "Enabled"]
+        }]
+        """
+        let decoder = JSONDecoder()
+        guard let featuresData = featureConfiguration.data(using: .utf8),
+            let features = try? decoder.decode([Feature].self, from: featuresData),
+            let feature = features.first else {
+                XCTAssert(false, "Fail")
+                return
+        }
+        XCTAssertEqual(feature.testVariations.count, 2)
+        XCTAssertEqual(feature.testBias(.enabled)?.rawValue, 20)
+        XCTAssertEqual(feature.testBias(.disabled)?.rawValue, 80)
+    }
+
+    func testWhenTestVariationsAreAAndBThenTypeIsFeatureTestAB() {
+        let featureConfiguration =
+        """
+        [{
+        "name": "Example Feature A/B Test",
+        "enabled": false,
+        "test-variations": ["A", "B"]
+        }]
+        """
+        let decoder = JSONDecoder()
+        guard let featuresData = featureConfiguration.data(using: .utf8),
+            let features = try? decoder.decode([Feature].self, from: featuresData),
+            let feature = features.first else {
+                XCTAssert(false, "Fail")
+                return
+        }
+        XCTAssertEqual(feature.type, .featureTest(.ab))
+    }
 }
