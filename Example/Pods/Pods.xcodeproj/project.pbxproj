@@ -736,7 +736,6 @@
 				INFOPLIST_FILE = "Target Support Files/FeatureFlags/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.6.3;
 				MODULEMAP_FILE = "Target Support Files/FeatureFlags/FeatureFlags.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.FeatureFlags;
 				PRODUCT_MODULE_NAME = FeatureFlags;
@@ -913,6 +912,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 3.0.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -976,6 +976,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 3.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -1035,7 +1036,6 @@
 				INFOPLIST_FILE = "Target Support Files/FeatureFlags/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.6.3;
 				MODULEMAP_FILE = "Target Support Files/FeatureFlags/FeatureFlags.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rwbutler.FeatureFlags;
 				PRODUCT_MODULE_NAME = FeatureFlags;
