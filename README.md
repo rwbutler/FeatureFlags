@@ -1,4 +1,4 @@
-![FeatureFlags](https://raw.githubusercontent.com/rwbutler/FeatureFlags/master/docs/images/feature-flags-banner.png)
+![FeatureFlags](https://raw.githubusercontent.com/rwbutler/FeatureFlags/main/docs/images/feature-flags-banner.png)
 
 [![CI Status](http://img.shields.io/travis/rwbutler/FeatureFlags.svg?style=flat)](https://travis-ci.org/rwbutler/FeatureFlags)
 [![Version](https://img.shields.io/cocoapods/v/FeatureFlags.svg?style=flat)](http://cocoapods.org/pods/Featureflags)
@@ -11,7 +11,7 @@
 
 FeatureFlags makes it easy to configure feature flags, A/B and MVT tests via a JSON file which may be bundled with your app or hosted remotely. For remotely-hosted configuration files, you may enable / disable features without another release to the App Store, update the percentages of users in A/B test groups or even roll out a feature previously under A/B test to 100% of your users once you have decided that the feature is ready for prime time. 
 
-To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/master/docs/presentations/feature-flags.pdf), check out the [blog post](https://medium.com/@rwbutler/feature-flags-a-b-testing-mvt-on-ios-718339ac7aa1), or make use of the table of contents below:
+To learn more about how to use FeatureFlags, take a look at the [keynote presentation](https://github.com/rwbutler/FeatureFlags/blob/main/docs/presentations/feature-flags.pdf), check out the [blog post](https://medium.com/@rwbutler/feature-flags-a-b-testing-mvt-on-ios-718339ac7aa1), or make use of the table of contents below:
 
 - [Features](#features)
 - [Installation](#installation)
@@ -519,11 +519,11 @@ FeatureFlags.pushFeatureFlags(delegate: self, navigationController: navigationCo
 ```
 
 
-![FeatureFlagsViewController](https://raw.githubusercontent.com/rwbutler/FeatureFlags/master/docs/images/feature-flags-view-controller.png)
+![FeatureFlagsViewController](https://raw.githubusercontent.com/rwbutler/FeatureFlags/main/docs/images/feature-flags-view-controller.png)
 
 Should you need further information on the state of each feature flag / test, you may use 3D Touch to peek / pop more information.
 
-![FeatureDetailsViewController](https://raw.githubusercontent.com/rwbutler/FeatureFlags/master/docs/images/feature-details-view-controller.png)
+![FeatureDetailsViewController](https://raw.githubusercontent.com/rwbutler/FeatureFlags/main/docs/images/feature-details-view-controller.png)
 
 ### Refreshing Configuration
 
@@ -579,7 +579,7 @@ FeatureFlags is available under the MIT license. See the [LICENSE file](./LICENS
 
 |[Cheats](https://github.com/rwbutler/Cheats) |[Connectivity](https://github.com/rwbutler/Connectivity) | [FeatureFlags](https://github.com/rwbutler/FeatureFlags) | [Skylark](https://github.com/rwbutler/Skylark) | [TypographyKit](https://github.com/rwbutler/TypographyKit) | [Updates](https://github.com/rwbutler/Updates) |
 |:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
-|[![Cheats](https://raw.githubusercontent.com/rwbutler/Cheats/master/docs/images/cheats-logo.png)](https://github.com/rwbutler/Cheats) |[![Connectivity](https://github.com/rwbutler/Connectivity/raw/master/ConnectivityLogo.png)](https://github.com/rwbutler/Connectivity) | [![FeatureFlags](https://raw.githubusercontent.com/rwbutler/FeatureFlags/master/docs/images/feature-flags-logo.png)](https://github.com/rwbutler/FeatureFlags) | [![Skylark](https://github.com/rwbutler/Skylark/raw/master/SkylarkLogo.png)](https://github.com/rwbutler/Skylark) | [![TypographyKit](https://raw.githubusercontent.com/rwbutler/TypographyKit/master/docs/images/typography-kit-logo.png)](https://github.com/rwbutler/TypographyKit) | [![Updates](https://raw.githubusercontent.com/rwbutler/Updates/master/docs/images/updates-logo.png)](https://github.com/rwbutler/Updates)
+|[![Cheats](https://raw.githubusercontent.com/rwbutler/Cheats/master/docs/images/cheats-logo.png)](https://github.com/rwbutler/Cheats) |[![Connectivity](https://github.com/rwbutler/Connectivity/raw/main/ConnectivityLogo.png)](https://github.com/rwbutler/Connectivity) | [![FeatureFlags](https://raw.githubusercontent.com/rwbutler/FeatureFlags/main/docs/images/feature-flags-logo.png)](https://github.com/rwbutler/FeatureFlags) | [![Skylark](https://github.com/rwbutler/Skylark/raw/master/SkylarkLogo.png)](https://github.com/rwbutler/Skylark) | [![TypographyKit](https://raw.githubusercontent.com/rwbutler/TypographyKit/main/docs/images/typography-kit-logo.png)](https://github.com/rwbutler/TypographyKit) | [![Updates](https://raw.githubusercontent.com/rwbutler/Updates/master/docs/images/updates-logo.png)](https://github.com/rwbutler/Updates)
 
 ### Tools
 
