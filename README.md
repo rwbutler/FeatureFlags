@@ -49,9 +49,9 @@ To learn more about how to use FeatureFlags, take a look at the [keynote present
 - [x] Convert an A/B test into a feature flag once you have decided whether the feature test was a success i.e. rollout a feature to 100% of users
 - [x] Visualize the state of your flags and tests using FeatureFlagsViewController in debug builds of your app
 
-## What's new in FeatureFlags 2.6.3?
+## What's new in FeatureFlags 3.0.0?
 
-When using FeatureFlags 2.6.3 with SPM, import `FeatureFlags` rather than `FeatureFlagsPackage`.
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## Installation
 
