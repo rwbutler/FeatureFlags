@@ -9,14 +9,6 @@
 import Foundation
 import UIKit
 
-extension UIControl {
-    func addAction(for controlEvents: UIControl.Event = .touchUpInside, _ closure: @escaping()->()) {
-        if #available(iOSApplicationExtension 14.0, *) {
-            addAction(UIAction { (action: UIAction) in closure() }, for: controlEvents)
-        }
-    }
-}
-
 class FeatureFlagsViewController: UITableViewController {
     
     // MARK: Type definitions
@@ -57,7 +49,7 @@ class FeatureFlagsViewController: UITableViewController {
     }
     
     private func bindCell(_ cell: FeatureFlagTableViewCell, feature: Feature) -> FeatureFlagTableViewCell {
-        cell.featureDetailButton.addAction {
+        cell.featureDetailButton.touchUpInside.action = {
             let viewController = FeatureDetailsViewController(style: .grouped)
             viewController.feature = feature
             self.navigationController?.pushViewController(viewController, animated: true)

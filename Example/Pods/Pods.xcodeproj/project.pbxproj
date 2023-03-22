@@ -47,6 +47,7 @@
 		13EA6C2B21944C1C0057724A /* FeatureFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = 13AE3EC3219449A6003BFA34 /* FeatureFlags.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FD713615BDF74D9B2EE769255074C13 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		2F4DE5AB3E0F07F628BBE3F6FC3BAB77 /* FeatureFlags-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 938636CB5BC770CC83F3A2AF56F939ED /* FeatureFlags-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3067FB8329CB8290007DEA51 /* UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3067FB8229CB8290007DEA51 /* UIControl.swift */; };
 		5DB8B4F2FC907773A4ED7A682E2BFC35 /* Pods-FeatureFlags_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE802B3080D5514EB764C0739F7168C9 /* Pods-FeatureFlags_Tests-dummy.m */; };
 		7F1F2D2AD4886F384EA3B0A3DF206F92 /* FeatureFlags-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E1967FE1A78D4D27F60F89F0C1E849 /* FeatureFlags-dummy.m */; };
 		A32027581ECEBA9A65EB1819AC302FFD /* Pods-FeatureFlags_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C72BAC0721554F7CE54ADF16EE5A2B /* Pods-FeatureFlags_Example-dummy.m */; };
@@ -118,6 +119,7 @@
 		283DD01CF54326970BDF4106EE4F114B /* Pods-FeatureFlags_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-FeatureFlags_Tests-umbrella.h"; sourceTree = "<group>"; };
 		28A8BD20CE65658510927664523C5A0D /* Pods-FeatureFlags_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-FeatureFlags_Tests.modulemap"; sourceTree = "<group>"; };
 		2A4D20C9C3CA506952152E4D4C127394 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3067FB8229CB8290007DEA51 /* UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControl.swift; sourceTree = "<group>"; };
 		417FE471ED3706AD9FDEAF2793C7C342 /* Pods_FeatureFlags_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatureFlags_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		45D85EF0F33CBF508B1E240008040778 /* Pods-FeatureFlags_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FeatureFlags_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		532062CA003E0E03D8FAA7CDE1C62553 /* Pods-FeatureFlags_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-FeatureFlags_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 		135FF815218214BF00F430C4 /* Feature Flags */ = {
 			isa = PBXGroup;
 			children = (
+				3067FB8129CB827D007DEA51 /* Shared */,
 				13C8F1CD23B17B0B00AF347B /* View Model */,
 				135FF816218214BF00F430C4 /* View Controller */,
 				135FF818218214BF00F430C4 /* Views */,
@@ -369,6 +372,14 @@
 				13A75B9823B0F4AD00DAE839 /* FeatureFlagsViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		3067FB8129CB827D007DEA51 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3067FB8229CB8290007DEA51 /* UIControl.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		38DAD0E284CB4CE1AFEE4A91254A2523 /* FeatureFlags */ = {
@@ -671,6 +682,7 @@
 				135FF82D218214BF00F430C4 /* PropertyListParsingService.swift in Sources */,
 				1389AE632188C3C700CD8AF8 /* FeatureFlagsViewControllerDelegate.swift in Sources */,
 				1356D67121ADF96400D8590B /* FeatureFlagsUI.swift in Sources */,
+				3067FB8329CB8290007DEA51 /* UIControl.swift in Sources */,
 				135FF827218214BF00F430C4 /* PickerOptionsViewModel.swift in Sources */,
 				133653272178E98C00E41564 /* FeatureType.swift in Sources */,
 				133653262178E98C00E41564 /* FeatureFlags.swift in Sources */,
