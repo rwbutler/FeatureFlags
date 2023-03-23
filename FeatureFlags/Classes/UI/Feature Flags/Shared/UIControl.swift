@@ -7,6 +7,8 @@
 
 import Foundation
 import ObjectiveC
+#if canImport(UIKit)
+import UIKit
 
 public extension NSObject {
     func associatedObject<T>(key: UnsafeRawPointer, makeDefault: () -> T) -> T {
@@ -43,3 +45,4 @@ public extension UIControl {
         }
     }
 }
+#endif

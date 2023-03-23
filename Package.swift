@@ -10,7 +10,8 @@ let package = Package(
     products: [
         .library(
             name: "FeatureFlags",
-            targets: ["FeatureFlags"])
+            targets: ["FeatureFlags"]
+        )
     ],
     targets: [
         .target(
