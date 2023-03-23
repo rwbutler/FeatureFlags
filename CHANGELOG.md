@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added an arrow button to cells on the `FeatureFlagsViewController` which allows the user to view more information about the specific feature flag / test.
 
 ### Changed 
-- Resolved pull [#7](https://github.com/rwbutler/FeatureFlags/pull/7) whereby if test variations were specified as `disabled`,`enabled` (as opposed to `enabled`, `disabled`) then test biases would be applied the wrong way round.
+- Resolved pull [#7](https://github.com/rwbutler/FeatureFlags/pull/7) whereby if test variations were specified as `disabled`,`enabled` (as opposed to `enabled`, `disabled`) then test biases would be applied the wrong way round. Thanks to [nicolasanjoran](https://www.github.com/nicolasanjoran) for discovering & reporting this issue.
 
 ## [2.6.4] - 2023-02-03
 ### Changed
